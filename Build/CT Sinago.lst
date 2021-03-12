@@ -1,0 +1,3734 @@
+***********************************************************************
+*
+*	CODE GENERATION LISTING FOR: CT Sinago
+*	COMPILER VERSION: 3.1.1.0
+*
+***********************************************************************
+
+***********************************************************************
+UNUSED FUNCTION BLOCKS:
+
+	eTP
+***********************************************************************
+
+**************************************************
+	CODE GENERATOR SUBROUTINES
+**************************************************
+
+$$MOD:
+005BA0E0  FB90 F3F1		sdiv r3, r0, r1
+005BA0E4  4359     		mul r1, r1, r3
+005BA0E6  EBC1 0000		rsb r0, r1, r0
+005BA0EA  4770     		bx lr
+
+$$MOD_U:
+005BA0EC  FBB0 F3F1		udiv r3, r0, r1
+005BA0F0  4359     		mul r1, r1, r3
+005BA0F2  EBC1 0000		rsb r0, r1, r0
+005BA0F6  4770     		bx lr
+
+**************************************************
+	List function block: eTON
+**************************************************
+
+FUNCTION_BLOCK eTON
+
+	{ DE:"(Sfr053c000) eLLabStdLib - On delay timer" }
+
+        VAR_INPUT
+IN : BOOL;	{ DE:"Timer input" }
+PT : UDINT;	{ DE:"Preset time value (mS)" }
+	END_VAR
+
+        VAR_OUTPUT
+Q : BOOL;	{ DE:"Delayed output" }
+ET : UDINT;	{ DE:"Executing time (mS)" }
+	END_VAR
+
+        VAR_EXTERNAL
+	{G:"SystemVariables"}
+SysTime AT %MB0.320 : UDINT;	{ DE:"System time [mS]" }
+	END_VAR
+
+        VAR
+TimeBf : UDINT;	{ DE:"Time buffer" }
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+005BA0F8  E92D 4040		stmdb sp!, { r6, lr }
+005BA0FC  462E     		mov r6, r5
+
+005BA0FE  F8DF 70AC		ldr r7, [pc, #+172] ; 0x4
+005BA102  5DF0     		ldrb r0, [r6, +r7]
+
+005BA104  2800     		cmp r0, #0
+005BA106  BF08 2001		eqmov r0, #1
+005BA10A  BF18 2000		nemov r0, #0
+
+005BA10E  2800     		cmp r0, #0
+005BA110  D00E     		beq #28 ; 0x005BA130
+
+
+005BA114  F8DF 70A4		ldr r7, [pc, #+164] ; 0x20418B74
+005BA118  6838     		ldr r0, [r7]
+005BA11A  6030     		str r0, [r6]
+
+005BA11C  2000     		mov r0, #0 ; 0
+005BA11E  F8DF 7094		ldr r7, [pc, #+148] ; 0xC
+005BA122  55F0     		strb r0, [r6, +r7]
+
+005BA124  2000     		mov r0, #0 ; 0
+005BA126  F8DF 7090		ldr r7, [pc, #+144] ; 0x10
+005BA12A  51F0     		str r0, [r6, +r7]
+
+005BA12C  E03A     		b #116 ; 0x005BA1A4
+
+
+005BA130  F8DF 7080		ldr r7, [pc, #+128] ; 0xC
+005BA134  5DF0     		ldrb r0, [r6, +r7]
+
+005BA136  2800     		cmp r0, #0
+005BA138  D014     		beq #40 ; 0x005BA164
+
+
+005BA13C  F8DF 7070		ldr r7, [pc, #+112] ; 0x8
+005BA140  59F0     		ldr r0, [r6, +r7]
+
+005BA142  F8DF 7074		ldr r7, [pc, #+116] ; 0x10
+005BA146  59F7     		ldr r7, [r6, +r7]
+005BA148  42B8     		cmp r0, r7
+005BA14A  BF98 2000		lsmov r0, #0
+005BA14E  BF88 2001		himov r0, #1
+
+005BA152  2800     		cmp r0, #0
+005BA154  D004     		beq #8 ; 0x005BA160
+
+
+005BA158  2000     		mov r0, #0 ; 0
+005BA15A  F8DF 7058		ldr r7, [pc, #+88] ; 0xC
+005BA15E  55F0     		strb r0, [r6, +r7]
+
+005BA160  E020     		b #64 ; 0x005BA1A4
+
+
+005BA164  F8DF 7054		ldr r7, [pc, #+84] ; 0x20418B74
+005BA168  6838     		ldr r0, [r7]
+
+005BA16A  6837     		ldr r7, [r6]
+005BA16C  1BC0     		sub r0, r0, r7
+
+005BA16E  F8DF 7048		ldr r7, [pc, #+72] ; 0x10
+005BA172  51F0     		str r0, [r6, +r7]
+
+005BA174  F8DF 7040		ldr r7, [pc, #+64] ; 0x10
+005BA178  59F0     		ldr r0, [r6, +r7]
+
+005BA17A  F8DF 7034		ldr r7, [pc, #+52] ; 0x8
+005BA17E  59F7     		ldr r7, [r6, +r7]
+005BA180  42B8     		cmp r0, r7
+005BA182  BF38 2000		lomov r0, #0
+005BA186  BF28 2001		hsmov r0, #1
+
+005BA18A  2800     		cmp r0, #0
+005BA18C  D00A     		beq #20 ; 0x005BA1A4
+
+
+005BA190  2001     		mov r0, #1 ; 1
+005BA192  F8DF 7020		ldr r7, [pc, #+32] ; 0xC
+005BA196  55F0     		strb r0, [r6, +r7]
+
+005BA198  F8DF 7014		ldr r7, [pc, #+20] ; 0x8
+005BA19C  59F0     		ldr r0, [r6, +r7]
+005BA19E  F8DF 7018		ldr r7, [pc, #+24] ; 0x10
+005BA1A2  51F0     		str r0, [r6, +r7]
+
+005BA1A4  E8BD 4040		ldmia sp!, { r6, lr }
+
+005BA1A8  4770     		bx lr
+
+005BA1AC  00000004		; 0x00000004
+005BA1B0  00000008		; 0x00000008
+005BA1B4  0000000C		; 0x0000000C
+005BA1B8  00000010		; 0x00000010
+005BA1BC  20418B74		; 0x20418B74
+
+
+Frame allocation:
+
+	0000       : VAR TimeBf
+	0004 bit  0: VAR IN
+	0008       : VAR PT
+	000C bit  0: VAR Q
+	0010       : VAR ET
+
+END_FUNCTION_BLOCK
+**************************************************
+	List function block: OnOffCalendar
+**************************************************
+
+FUNCTION_BLOCK OnOffCalendar
+
+        VAR_INPUT
+Giorno_settimana : INT;
+Ora : INT;
+Minuto : INT;
+P11On : INT;
+P12Off : INT;
+P13On : INT;
+P14Off : INT;
+P21On : INT;
+P22Off : INT;
+P23On : INT;
+P24Off : INT;
+P31On : INT;
+P32Off : INT;
+P33On : INT;
+P34Off : INT;
+P41On : INT;
+P42Off : INT;
+P43On : INT;
+P44Off : INT;
+P51On : INT;
+P52Off : INT;
+P53On : INT;
+P54Off : INT;
+P61On : INT;
+P62Off : INT;
+P63On : INT;
+P64Off : INT;
+P71On : INT;
+P72Off : INT;
+P73On : INT;
+P74Off : INT;
+Lun_enabled : BOOL;
+Mar_enabled : BOOL;
+Mer_enabled : BOOL;
+Gio_enabled : BOOL;
+Ven_enabled : BOOL;
+Sab_enabled : BOOL;
+Dom_enabled : BOOL;
+	END_VAR
+
+        VAR_OUTPUT
+OnByCalendar : INT;
+	END_VAR
+
+        VAR
+NOW : INT;
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+005BA1C0  E92D 4040		stmdb sp!, { r6, lr }
+005BA1C4  462E     		mov r6, r5
+
+#0		{SRC:OnOffCalendar}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* NOW := Ora*60+Minuto; *)
+#4			LD		Ora	{LNXT:1|4|-1}
+(*) UNDEF
+005BA1C6  F8DF 755C		ldr r7, [pc, #+1372] ; 0x4
+005BA1CA  5FF0     		ldrsh r0, [r6, +r7]
+
+#5			MUL		60	{LNXT:1|4|-1}
+(*) INT
+005BA1CC  273C     		mov r7, #60 ; 60
+005BA1CE  4378     		mul r0, r0, r7
+
+#6			ADD		Minuto	{LNXT:1|4|-1}
+(*) INT
+005BA1D0  F8DF 7554		ldr r7, [pc, #+1364] ; 0x6
+005BA1D4  5FF7     		ldrsh r7, [r6, +r7]
+005BA1D6  19C0     		add r0, r0, r7
+
+#7			ST		NOW	{LNXT:1|4|-1}
+(-) INT
+005BA1D8  8030     		strh r0, [r6]
+
+#8		
+#9		
+#10			(* CASE Giorno_settimana OF *)
+#11		
+#12			(* 1: *)
+#13			LD		Giorno_settimana	{LNXT:4|-1|-1}
+(*) UNDEF
+005BA1DA  F8DF 7544		ldr r7, [pc, #+1348] ; 0x2
+005BA1DE  5FF0     		ldrsh r0, [r6, +r7]
+
+#14			EQ		1	{LNXT:4|-1|-1}
+(*) INT
+005BA1E0  2801     		cmp r0, #1
+005BA1E2  BF18 2000		nemov r0, #0
+005BA1E6  BF08 2001		eqmov r0, #1
+
+#15			JMPC		$label1	{LNXT:4|5|13}
+(-) BOOL
+005BA1EA  2800     		cmp r0, #0
+005BA1EC  D144     		bne #136 ; 0x005BA278
+
+
+#16		
+#17			(* 2: *)
+#18			LD		Giorno_settimana	{LNXT:13|-1|-1}
+(*) UNDEF
+005BA1F0  F8DF 752C		ldr r7, [pc, #+1324] ; 0x2
+005BA1F4  5FF0     		ldrsh r0, [r6, +r7]
+
+#19			EQ		2	{LNXT:13|-1|-1}
+(*) INT
+005BA1F6  2802     		cmp r0, #2
+005BA1F8  BF18 2000		nemov r0, #0
+005BA1FC  BF08 2001		eqmov r0, #1
+
+#20			JMPC		$label2	{LNXT:13|14|22}
+(-) BOOL
+005BA200  2800     		cmp r0, #0
+005BA202  F040 808D		bne #282 ; 0x005BA320
+
+
+#21		
+#22			(* 3: *)
+#23			LD		Giorno_settimana	{LNXT:22|-1|-1}
+(*) UNDEF
+005BA206  F8DF 7518		ldr r7, [pc, #+1304] ; 0x2
+005BA20A  5FF0     		ldrsh r0, [r6, +r7]
+
+#24			EQ		3	{LNXT:22|-1|-1}
+(*) INT
+005BA20C  2803     		cmp r0, #3
+005BA20E  BF18 2000		nemov r0, #0
+005BA212  BF08 2001		eqmov r0, #1
+
+#25			JMPC		$label3	{LNXT:22|23|31}
+(-) BOOL
+005BA216  2800     		cmp r0, #0
+005BA218  F040 80D6		bne #428 ; 0x005BA3C8
+
+
+#26		
+#27			(* 4: *)
+#28			LD		Giorno_settimana	{LNXT:31|-1|-1}
+(*) UNDEF
+005BA21C  F8DF 7500		ldr r7, [pc, #+1280] ; 0x2
+005BA220  5FF0     		ldrsh r0, [r6, +r7]
+
+#29			EQ		4	{LNXT:31|-1|-1}
+(*) INT
+005BA222  2804     		cmp r0, #4
+005BA224  BF18 2000		nemov r0, #0
+005BA228  BF08 2001		eqmov r0, #1
+
+#30			JMPC		$label4	{LNXT:31|32|40}
+(-) BOOL
+005BA22C  2800     		cmp r0, #0
+005BA22E  F040 811F		bne #574 ; 0x005BA470
+
+
+#31		
+#32			(* 5: *)
+#33			LD		Giorno_settimana	{LNXT:40|-1|-1}
+(*) UNDEF
+005BA232  F8DF 74EC		ldr r7, [pc, #+1260] ; 0x2
+005BA236  5FF0     		ldrsh r0, [r6, +r7]
+
+#34			EQ		5	{LNXT:40|-1|-1}
+(*) INT
+005BA238  2805     		cmp r0, #5
+005BA23A  BF18 2000		nemov r0, #0
+005BA23E  BF08 2001		eqmov r0, #1
+
+#35			JMPC		$label5	{LNXT:40|41|49}
+(-) BOOL
+005BA242  2800     		cmp r0, #0
+005BA244  F040 8168		bne #720 ; 0x005BA518
+
+
+#36		
+#37			(* 6: *)
+#38			LD		Giorno_settimana	{LNXT:49|-1|-1}
+(*) UNDEF
+005BA248  F8DF 74D4		ldr r7, [pc, #+1236] ; 0x2
+005BA24C  5FF0     		ldrsh r0, [r6, +r7]
+
+#39			EQ		6	{LNXT:49|-1|-1}
+(*) INT
+005BA24E  2806     		cmp r0, #6
+005BA250  BF18 2000		nemov r0, #0
+005BA254  BF08 2001		eqmov r0, #1
+
+#40			JMPC		$label6	{LNXT:49|50|58}
+(-) BOOL
+005BA258  2800     		cmp r0, #0
+005BA25A  F040 81B1		bne #866 ; 0x005BA5C0
+
+
+#41		
+#42			(* 7: *)
+#43			LD		Giorno_settimana	{LNXT:58|-1|-1}
+(*) UNDEF
+005BA25E  F8DF 74C0		ldr r7, [pc, #+1216] ; 0x2
+005BA262  5FF0     		ldrsh r0, [r6, +r7]
+
+#44			EQ		7	{LNXT:58|-1|-1}
+(*) INT
+005BA264  2807     		cmp r0, #7
+005BA266  BF18 2000		nemov r0, #0
+005BA26A  BF08 2001		eqmov r0, #1
+
+#45			JMPC		$label7	{LNXT:58|59|68}
+(-) BOOL
+005BA26E  2800     		cmp r0, #0
+005BA270  F040 81FA		bne #1012 ; 0x005BA668
+
+
+#46		
+#47			(* ELSE *)
+#48			JMP		$label8	{LNXT:58|59|68}
+(-) BOOL
+005BA274  E24C     		b #1176 ; 0x005BA710
+
+
+#49		
+#50			(* Istruzioni di ciascun CASE: *)
+#51		
+#52		$label1:
+#53		
+#54				(* IF NOW >= P11On AND NOW < P12Off AND Lun_enabled *)
+#55				LD		NOW	{LNXT:5|-1|-1}
+(*) UNDEF
+005BA278  F9B6 0000		ldrsh r0, [r6]
+
+#56				LT		P12Off	{LNXT:5|-1|-1}
+(*) INT
+005BA27C  F8DF 74B0		ldr r7, [pc, #+1200] ; 0xA
+005BA280  5FF7     		ldrsh r7, [r6, +r7]
+005BA282  42B8     		cmp r0, r7
+005BA284  BFA8 2000		gemov r0, #0
+005BA288  BFB8 2001		ltmov r0, #1
+
+#57				AND(		NOW	{LNXT:5|-1|-1}
+(*) BOOL
+005BA28C  B082     		sub sp, sp, #8
+005BA28E  F8CD 0000		str r0, [sp]
+005BA292  F9B6 0000		ldrsh r0, [r6]
+
+#58				GE		P11On	{LNXT:5|-1|-1}
+(*) INT
+005BA296  F8DF 7494		ldr r7, [pc, #+1172] ; 0x8
+005BA29A  5FF7     		ldrsh r7, [r6, +r7]
+005BA29C  42B8     		cmp r0, r7
+005BA29E  BFB8 2000		ltmov r0, #0
+005BA2A2  BFA8 2001		gemov r0, #1
+
+#59				)	{LNXT:5|-1|-1}
+(*) BOOL
+005BA2A6  4607     		mov r7, r0
+005BA2A8  F8DD 0000		ldr r0, [sp]
+005BA2AC  B002     		add sp, sp, #8
+005BA2AE  4038     		and r0, r0, r7
+
+#60				AND		Lun_enabled	{LNXT:5|-1|-1}
+(*) BOOL
+005BA2B0  F8DF 74E8		ldr r7, [pc, #+1256] ; 0x40
+005BA2B4  5DF7     		ldrb r7, [r6, +r7]
+005BA2B6  4038     		and r0, r0, r7
+
+#61				JMPCN	$label9	{LNXT:5|6|7}
+(-) BOOL
+005BA2B8  2800     		cmp r0, #0
+005BA2BA  D006     		beq #12 ; 0x005BA2CA
+
+
+#62		
+#63				(* THEN *)
+#64		
+#65					(* OnByCalendar := 1; *)
+#66					MOVE		1,OnByCalendar	{LNXT:6|-1|-1}
+(*) BOOL
+005BA2BE  2001     		mov r0, #1 ; 1
+005BA2C0  F8DF 74F4		ldr r7, [pc, #+1268] ; 0x48
+005BA2C4  53F0     		strh r0, [r6, +r7]
+
+#67					JMP		$label11	{LNXT:5|6|7}
+(-) INT
+005BA2C6  E029     		b #82 ; 0x005BA31C
+
+
+#68		$label9:
+#69		
+#70				(* ELSIF NOW >= P13On AND NOW < P14Off *)
+#71				LD		NOW	{LNXT:7|-1|-1}
+(*) UNDEF
+005BA2CA  F9B6 0000		ldrsh r0, [r6]
+
+#72				LT		P14Off	{LNXT:7|-1|-1}
+(*) INT
+005BA2CE  F8DF 7468		ldr r7, [pc, #+1128] ; 0xE
+005BA2D2  5FF7     		ldrsh r7, [r6, +r7]
+005BA2D4  42B8     		cmp r0, r7
+005BA2D6  BFA8 2000		gemov r0, #0
+005BA2DA  BFB8 2001		ltmov r0, #1
+
+#73				AND(		NOW	{LNXT:7|-1|-1}
+(*) BOOL
+005BA2DE  B082     		sub sp, sp, #8
+005BA2E0  F8CD 0000		str r0, [sp]
+005BA2E4  F9B6 0000		ldrsh r0, [r6]
+
+#74				GE		P13On	{LNXT:7|-1|-1}
+(*) INT
+005BA2E8  F8DF 7448		ldr r7, [pc, #+1096] ; 0xC
+005BA2EC  5FF7     		ldrsh r7, [r6, +r7]
+005BA2EE  42B8     		cmp r0, r7
+005BA2F0  BFB8 2000		ltmov r0, #0
+005BA2F4  BFA8 2001		gemov r0, #1
+
+#75				)	{LNXT:7|-1|-1}
+(*) BOOL
+005BA2F8  4607     		mov r7, r0
+005BA2FA  F8DD 0000		ldr r0, [sp]
+005BA2FE  B002     		add sp, sp, #8
+005BA300  4038     		and r0, r0, r7
+
+#76				JMPCN	$label10	{LNXT:7|8|10}
+(-) BOOL
+005BA302  2800     		cmp r0, #0
+005BA304  D006     		beq #12 ; 0x005BA314
+
+
+#77		
+#78				(* THEN *)
+#79		
+#80					(* OnByCalendar := 1; *)
+#81					MOVE		1,OnByCalendar	{LNXT:8|-1|-1}
+(*) BOOL
+005BA308  2001     		mov r0, #1 ; 1
+005BA30A  F8DF 74AC		ldr r7, [pc, #+1196] ; 0x48
+005BA30E  53F0     		strh r0, [r6, +r7]
+
+#82					JMP		$label11	{LNXT:7|8|10}
+(-) INT
+005BA310  E004     		b #8 ; 0x005BA31C
+
+
+#83		$label10:
+#84		
+#85				(* ELSE *)
+#86		
+#87					(* OnByCalendar := 0; *)
+#88					MOVE		0,OnByCalendar	{LNXT:10|-1|-1}
+(*) INT
+005BA314  2000     		mov r0, #0 ; 0
+005BA316  F8DF 74A0		ldr r7, [pc, #+1184] ; 0x48
+005BA31A  53F0     		strh r0, [r6, +r7]
+
+#89		
+#90		$label11:
+#91				(* END_IF *)
+#92				JMP		$label0	{LNXT:1|10|-1}
+(-) INT
+005BA31C  E1FC     		b #1016 ; 0x005BA718
+
+
+#93		
+#94		$label2:
+#95		
+#96				(* IF NOW >= P21On AND NOW < P22Off AND Mar_enabled *)
+#97				LD		NOW	{LNXT:14|-1|-1}
+(*) UNDEF
+005BA320  F9B6 0000		ldrsh r0, [r6]
+
+#98				LT		P22Off	{LNXT:14|-1|-1}
+(*) INT
+005BA324  F8DF 7418		ldr r7, [pc, #+1048] ; 0x12
+005BA328  5FF7     		ldrsh r7, [r6, +r7]
+005BA32A  42B8     		cmp r0, r7
+005BA32C  BFA8 2000		gemov r0, #0
+005BA330  BFB8 2001		ltmov r0, #1
+
+#99				AND(		NOW	{LNXT:14|-1|-1}
+(*) BOOL
+005BA334  B082     		sub sp, sp, #8
+005BA336  F8CD 0000		str r0, [sp]
+005BA33A  F9B6 0000		ldrsh r0, [r6]
+
+#100				GE		P21On	{LNXT:14|-1|-1}
+(*) INT
+005BA33E  F8DF 73FC		ldr r7, [pc, #+1020] ; 0x10
+005BA342  5FF7     		ldrsh r7, [r6, +r7]
+005BA344  42B8     		cmp r0, r7
+005BA346  BFB8 2000		ltmov r0, #0
+005BA34A  BFA8 2001		gemov r0, #1
+
+#101				)	{LNXT:14|-1|-1}
+(*) BOOL
+005BA34E  4607     		mov r7, r0
+005BA350  F8DD 0000		ldr r0, [sp]
+005BA354  B002     		add sp, sp, #8
+005BA356  4038     		and r0, r0, r7
+
+#102				AND		Mar_enabled	{LNXT:14|-1|-1}
+(*) BOOL
+005BA358  F8DF 7444		ldr r7, [pc, #+1092] ; 0x41
+005BA35C  5DF7     		ldrb r7, [r6, +r7]
+005BA35E  4038     		and r0, r0, r7
+
+#103				JMPCN	$label12	{LNXT:14|15|16}
+(-) BOOL
+005BA360  2800     		cmp r0, #0
+005BA362  D006     		beq #12 ; 0x005BA372
+
+
+#104		
+#105				(* THEN *)
+#106		
+#107					(* OnByCalendar := 1; *)
+#108					MOVE		1,OnByCalendar	{LNXT:15|-1|-1}
+(*) BOOL
+005BA366  2001     		mov r0, #1 ; 1
+005BA368  F8DF 744C		ldr r7, [pc, #+1100] ; 0x48
+005BA36C  53F0     		strh r0, [r6, +r7]
+
+#109					JMP		$label14	{LNXT:14|15|16}
+(-) INT
+005BA36E  E029     		b #82 ; 0x005BA3C4
+
+
+#110		$label12:
+#111		
+#112				(* ELSIF NOW >= P23On AND NOW < P24Off *)
+#113				LD		NOW	{LNXT:16|-1|-1}
+(*) UNDEF
+005BA372  F9B6 0000		ldrsh r0, [r6]
+
+#114				LT		P24Off	{LNXT:16|-1|-1}
+(*) INT
+005BA376  F8DF 73D0		ldr r7, [pc, #+976] ; 0x16
+005BA37A  5FF7     		ldrsh r7, [r6, +r7]
+005BA37C  42B8     		cmp r0, r7
+005BA37E  BFA8 2000		gemov r0, #0
+005BA382  BFB8 2001		ltmov r0, #1
+
+#115				AND(		NOW	{LNXT:16|-1|-1}
+(*) BOOL
+005BA386  B082     		sub sp, sp, #8
+005BA388  F8CD 0000		str r0, [sp]
+005BA38C  F9B6 0000		ldrsh r0, [r6]
+
+#116				GE		P23On	{LNXT:16|-1|-1}
+(*) INT
+005BA390  F8DF 73B0		ldr r7, [pc, #+944] ; 0x14
+005BA394  5FF7     		ldrsh r7, [r6, +r7]
+005BA396  42B8     		cmp r0, r7
+005BA398  BFB8 2000		ltmov r0, #0
+005BA39C  BFA8 2001		gemov r0, #1
+
+#117				)	{LNXT:16|-1|-1}
+(*) BOOL
+005BA3A0  4607     		mov r7, r0
+005BA3A2  F8DD 0000		ldr r0, [sp]
+005BA3A6  B002     		add sp, sp, #8
+005BA3A8  4038     		and r0, r0, r7
+
+#118				JMPCN	$label13	{LNXT:16|17|19}
+(-) BOOL
+005BA3AA  2800     		cmp r0, #0
+005BA3AC  D006     		beq #12 ; 0x005BA3BC
+
+
+#119		
+#120				(* THEN *)
+#121		
+#122					(* OnByCalendar := 1; *)
+#123					MOVE		1,OnByCalendar	{LNXT:17|-1|-1}
+(*) BOOL
+005BA3B0  2001     		mov r0, #1 ; 1
+005BA3B2  F8DF 7404		ldr r7, [pc, #+1028] ; 0x48
+005BA3B6  53F0     		strh r0, [r6, +r7]
+
+#124					JMP		$label14	{LNXT:16|17|19}
+(-) INT
+005BA3B8  E004     		b #8 ; 0x005BA3C4
+
+
+#125		$label13:
+#126		
+#127				(* ELSE *)
+#128		
+#129					(* OnByCalendar := 0; *)
+#130					MOVE		0,OnByCalendar	{LNXT:19|-1|-1}
+(*) INT
+005BA3BC  2000     		mov r0, #0 ; 0
+005BA3BE  F8DF 73F8		ldr r7, [pc, #+1016] ; 0x48
+005BA3C2  53F0     		strh r0, [r6, +r7]
+
+#131		
+#132		$label14:
+#133				(* END_IF *)
+#134				JMP		$label0	{LNXT:1|19|-1}
+(-) INT
+005BA3C4  E1A8     		b #848 ; 0x005BA718
+
+
+#135		
+#136		$label3:
+#137		
+#138				(* IF NOW >= P31On AND NOW < P32Off AND Mer_enabled *)
+#139				LD		NOW	{LNXT:23|-1|-1}
+(*) UNDEF
+005BA3C8  F9B6 0000		ldrsh r0, [r6]
+
+#140				LT		P32Off	{LNXT:23|-1|-1}
+(*) INT
+005BA3CC  F8DF 7380		ldr r7, [pc, #+896] ; 0x1A
+005BA3D0  5FF7     		ldrsh r7, [r6, +r7]
+005BA3D2  42B8     		cmp r0, r7
+005BA3D4  BFA8 2000		gemov r0, #0
+005BA3D8  BFB8 2001		ltmov r0, #1
+
+#141				AND(		NOW	{LNXT:23|-1|-1}
+(*) BOOL
+005BA3DC  B082     		sub sp, sp, #8
+005BA3DE  F8CD 0000		str r0, [sp]
+005BA3E2  F9B6 0000		ldrsh r0, [r6]
+
+#142				GE		P31On	{LNXT:23|-1|-1}
+(*) INT
+005BA3E6  F8DF 7364		ldr r7, [pc, #+868] ; 0x18
+005BA3EA  5FF7     		ldrsh r7, [r6, +r7]
+005BA3EC  42B8     		cmp r0, r7
+005BA3EE  BFB8 2000		ltmov r0, #0
+005BA3F2  BFA8 2001		gemov r0, #1
+
+#143				)	{LNXT:23|-1|-1}
+(*) BOOL
+005BA3F6  4607     		mov r7, r0
+005BA3F8  F8DD 0000		ldr r0, [sp]
+005BA3FC  B002     		add sp, sp, #8
+005BA3FE  4038     		and r0, r0, r7
+
+#144				AND		Mer_enabled	{LNXT:23|-1|-1}
+(*) BOOL
+005BA400  F8DF 73A0		ldr r7, [pc, #+928] ; 0x42
+005BA404  5DF7     		ldrb r7, [r6, +r7]
+005BA406  4038     		and r0, r0, r7
+
+#145				JMPCN	$label15	{LNXT:23|24|25}
+(-) BOOL
+005BA408  2800     		cmp r0, #0
+005BA40A  D006     		beq #12 ; 0x005BA41A
+
+
+#146		
+#147				(* THEN *)
+#148		
+#149					(* OnByCalendar := 1; *)
+#150					MOVE		1,OnByCalendar	{LNXT:24|-1|-1}
+(*) BOOL
+005BA40E  2001     		mov r0, #1 ; 1
+005BA410  F8DF 73A4		ldr r7, [pc, #+932] ; 0x48
+005BA414  53F0     		strh r0, [r6, +r7]
+
+#151					JMP		$label17	{LNXT:23|24|25}
+(-) INT
+005BA416  E029     		b #82 ; 0x005BA46C
+
+
+#152		$label15:
+#153		
+#154				(* ELSIF NOW >= P33On AND NOW < P34Off *)
+#155				LD		NOW	{LNXT:25|-1|-1}
+(*) UNDEF
+005BA41A  F9B6 0000		ldrsh r0, [r6]
+
+#156				LT		P34Off	{LNXT:25|-1|-1}
+(*) INT
+005BA41E  F8DF 7338		ldr r7, [pc, #+824] ; 0x1E
+005BA422  5FF7     		ldrsh r7, [r6, +r7]
+005BA424  42B8     		cmp r0, r7
+005BA426  BFA8 2000		gemov r0, #0
+005BA42A  BFB8 2001		ltmov r0, #1
+
+#157				AND(		NOW	{LNXT:25|-1|-1}
+(*) BOOL
+005BA42E  B082     		sub sp, sp, #8
+005BA430  F8CD 0000		str r0, [sp]
+005BA434  F9B6 0000		ldrsh r0, [r6]
+
+#158				GE		P33On	{LNXT:25|-1|-1}
+(*) INT
+005BA438  F8DF 7318		ldr r7, [pc, #+792] ; 0x1C
+005BA43C  5FF7     		ldrsh r7, [r6, +r7]
+005BA43E  42B8     		cmp r0, r7
+005BA440  BFB8 2000		ltmov r0, #0
+005BA444  BFA8 2001		gemov r0, #1
+
+#159				)	{LNXT:25|-1|-1}
+(*) BOOL
+005BA448  4607     		mov r7, r0
+005BA44A  F8DD 0000		ldr r0, [sp]
+005BA44E  B002     		add sp, sp, #8
+005BA450  4038     		and r0, r0, r7
+
+#160				JMPCN	$label16	{LNXT:25|26|28}
+(-) BOOL
+005BA452  2800     		cmp r0, #0
+005BA454  D006     		beq #12 ; 0x005BA464
+
+
+#161		
+#162				(* THEN *)
+#163		
+#164					(* OnByCalendar := 1; *)
+#165					MOVE		1,OnByCalendar	{LNXT:26|-1|-1}
+(*) BOOL
+005BA458  2001     		mov r0, #1 ; 1
+005BA45A  F8DF 735C		ldr r7, [pc, #+860] ; 0x48
+005BA45E  53F0     		strh r0, [r6, +r7]
+
+#166					JMP		$label17	{LNXT:25|26|28}
+(-) INT
+005BA460  E004     		b #8 ; 0x005BA46C
+
+
+#167		$label16:
+#168		
+#169				(* ELSE *)
+#170		
+#171					(* OnByCalendar := 0; *)
+#172					MOVE		0,OnByCalendar	{LNXT:28|-1|-1}
+(*) INT
+005BA464  2000     		mov r0, #0 ; 0
+005BA466  F8DF 7350		ldr r7, [pc, #+848] ; 0x48
+005BA46A  53F0     		strh r0, [r6, +r7]
+
+#173		
+#174		$label17:
+#175				(* END_IF *)
+#176				JMP		$label0	{LNXT:1|28|-1}
+(-) INT
+005BA46C  E154     		b #680 ; 0x005BA718
+
+
+#177		
+#178		$label4:
+#179		
+#180				(* IF NOW >= P41On AND NOW < P42Off AND Gio_enabled *)
+#181				LD		NOW	{LNXT:32|-1|-1}
+(*) UNDEF
+005BA470  F9B6 0000		ldrsh r0, [r6]
+
+#182				LT		P42Off	{LNXT:32|-1|-1}
+(*) INT
+005BA474  F8DF 72E8		ldr r7, [pc, #+744] ; 0x22
+005BA478  5FF7     		ldrsh r7, [r6, +r7]
+005BA47A  42B8     		cmp r0, r7
+005BA47C  BFA8 2000		gemov r0, #0
+005BA480  BFB8 2001		ltmov r0, #1
+
+#183				AND(		NOW	{LNXT:32|-1|-1}
+(*) BOOL
+005BA484  B082     		sub sp, sp, #8
+005BA486  F8CD 0000		str r0, [sp]
+005BA48A  F9B6 0000		ldrsh r0, [r6]
+
+#184				GE		P41On	{LNXT:32|-1|-1}
+(*) INT
+005BA48E  F8DF 72CC		ldr r7, [pc, #+716] ; 0x20
+005BA492  5FF7     		ldrsh r7, [r6, +r7]
+005BA494  42B8     		cmp r0, r7
+005BA496  BFB8 2000		ltmov r0, #0
+005BA49A  BFA8 2001		gemov r0, #1
+
+#185				)	{LNXT:32|-1|-1}
+(*) BOOL
+005BA49E  4607     		mov r7, r0
+005BA4A0  F8DD 0000		ldr r0, [sp]
+005BA4A4  B002     		add sp, sp, #8
+005BA4A6  4038     		and r0, r0, r7
+
+#186				AND		Gio_enabled	{LNXT:32|-1|-1}
+(*) BOOL
+005BA4A8  F8DF 72FC		ldr r7, [pc, #+764] ; 0x43
+005BA4AC  5DF7     		ldrb r7, [r6, +r7]
+005BA4AE  4038     		and r0, r0, r7
+
+#187				JMPCN	$label18	{LNXT:32|33|34}
+(-) BOOL
+005BA4B0  2800     		cmp r0, #0
+005BA4B2  D006     		beq #12 ; 0x005BA4C2
+
+
+#188		
+#189				(* THEN *)
+#190		
+#191					(* OnByCalendar := 1; *)
+#192					MOVE		1,OnByCalendar	{LNXT:33|-1|-1}
+(*) BOOL
+005BA4B6  2001     		mov r0, #1 ; 1
+005BA4B8  F8DF 72FC		ldr r7, [pc, #+764] ; 0x48
+005BA4BC  53F0     		strh r0, [r6, +r7]
+
+#193					JMP		$label20	{LNXT:32|33|34}
+(-) INT
+005BA4BE  E029     		b #82 ; 0x005BA514
+
+
+#194		$label18:
+#195		
+#196				(* ELSIF NOW >= P43On AND NOW < P44Off *)
+#197				LD		NOW	{LNXT:34|-1|-1}
+(*) UNDEF
+005BA4C2  F9B6 0000		ldrsh r0, [r6]
+
+#198				LT		P44Off	{LNXT:34|-1|-1}
+(*) INT
+005BA4C6  F8DF 72A0		ldr r7, [pc, #+672] ; 0x26
+005BA4CA  5FF7     		ldrsh r7, [r6, +r7]
+005BA4CC  42B8     		cmp r0, r7
+005BA4CE  BFA8 2000		gemov r0, #0
+005BA4D2  BFB8 2001		ltmov r0, #1
+
+#199				AND(		NOW	{LNXT:34|-1|-1}
+(*) BOOL
+005BA4D6  B082     		sub sp, sp, #8
+005BA4D8  F8CD 0000		str r0, [sp]
+005BA4DC  F9B6 0000		ldrsh r0, [r6]
+
+#200				GE		P43On	{LNXT:34|-1|-1}
+(*) INT
+005BA4E0  F8DF 7280		ldr r7, [pc, #+640] ; 0x24
+005BA4E4  5FF7     		ldrsh r7, [r6, +r7]
+005BA4E6  42B8     		cmp r0, r7
+005BA4E8  BFB8 2000		ltmov r0, #0
+005BA4EC  BFA8 2001		gemov r0, #1
+
+#201				)	{LNXT:34|-1|-1}
+(*) BOOL
+005BA4F0  4607     		mov r7, r0
+005BA4F2  F8DD 0000		ldr r0, [sp]
+005BA4F6  B002     		add sp, sp, #8
+005BA4F8  4038     		and r0, r0, r7
+
+#202				JMPCN	$label19	{LNXT:34|35|37}
+(-) BOOL
+005BA4FA  2800     		cmp r0, #0
+005BA4FC  D006     		beq #12 ; 0x005BA50C
+
+
+#203		
+#204				(* THEN *)
+#205		
+#206					(* OnByCalendar := 1; *)
+#207					MOVE		1,OnByCalendar	{LNXT:35|-1|-1}
+(*) BOOL
+005BA500  2001     		mov r0, #1 ; 1
+005BA502  F8DF 72B4		ldr r7, [pc, #+692] ; 0x48
+005BA506  53F0     		strh r0, [r6, +r7]
+
+#208					JMP		$label20	{LNXT:34|35|37}
+(-) INT
+005BA508  E004     		b #8 ; 0x005BA514
+
+
+#209		$label19:
+#210		
+#211				(* ELSE *)
+#212		
+#213					(* OnByCalendar := 0; *)
+#214					MOVE		0,OnByCalendar	{LNXT:37|-1|-1}
+(*) INT
+005BA50C  2000     		mov r0, #0 ; 0
+005BA50E  F8DF 72A8		ldr r7, [pc, #+680] ; 0x48
+005BA512  53F0     		strh r0, [r6, +r7]
+
+#215		
+#216		$label20:
+#217				(* END_IF *)
+#218				JMP		$label0	{LNXT:1|37|-1}
+(-) INT
+005BA514  E100     		b #512 ; 0x005BA718
+
+
+#219		
+#220		$label5:
+#221		
+#222				(* IF NOW >= P51On AND NOW < P52Off AND Ven_enabled *)
+#223				LD		NOW	{LNXT:41|-1|-1}
+(*) UNDEF
+005BA518  F9B6 0000		ldrsh r0, [r6]
+
+#224				LT		P52Off	{LNXT:41|-1|-1}
+(*) INT
+005BA51C  F8DF 7250		ldr r7, [pc, #+592] ; 0x2A
+005BA520  5FF7     		ldrsh r7, [r6, +r7]
+005BA522  42B8     		cmp r0, r7
+005BA524  BFA8 2000		gemov r0, #0
+005BA528  BFB8 2001		ltmov r0, #1
+
+#225				AND(		NOW	{LNXT:41|-1|-1}
+(*) BOOL
+005BA52C  B082     		sub sp, sp, #8
+005BA52E  F8CD 0000		str r0, [sp]
+005BA532  F9B6 0000		ldrsh r0, [r6]
+
+#226				GE		P51On	{LNXT:41|-1|-1}
+(*) INT
+005BA536  F8DF 7234		ldr r7, [pc, #+564] ; 0x28
+005BA53A  5FF7     		ldrsh r7, [r6, +r7]
+005BA53C  42B8     		cmp r0, r7
+005BA53E  BFB8 2000		ltmov r0, #0
+005BA542  BFA8 2001		gemov r0, #1
+
+#227				)	{LNXT:41|-1|-1}
+(*) BOOL
+005BA546  4607     		mov r7, r0
+005BA548  F8DD 0000		ldr r0, [sp]
+005BA54C  B002     		add sp, sp, #8
+005BA54E  4038     		and r0, r0, r7
+
+#228				AND		Ven_enabled	{LNXT:41|-1|-1}
+(*) BOOL
+005BA550  F8DF 7258		ldr r7, [pc, #+600] ; 0x44
+005BA554  5DF7     		ldrb r7, [r6, +r7]
+005BA556  4038     		and r0, r0, r7
+
+#229				JMPCN	$label21	{LNXT:41|42|43}
+(-) BOOL
+005BA558  2800     		cmp r0, #0
+005BA55A  D006     		beq #12 ; 0x005BA56A
+
+
+#230		
+#231				(* THEN *)
+#232		
+#233					(* OnByCalendar := 1; *)
+#234					MOVE		1,OnByCalendar	{LNXT:42|-1|-1}
+(*) BOOL
+005BA55E  2001     		mov r0, #1 ; 1
+005BA560  F8DF 7254		ldr r7, [pc, #+596] ; 0x48
+005BA564  53F0     		strh r0, [r6, +r7]
+
+#235					JMP		$label23	{LNXT:41|42|43}
+(-) INT
+005BA566  E029     		b #82 ; 0x005BA5BC
+
+
+#236		$label21:
+#237		
+#238				(* ELSIF NOW >= P53On AND NOW < P54Off *)
+#239				LD		NOW	{LNXT:43|-1|-1}
+(*) UNDEF
+005BA56A  F9B6 0000		ldrsh r0, [r6]
+
+#240				LT		P54Off	{LNXT:43|-1|-1}
+(*) INT
+005BA56E  F8DF 7208		ldr r7, [pc, #+520] ; 0x2E
+005BA572  5FF7     		ldrsh r7, [r6, +r7]
+005BA574  42B8     		cmp r0, r7
+005BA576  BFA8 2000		gemov r0, #0
+005BA57A  BFB8 2001		ltmov r0, #1
+
+#241				AND(		NOW	{LNXT:43|-1|-1}
+(*) BOOL
+005BA57E  B082     		sub sp, sp, #8
+005BA580  F8CD 0000		str r0, [sp]
+005BA584  F9B6 0000		ldrsh r0, [r6]
+
+#242				GE		P53On	{LNXT:43|-1|-1}
+(*) INT
+005BA588  F8DF 71E8		ldr r7, [pc, #+488] ; 0x2C
+005BA58C  5FF7     		ldrsh r7, [r6, +r7]
+005BA58E  42B8     		cmp r0, r7
+005BA590  BFB8 2000		ltmov r0, #0
+005BA594  BFA8 2001		gemov r0, #1
+
+#243				)	{LNXT:43|-1|-1}
+(*) BOOL
+005BA598  4607     		mov r7, r0
+005BA59A  F8DD 0000		ldr r0, [sp]
+005BA59E  B002     		add sp, sp, #8
+005BA5A0  4038     		and r0, r0, r7
+
+#244				JMPCN	$label22	{LNXT:43|44|46}
+(-) BOOL
+005BA5A2  2800     		cmp r0, #0
+005BA5A4  D006     		beq #12 ; 0x005BA5B4
+
+
+#245		
+#246				(* THEN *)
+#247		
+#248					(* OnByCalendar := 1; *)
+#249					MOVE		1,OnByCalendar	{LNXT:44|-1|-1}
+(*) BOOL
+005BA5A8  2001     		mov r0, #1 ; 1
+005BA5AA  F8DF 720C		ldr r7, [pc, #+524] ; 0x48
+005BA5AE  53F0     		strh r0, [r6, +r7]
+
+#250					JMP		$label23	{LNXT:43|44|46}
+(-) INT
+005BA5B0  E004     		b #8 ; 0x005BA5BC
+
+
+#251		$label22:
+#252		
+#253				(* ELSE *)
+#254		
+#255					(* OnByCalendar := 0; *)
+#256					MOVE		0,OnByCalendar	{LNXT:46|-1|-1}
+(*) INT
+005BA5B4  2000     		mov r0, #0 ; 0
+005BA5B6  F8DF 7200		ldr r7, [pc, #+512] ; 0x48
+005BA5BA  53F0     		strh r0, [r6, +r7]
+
+#257		
+#258		$label23:
+#259				(* END_IF *)
+#260				JMP		$label0	{LNXT:1|46|-1}
+(-) INT
+005BA5BC  E0AC     		b #344 ; 0x005BA718
+
+
+#261		
+#262		$label6:
+#263		
+#264				(* IF NOW >= P61On AND NOW < P62Off AND Sab_enabled *)
+#265				LD		NOW	{LNXT:50|-1|-1}
+(*) UNDEF
+005BA5C0  F9B6 0000		ldrsh r0, [r6]
+
+#266				LT		P62Off	{LNXT:50|-1|-1}
+(*) INT
+005BA5C4  F8DF 71B8		ldr r7, [pc, #+440] ; 0x32
+005BA5C8  5FF7     		ldrsh r7, [r6, +r7]
+005BA5CA  42B8     		cmp r0, r7
+005BA5CC  BFA8 2000		gemov r0, #0
+005BA5D0  BFB8 2001		ltmov r0, #1
+
+#267				AND(		NOW	{LNXT:50|-1|-1}
+(*) BOOL
+005BA5D4  B082     		sub sp, sp, #8
+005BA5D6  F8CD 0000		str r0, [sp]
+005BA5DA  F9B6 0000		ldrsh r0, [r6]
+
+#268				GE		P61On	{LNXT:50|-1|-1}
+(*) INT
+005BA5DE  F8DF 719C		ldr r7, [pc, #+412] ; 0x30
+005BA5E2  5FF7     		ldrsh r7, [r6, +r7]
+005BA5E4  42B8     		cmp r0, r7
+005BA5E6  BFB8 2000		ltmov r0, #0
+005BA5EA  BFA8 2001		gemov r0, #1
+
+#269				)	{LNXT:50|-1|-1}
+(*) BOOL
+005BA5EE  4607     		mov r7, r0
+005BA5F0  F8DD 0000		ldr r0, [sp]
+005BA5F4  B002     		add sp, sp, #8
+005BA5F6  4038     		and r0, r0, r7
+
+#270				AND		Sab_enabled	{LNXT:50|-1|-1}
+(*) BOOL
+005BA5F8  F8DF 71B4		ldr r7, [pc, #+436] ; 0x45
+005BA5FC  5DF7     		ldrb r7, [r6, +r7]
+005BA5FE  4038     		and r0, r0, r7
+
+#271				JMPCN	$label24	{LNXT:50|51|52}
+(-) BOOL
+005BA600  2800     		cmp r0, #0
+005BA602  D006     		beq #12 ; 0x005BA612
+
+
+#272		
+#273				(* THEN *)
+#274		
+#275					(* OnByCalendar := 1; *)
+#276					MOVE		1,OnByCalendar	{LNXT:51|-1|-1}
+(*) BOOL
+005BA606  2001     		mov r0, #1 ; 1
+005BA608  F8DF 71AC		ldr r7, [pc, #+428] ; 0x48
+005BA60C  53F0     		strh r0, [r6, +r7]
+
+#277					JMP		$label26	{LNXT:50|51|52}
+(-) INT
+005BA60E  E029     		b #82 ; 0x005BA664
+
+
+#278		$label24:
+#279		
+#280				(* ELSIF NOW >= P63On AND NOW < P64Off *)
+#281				LD		NOW	{LNXT:52|-1|-1}
+(*) UNDEF
+005BA612  F9B6 0000		ldrsh r0, [r6]
+
+#282				LT		P64Off	{LNXT:52|-1|-1}
+(*) INT
+005BA616  F8DF 7170		ldr r7, [pc, #+368] ; 0x36
+005BA61A  5FF7     		ldrsh r7, [r6, +r7]
+005BA61C  42B8     		cmp r0, r7
+005BA61E  BFA8 2000		gemov r0, #0
+005BA622  BFB8 2001		ltmov r0, #1
+
+#283				AND(		NOW	{LNXT:52|-1|-1}
+(*) BOOL
+005BA626  B082     		sub sp, sp, #8
+005BA628  F8CD 0000		str r0, [sp]
+005BA62C  F9B6 0000		ldrsh r0, [r6]
+
+#284				GE		P63On	{LNXT:52|-1|-1}
+(*) INT
+005BA630  F8DF 7150		ldr r7, [pc, #+336] ; 0x34
+005BA634  5FF7     		ldrsh r7, [r6, +r7]
+005BA636  42B8     		cmp r0, r7
+005BA638  BFB8 2000		ltmov r0, #0
+005BA63C  BFA8 2001		gemov r0, #1
+
+#285				)	{LNXT:52|-1|-1}
+(*) BOOL
+005BA640  4607     		mov r7, r0
+005BA642  F8DD 0000		ldr r0, [sp]
+005BA646  B002     		add sp, sp, #8
+005BA648  4038     		and r0, r0, r7
+
+#286				JMPCN	$label25	{LNXT:52|53|55}
+(-) BOOL
+005BA64A  2800     		cmp r0, #0
+005BA64C  D006     		beq #12 ; 0x005BA65C
+
+
+#287		
+#288				(* THEN *)
+#289		
+#290					(* OnByCalendar := 1; *)
+#291					MOVE		1,OnByCalendar	{LNXT:53|-1|-1}
+(*) BOOL
+005BA650  2001     		mov r0, #1 ; 1
+005BA652  F8DF 7164		ldr r7, [pc, #+356] ; 0x48
+005BA656  53F0     		strh r0, [r6, +r7]
+
+#292					JMP		$label26	{LNXT:52|53|55}
+(-) INT
+005BA658  E004     		b #8 ; 0x005BA664
+
+
+#293		$label25:
+#294		
+#295				(* ELSE *)
+#296		
+#297					(* OnByCalendar := 0; *)
+#298					MOVE		0,OnByCalendar	{LNXT:55|-1|-1}
+(*) INT
+005BA65C  2000     		mov r0, #0 ; 0
+005BA65E  F8DF 7158		ldr r7, [pc, #+344] ; 0x48
+005BA662  53F0     		strh r0, [r6, +r7]
+
+#299		
+#300		$label26:
+#301				(* END_IF *)
+#302				JMP		$label0	{LNXT:1|55|-1}
+(-) INT
+005BA664  E058     		b #176 ; 0x005BA718
+
+
+#303		
+#304		$label7:
+#305		
+#306				(* IF NOW >= P71On AND NOW < P72Off AND Dom_enabled *)
+#307				LD		NOW	{LNXT:59|-1|-1}
+(*) UNDEF
+005BA668  F9B6 0000		ldrsh r0, [r6]
+
+#308				LT		P72Off	{LNXT:59|-1|-1}
+(*) INT
+005BA66C  F8DF 7120		ldr r7, [pc, #+288] ; 0x3A
+005BA670  5FF7     		ldrsh r7, [r6, +r7]
+005BA672  42B8     		cmp r0, r7
+005BA674  BFA8 2000		gemov r0, #0
+005BA678  BFB8 2001		ltmov r0, #1
+
+#309				AND(		NOW	{LNXT:59|-1|-1}
+(*) BOOL
+005BA67C  B082     		sub sp, sp, #8
+005BA67E  F8CD 0000		str r0, [sp]
+005BA682  F9B6 0000		ldrsh r0, [r6]
+
+#310				GE		P71On	{LNXT:59|-1|-1}
+(*) INT
+005BA686  F8DF 7104		ldr r7, [pc, #+260] ; 0x38
+005BA68A  5FF7     		ldrsh r7, [r6, +r7]
+005BA68C  42B8     		cmp r0, r7
+005BA68E  BFB8 2000		ltmov r0, #0
+005BA692  BFA8 2001		gemov r0, #1
+
+#311				)	{LNXT:59|-1|-1}
+(*) BOOL
+005BA696  4607     		mov r7, r0
+005BA698  F8DD 0000		ldr r0, [sp]
+005BA69C  B002     		add sp, sp, #8
+005BA69E  4038     		and r0, r0, r7
+
+#312				AND		Dom_enabled	{LNXT:59|-1|-1}
+(*) BOOL
+005BA6A0  F8DF 7110		ldr r7, [pc, #+272] ; 0x46
+005BA6A4  5DF7     		ldrb r7, [r6, +r7]
+005BA6A6  4038     		and r0, r0, r7
+
+#313				JMPCN	$label27	{LNXT:59|60|61}
+(-) BOOL
+005BA6A8  2800     		cmp r0, #0
+005BA6AA  D006     		beq #12 ; 0x005BA6BA
+
+
+#314		
+#315				(* THEN *)
+#316		
+#317					(* OnByCalendar := 1; *)
+#318					MOVE		1,OnByCalendar	{LNXT:60|-1|-1}
+(*) BOOL
+005BA6AE  2001     		mov r0, #1 ; 1
+005BA6B0  F8DF 7104		ldr r7, [pc, #+260] ; 0x48
+005BA6B4  53F0     		strh r0, [r6, +r7]
+
+#319					JMP		$label29	{LNXT:59|60|61}
+(-) INT
+005BA6B6  E029     		b #82 ; 0x005BA70C
+
+
+#320		$label27:
+#321		
+#322				(* ELSIF NOW >= P73On AND NOW < P74Off *)
+#323				LD		NOW	{LNXT:61|-1|-1}
+(*) UNDEF
+005BA6BA  F9B6 0000		ldrsh r0, [r6]
+
+#324				LT		P74Off	{LNXT:61|-1|-1}
+(*) INT
+005BA6BE  F8DF 70D8		ldr r7, [pc, #+216] ; 0x3E
+005BA6C2  5FF7     		ldrsh r7, [r6, +r7]
+005BA6C4  42B8     		cmp r0, r7
+005BA6C6  BFA8 2000		gemov r0, #0
+005BA6CA  BFB8 2001		ltmov r0, #1
+
+#325				AND(		NOW	{LNXT:61|-1|-1}
+(*) BOOL
+005BA6CE  B082     		sub sp, sp, #8
+005BA6D0  F8CD 0000		str r0, [sp]
+005BA6D4  F9B6 0000		ldrsh r0, [r6]
+
+#326				GE		P73On	{LNXT:61|-1|-1}
+(*) INT
+005BA6D8  F8DF 70B8		ldr r7, [pc, #+184] ; 0x3C
+005BA6DC  5FF7     		ldrsh r7, [r6, +r7]
+005BA6DE  42B8     		cmp r0, r7
+005BA6E0  BFB8 2000		ltmov r0, #0
+005BA6E4  BFA8 2001		gemov r0, #1
+
+#327				)	{LNXT:61|-1|-1}
+(*) BOOL
+005BA6E8  4607     		mov r7, r0
+005BA6EA  F8DD 0000		ldr r0, [sp]
+005BA6EE  B002     		add sp, sp, #8
+005BA6F0  4038     		and r0, r0, r7
+
+#328				JMPCN	$label28	{LNXT:61|62|64}
+(-) BOOL
+005BA6F2  2800     		cmp r0, #0
+005BA6F4  D006     		beq #12 ; 0x005BA704
+
+
+#329		
+#330				(* THEN *)
+#331		
+#332					(* OnByCalendar := 1; *)
+#333					MOVE		1,OnByCalendar	{LNXT:62|-1|-1}
+(*) BOOL
+005BA6F8  2001     		mov r0, #1 ; 1
+005BA6FA  F8DF 70BC		ldr r7, [pc, #+188] ; 0x48
+005BA6FE  53F0     		strh r0, [r6, +r7]
+
+#334					JMP		$label29	{LNXT:61|62|64}
+(-) INT
+005BA700  E004     		b #8 ; 0x005BA70C
+
+
+#335		$label28:
+#336		
+#337				(* ELSE *)
+#338		
+#339					(* OnByCalendar := 0; *)
+#340					MOVE		0,OnByCalendar	{LNXT:64|-1|-1}
+(*) INT
+005BA704  2000     		mov r0, #0 ; 0
+005BA706  F8DF 70B0		ldr r7, [pc, #+176] ; 0x48
+005BA70A  53F0     		strh r0, [r6, +r7]
+
+#341		
+#342		$label29:
+#343				(* END_IF *)
+#344				JMP		$label0	{LNXT:1|64|-1}
+(-) INT
+005BA70C  E004     		b #8 ; 0x005BA718
+
+
+#345		
+#346		$label8:
+#347				(* OnByCalendar := 0; *)
+#348				MOVE		0,OnByCalendar	{LNXT:68|-1|-1}
+(*) INT
+005BA710  2000     		mov r0, #0 ; 0
+005BA712  F8DF 70A4		ldr r7, [pc, #+164] ; 0x48
+005BA716  53F0     		strh r0, [r6, +r7]
+
+005BA718  E8BD 4040		ldmia sp!, { r6, lr }
+
+005BA71C  4770     		bx lr
+
+005BA720  00000002		; 0x00000002
+005BA724  00000004		; 0x00000004
+005BA728  00000006		; 0x00000006
+005BA72C  00000008		; 0x00000008
+005BA730  0000000A		; 0x0000000A
+005BA734  0000000C		; 0x0000000C
+005BA738  0000000E		; 0x0000000E
+005BA73C  00000010		; 0x00000010
+005BA740  00000012		; 0x00000012
+005BA744  00000014		; 0x00000014
+005BA748  00000016		; 0x00000016
+005BA74C  00000018		; 0x00000018
+005BA750  0000001A		; 0x0000001A
+005BA754  0000001C		; 0x0000001C
+005BA758  0000001E		; 0x0000001E
+005BA75C  00000020		; 0x00000020
+005BA760  00000022		; 0x00000022
+005BA764  00000024		; 0x00000024
+005BA768  00000026		; 0x00000026
+005BA76C  00000028		; 0x00000028
+005BA770  0000002A		; 0x0000002A
+005BA774  0000002C		; 0x0000002C
+005BA778  0000002E		; 0x0000002E
+005BA77C  00000030		; 0x00000030
+005BA780  00000032		; 0x00000032
+005BA784  00000034		; 0x00000034
+005BA788  00000036		; 0x00000036
+005BA78C  00000038		; 0x00000038
+005BA790  0000003A		; 0x0000003A
+005BA794  0000003C		; 0x0000003C
+005BA798  0000003E		; 0x0000003E
+005BA79C  00000040		; 0x00000040
+005BA7A0  00000041		; 0x00000041
+005BA7A4  00000042		; 0x00000042
+005BA7A8  00000043		; 0x00000043
+005BA7AC  00000044		; 0x00000044
+005BA7B0  00000045		; 0x00000045
+005BA7B4  00000046		; 0x00000046
+005BA7B8  00000048		; 0x00000048
+
+
+Frame allocation:
+
+	0000       : VAR NOW
+	0002       : VAR Giorno_settimana
+	0004       : VAR Ora
+	0006       : VAR Minuto
+	0008       : VAR P11On
+	000A       : VAR P12Off
+	000C       : VAR P13On
+	000E       : VAR P14Off
+	0010       : VAR P21On
+	0012       : VAR P22Off
+	0014       : VAR P23On
+	0016       : VAR P24Off
+	0018       : VAR P31On
+	001A       : VAR P32Off
+	001C       : VAR P33On
+	001E       : VAR P34Off
+	0020       : VAR P41On
+	0022       : VAR P42Off
+	0024       : VAR P43On
+	0026       : VAR P44Off
+	0028       : VAR P51On
+	002A       : VAR P52Off
+	002C       : VAR P53On
+	002E       : VAR P54Off
+	0030       : VAR P61On
+	0032       : VAR P62Off
+	0034       : VAR P63On
+	0036       : VAR P64Off
+	0038       : VAR P71On
+	003A       : VAR P72Off
+	003C       : VAR P73On
+	003E       : VAR P74Off
+	0040 bit  0: VAR Lun_enabled
+	0041 bit  0: VAR Mar_enabled
+	0042 bit  0: VAR Mer_enabled
+	0043 bit  0: VAR Gio_enabled
+	0044 bit  0: VAR Ven_enabled
+	0045 bit  0: VAR Sab_enabled
+	0046 bit  0: VAR Dom_enabled
+	0048       : VAR OnByCalendar
+
+END_FUNCTION_BLOCK
+**************************************************
+	List function: XUnifiedLibInit
+**************************************************
+
+FUNCTION XUnifiedLibInit : BOOL
+
+	{ DE:"XUnified library init" }
+
+        VAR_INPUT
+Cmd : BOOL;	{ DE:"Command" }
+	END_VAR
+
+        VAR
+b : BOOL;	{ DE:"Dummy" }
+ver : STRING[ 10 ];	{ DE:"Lib version" }
+ptr : @BYTE;
+	END_VAR
+
+END_FUNCTION
+
+	*** Function data allocation
+
+	Par Cmd: CALLER STACK FRAME AT sp+0
+	Var b: REGISTER _TMP_32LO
+	Var ver: LOCAL STACK FRAME AT sp-12
+	Var ptr: REGISTER _TMP_32HI
+
+005BA7BC  466F     		mov r7, sp
+005BA7BE  B084     		sub sp, sp, #16
+005BA7C0  B082     		sub sp, sp, #8
+005BA7C2  F8CD E000		str lr, [sp]
+005BA7C6  E92D 1E50		stmdb sp!, { r4, r6, r9, r10, r11, r12 }
+005BA7CA  463E     		mov r6, r7
+005BA7CC  2400     		mov r4, #0
+
+#0		{SRC:XUnifiedLibInit}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* ver:='SFR094A020'; *)
+#4			MOVE		'SFR094A020',ver	{LNXT:2|3|-1}
+(*) INT
+005BA7CE  F8DF 7074		ldr r7, [pc, #+116] ; 0x5BA0C4
+005BA7D2  4638     		mov r0, r7
+005BA7D4  B082     		sub sp, sp, #8
+005BA7D6  F8CD 0000		str r0, [sp]
+005BA7DA  E92D 0006		stmdb sp!, { r1, r2 }
+005BA7DE  220B     		mov r2, #11 ; 11
+005BA7E0  4631     		mov r1, r6
+005BA7E2  F8DF 7054		ldr r7, [pc, #+84] ; 0xFFFFFFF4
+005BA7E6  19C9     		add r1, r1, r7
+005BA7E8  F8DF 4054		ldr r4, [pc, #+84] ; 0x4B2AAD
+005BA7EC  F044 0401		orr r4, r4, #1
+005BA7F0  47A0     		blx r4
+005BA7F2  E8BD 0006		ldmia sp!, { r1, r2 }
+005BA7F6  F8DD 0000		ldr r0, [sp]
+005BA7FA  B002     		add sp, sp, #8
+
+#5		
+#6			(* ptr:=ADR(ver); *)
+#7			ADR		ver	{LNXT:3|4|-1}
+(*) STRING
+005BA7FC  F8DF 7038		ldr r7, [pc, #+56] ; 0xFFFFFFF4
+005BA800  19F0     		add r0, r6, r7
+
+#8			ST		ptr	{LNXT:3|4|-1}
+(-) DWORD
+005BA802  4682     		mov r10, r0
+
+#9		
+#10			(* b:=SysXUnifiedValue(TRUE, 1, ptr); *)
+#11			LD		TRUE	{LNXT:4|5|-1}
+(-) UNDEF
+005BA804  2001     		mov r0, #1 ; 1
+
+#12			SysXUnifiedValue		1, ptr	{LNXT:4|5|-1}
+(-) BOOL
+005BA806  B082     		sub sp, sp, #8
+005BA808  F8CD 4000		str r4, [sp]
+005BA80C  4652     		mov r2, r10
+005BA80E  2101     		mov r1, #1 ; 1
+005BA810  F8DF 4028		ldr r4, [pc, #+40] ; 0x49C019
+005BA814  F044 0401		orr r4, r4, #1
+005BA818  47A0     		blx r4
+005BA81A  F8DD 4000		ldr r4, [sp]
+005BA81E  B002     		add sp, sp, #8
+
+#13			ST		b	{LNXT:4|5|-1}
+(-) BOOL
+005BA820  4681     		mov r9, r0
+
+#14		
+#15			(* XUnifiedLibInit:=TRUE; *)
+#16			MOVE		TRUE,XUnifiedLibInit	{LNXT:5|-1|-1}
+(*) BOOL
+005BA822  2001     		mov r0, #1 ; 1
+005BA824  4604     		mov r4, r0
+
+005BA826  4620     		mov r0, r4
+005BA828  E8BD 1E50		ldmia sp!, { r4, r6, r9, r10, r11, r12 }
+005BA82C  F8DD E000		ldr lr, [sp]
+005BA830  B002     		add sp, sp, #8
+005BA832  B004     		add sp, sp, #16
+
+005BA834  4770     		bx lr
+
+005BA838  FFFFFFF4		; 0xFFFFFFF4
+005BA83C  0049C019		; 0x0049C019
+005BA840  004B2AAD		; 0x004B2AAD
+005BA844  005BA0C4		; 0x005BA0C4
+
+END_FUNCTION
+**************************************************
+	List program: $$ElsistInit
+**************************************************
+
+PROGRAM $$ElsistInit
+
+        VAR
+dummy : BOOL;
+	END_VAR
+
+END_PROGRAM
+
+005BA850  B082     		sub sp, sp, #8
+005BA852  F8CD E000		str lr, [sp]
+005BA856  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+
+#0		{SRC:$$ElsistInit}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* dummy:=XUnifiedLibInit(TRUE); *)
+#4			LD		TRUE	{LNXT:2|2|-1}
+(-) UNDEF
+005BA85A  2001     		mov r0, #1 ; 1
+
+#5			XUnifiedLibInit	{LNXT:2|2|-1}
+(-) BOOL
+005BA85C  B082     		sub sp, sp, #8
+005BA85E  F8CD 0000		str r0, [sp]
+005BA862  467C     		mov r4, pc
+005BA864  3CAA     		sub  r4, r4, #+0xAA ; 0x5BA7BC
+005BA866  F044 0401		orr r4, r4, #1
+005BA86A  47A0     		blx r4
+005BA86C  B002     		add sp, sp, #8
+
+#6			ST		dummy	{LNXT:2|2|-1}
+(*) BOOL
+005BA86E  F8DF 7010		ldr r7, [pc, #+16] ; 0x20414A14
+005BA872  7038     		strb r0, [r7]
+
+005BA874  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+005BA878  F8DD E000		ldr lr, [sp]
+005BA87C  B002     		add sp, sp, #8
+
+005BA87E  4770     		bx lr
+
+005BA880  20414A14		; 0x20414A14
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+005BA884  4770     		bx lr
+
+
+*** OUTPUT:
+005BA886  4770     		bx lr
+
+
+
+**************************************************
+	Task Boot init code
+**************************************************
+
+005BA888  B082     		sub sp, sp, #8
+005BA88A  F8CD E000		str lr, [sp]
+005BA88E  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+
+005BA892  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+005BA896  F8DD E000		ldr lr, [sp]
+005BA89A  B002     		add sp, sp, #8
+
+005BA89C  4770     		bx lr
+
+**************************************************
+	List program: Controllo_HVAC_inverno
+**************************************************
+
+PROGRAM Controllo_HVAC_inverno
+
+        VAR
+Comando_caldaia AT %QX255.0 : BOOL;
+Comando_PdC AT %QX255.1 : BOOL;
+Comando_pompe AT %QX255.2 : BOOL;
+Comando_fancoil AT %QX255.3 : BOOL;
+Apertura_valvola AT %QX0.4 : BOOL;
+Fase : INT := 0;
+Temp_puffer : INT;
+Delay : eTON;
+Delay1 : eTON;
+Delay2 : eTON;
+Delay3 : eTON;
+	END_VAR
+
+END_PROGRAM
+
+005BA8B0  B082     		sub sp, sp, #8
+005BA8B2  F8CD E000		str lr, [sp]
+005BA8B6  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+
+#0		{SRC:Controllo_HVAC_inverno}
+#1		(*$WAITSWITCH$*)
+#2		
+#3		
+#4			(* IF Estate_Inverno AND CalendarOnOff *)
+#5			LD		Estate_Inverno	{LNXT:1|-1|-1}
+(*) UNDEF
+005BA8BA  F8DF 7570		ldr r7, [pc, #+1392] ; 0x20414A15
+005BA8BE  7838     		ldrb r0, [r7]
+
+#6			AND		CalendarOnOff	{LNXT:1|-1|-1}
+(*) BOOL
+005BA8C0  F8DF 756C		ldr r7, [pc, #+1388] ; 0x20414A16
+005BA8C4  783F     		ldrb r7, [r7]
+005BA8C6  4038     		and r0, r0, r7
+
+#7			JMPCN	$label0	{LNXT:1|3|97}
+(-) BOOL
+005BA8C8  2800     		cmp r0, #0
+005BA8CA  F000 8272		beq #1252 ; 0x005BADB2
+
+
+#8		
+#9			(* THEN *)
+#10		
+#11				(* Delay.PT := 20000; *)
+#12				MOVE		20000,Delay.PT	{LNXT:3|4|-1}
+(*) BOOL
+005BA8CE  F8DF 7554		ldr r7, [pc, #+1364] ; 0x5BA0D0
+005BA8D2  8838     		ldrh r0, [r7]
+005BA8D4  F8DF 7564		ldr r7, [pc, #+1380] ; 0x20414A20
+005BA8D8  6038     		str r0, [r7]
+
+#13		
+#14				(* Delay *)
+#15				CAL		Delay	{LNXT:4|5|-1}
+(*) UINT
+005BA8DA  E92D 0021		stmdb sp!, { r0, r5 }
+005BA8DE  F8DF 7554		ldr r7, [pc, #+1364] ; 0x20414A18
+005BA8E2  463D     		mov r5, r7
+005BA8E4  F8DF 4540		ldr r4, [pc, #+1344] ; 0x5BA0F8
+005BA8E8  F044 0401		orr r4, r4, #1
+005BA8EC  47A0     		blx r4
+005BA8EE  E8BD 0021		ldmia sp!, { r0, r5 }
+
+#16		
+#17				(* Temp_puffer := Temp_accumulo; *)
+#18				MOVE		Temp_accumulo,Temp_puffer	{LNXT:5|9|-1}
+(*) UINT
+005BA8F2  F8DF 7550		ldr r7, [pc, #+1360] ; 0x20414A2C
+005BA8F6  F9B7 0000		ldrsh r0, [r7]
+005BA8FA  F8DF 754C		ldr r7, [pc, #+1356] ; 0x20414A2E
+005BA8FE  8038     		strh r0, [r7]
+
+#19		
+#20		
+#21				(* CASE Fase OF *)
+#22		
+#23				(* 0: *)
+#24				LD		Fase	{LNXT:10|-1|-1}
+(*) UNDEF
+005BA900  F8DF 7548		ldr r7, [pc, #+1352] ; 0x20414A30
+005BA904  F9B7 0000		ldrsh r0, [r7]
+
+#25				EQ		0	{LNXT:10|-1|-1}
+(*) INT
+005BA908  2800     		cmp r0, #0
+005BA90A  BF18 2000		nemov r0, #0
+005BA90E  BF08 2001		eqmov r0, #1
+
+#26				JMPC		$label3	{LNXT:10|11|31}
+(-) BOOL
+005BA912  2800     		cmp r0, #0
+005BA914  D132     		bne #100 ; 0x005BA97C
+
+
+#27		
+#28				(* 1: *)
+#29				LD		Fase	{LNXT:31|-1|-1}
+(*) UNDEF
+005BA918  F8DF 7530		ldr r7, [pc, #+1328] ; 0x20414A30
+005BA91C  F9B7 0000		ldrsh r0, [r7]
+
+#30				EQ		1	{LNXT:31|-1|-1}
+(*) INT
+005BA920  2801     		cmp r0, #1
+005BA922  BF18 2000		nemov r0, #0
+005BA926  BF08 2001		eqmov r0, #1
+
+#31				JMPC		$label4	{LNXT:31|32|46}
+(-) BOOL
+005BA92A  2800     		cmp r0, #0
+005BA92C  F040 80BB		bne #374 ; 0x005BAAA6
+
+
+#32		
+#33				(* 2: *)
+#34				LD		Fase	{LNXT:46|-1|-1}
+(*) UNDEF
+005BA930  F8DF 7518		ldr r7, [pc, #+1304] ; 0x20414A30
+005BA934  F9B7 0000		ldrsh r0, [r7]
+
+#35				EQ		2	{LNXT:46|-1|-1}
+(*) INT
+005BA938  2802     		cmp r0, #2
+005BA93A  BF18 2000		nemov r0, #0
+005BA93E  BF08 2001		eqmov r0, #1
+
+#36				JMPC		$label5	{LNXT:46|47|65}
+(-) BOOL
+005BA942  2800     		cmp r0, #0
+005BA944  F040 80FE		bne #508 ; 0x005BAB44
+
+
+#37		
+#38				(* 3: *)
+#39				LD		Fase	{LNXT:65|-1|-1}
+(*) UNDEF
+005BA948  F8DF 7500		ldr r7, [pc, #+1280] ; 0x20414A30
+005BA94C  F9B7 0000		ldrsh r0, [r7]
+
+#40				EQ		3	{LNXT:65|-1|-1}
+(*) INT
+005BA950  2803     		cmp r0, #3
+005BA952  BF18 2000		nemov r0, #0
+005BA956  BF08 2001		eqmov r0, #1
+
+#41				JMPC		$label6	{LNXT:65|66|85}
+(-) BOOL
+005BA95A  2800     		cmp r0, #0
+005BA95C  F040 8149		bne #658 ; 0x005BABF2
+
+
+#42		
+#43				(* 4: *)
+#44				LD		Fase	{LNXT:85|-1|-1}
+(*) UNDEF
+005BA960  F8DF 74E8		ldr r7, [pc, #+1256] ; 0x20414A30
+005BA964  F9B7 0000		ldrsh r0, [r7]
+
+#45				EQ		4	{LNXT:85|-1|-1}
+(*) INT
+005BA968  2804     		cmp r0, #4
+005BA96A  BF18 2000		nemov r0, #0
+005BA96E  BF08 2001		eqmov r0, #1
+
+#46				JMPC		$label7	{LNXT:85|86|1}
+(-) BOOL
+005BA972  2800     		cmp r0, #0
+005BA974  F040 81C2		bne #900 ; 0x005BACFC
+
+
+#47				JMP		$label2	{LNXT:85|86|1}
+(-) BOOL
+005BA978  E219     		b #1074 ; 0x005BADAE
+
+
+#48		
+#49				(* Istruzioni di ciascun CASE: *)
+#50		
+#51		$label3:
+#52					(* Comando_caldaia := TRUE; *)
+#53					MOVE		TRUE,Comando_caldaia	{LNXT:11|12|-1}
+(*) BOOL
+005BA97C  2001     		mov r0, #1 ; 1
+005BA97E  F8DF 74D8		ldr r7, [pc, #+1240] ; 0x2041A198
+005BA982  7038     		strb r0, [r7]
+
+#54		
+#55					(* Comando_pompe := FALSE; *)
+#56					MOVE		FALSE,Comando_pompe	{LNXT:12|13|-1}
+(*) BOOL
+005BA984  2000     		mov r0, #0 ; 0
+005BA986  F8DF 74D8		ldr r7, [pc, #+1240] ; 0x2041A19A
+005BA98A  7038     		strb r0, [r7]
+
+#57		
+#58					(* Comando_PdC := FALSE; *)
+#59					MOVE		FALSE,Comando_PdC	{LNXT:13|14|-1}
+(*) BOOL
+005BA98C  2000     		mov r0, #0 ; 0
+005BA98E  F8DF 74CC		ldr r7, [pc, #+1228] ; 0x2041A199
+005BA992  7038     		strb r0, [r7]
+
+#60		
+#61					(* Comando_fancoil := FALSE; *)
+#62					MOVE		FALSE,Comando_fancoil	{LNXT:14|16|-1}
+(*) BOOL
+005BA994  2000     		mov r0, #0 ; 0
+005BA996  F8DF 74CC		ldr r7, [pc, #+1228] ; 0x2041A19B
+005BA99A  7038     		strb r0, [r7]
+
+#63		
+#64		
+#65					(* IF Temp_puffer < Temp_setpoint_inverno - T_tolleranza *)
+#66					LD		Temp_puffer	{LNXT:16|-1|-1}
+(*) UNDEF
+005BA99C  F8DF 74A8		ldr r7, [pc, #+1192] ; 0x20414A2E
+005BA9A0  F9B7 0000		ldrsh r0, [r7]
+
+#67					LT(		Temp_setpoint_inverno	{LNXT:16|-1|-1}
+(*) INT
+005BA9A4  B082     		sub sp, sp, #8
+005BA9A6  F8CD 0000		str r0, [sp]
+005BA9AA  F8DF 74A4		ldr r7, [pc, #+1188] ; 0x20414A32
+005BA9AE  F9B7 0000		ldrsh r0, [r7]
+
+#68					SUB		T_tolleranza	{LNXT:16|-1|-1}
+(*) INT
+005BA9B2  F8DF 74A0		ldr r7, [pc, #+1184] ; 0x20414A34
+005BA9B6  F9B7 7000		ldrsh r7, [r7]
+005BA9BA  1BC0     		sub r0, r0, r7
+
+#69					)	{LNXT:16|-1|-1}
+(*) INT
+005BA9BC  4607     		mov r7, r0
+005BA9BE  F8DD 0000		ldr r0, [sp]
+005BA9C2  B002     		add sp, sp, #8
+005BA9C4  42B8     		cmp r0, r7
+005BA9C6  BFA8 2000		gemov r0, #0
+005BA9CA  BFB8 2001		ltmov r0, #1
+
+#70					JMPCN	$label8	{LNXT:16|17|26}
+(-) BOOL
+005BA9CE  2800     		cmp r0, #0
+005BA9D0  D043     		beq #134 ; 0x005BAA5A
+
+
+#71		
+#72					(* THEN *)
+#73		
+#74						(* Comando_caldaia := TRUE; *)
+#75						MOVE		TRUE,Comando_caldaia	{LNXT:17|18|-1}
+(*) BOOL
+005BA9D4  2001     		mov r0, #1 ; 1
+005BA9D6  F8DF 7480		ldr r7, [pc, #+1152] ; 0x2041A198
+005BA9DA  7038     		strb r0, [r7]
+
+#76		
+#77						(* Delay.IN:=TRUE; *)
+#78						MOVE		TRUE,Delay.IN	{LNXT:18|19|-1}
+(*) BOOL
+005BA9DC  2001     		mov r0, #1 ; 1
+005BA9DE  F8DF 7458		ldr r7, [pc, #+1112] ; 0x20414A1C
+005BA9E2  7038     		strb r0, [r7]
+
+#79		
+#80		
+#81						(* IF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#82						LD		Temp_puffer	{LNXT:19|-1|-1}
+(*) UNDEF
+005BA9E4  F8DF 7460		ldr r7, [pc, #+1120] ; 0x20414A2E
+005BA9E8  F9B7 0000		ldrsh r0, [r7]
+
+#83						GT(		Temp_setpoint_inverno	{LNXT:19|-1|-1}
+(*) INT
+005BA9EC  B082     		sub sp, sp, #8
+005BA9EE  F8CD 0000		str r0, [sp]
+005BA9F2  F8DF 745C		ldr r7, [pc, #+1116] ; 0x20414A32
+005BA9F6  F9B7 0000		ldrsh r0, [r7]
+
+#84						SUB		T_tolleranza	{LNXT:19|-1|-1}
+(*) INT
+005BA9FA  F8DF 7458		ldr r7, [pc, #+1112] ; 0x20414A34
+005BA9FE  F9B7 7000		ldrsh r7, [r7]
+005BAA02  1BC0     		sub r0, r0, r7
+
+#85						)	{LNXT:19|-1|-1}
+(*) INT
+005BAA04  4607     		mov r7, r0
+005BAA06  F8DD 0000		ldr r0, [sp]
+005BAA0A  B002     		add sp, sp, #8
+005BAA0C  42B8     		cmp r0, r7
+005BAA0E  BFD8 2000		lemov r0, #0
+005BAA12  BFC8 2001		gtmov r0, #1
+
+#86						AND		Delay.Q	{LNXT:19|-1|-1}
+(*) BOOL
+005BAA16  F8DF 7428		ldr r7, [pc, #+1064] ; 0x20414A24
+005BAA1A  783F     		ldrb r7, [r7]
+005BAA1C  4038     		and r0, r0, r7
+
+#87						JMPCN	$label10	{LNXT:19|20|23}
+(-) BOOL
+005BAA1E  2800     		cmp r0, #0
+005BAA20  D00A     		beq #20 ; 0x005BAA38
+
+
+#88		
+#89						(* THEN *)
+#90		
+#91							(* Delay.IN:=FALSE; *)
+#92							MOVE		FALSE,Delay.IN	{LNXT:20|21|-1}
+(*) BOOL
+005BAA24  2000     		mov r0, #0 ; 0
+005BAA26  F8DF 7410		ldr r7, [pc, #+1040] ; 0x20414A1C
+005BAA2A  7038     		strb r0, [r7]
+
+#93		
+#94							(* Fase := 1; *)
+#95							MOVE		1,Fase	{LNXT:21|1|-1}
+(*) BOOL
+005BAA2C  2001     		mov r0, #1 ; 1
+005BAA2E  F8DF 741C		ldr r7, [pc, #+1052] ; 0x20414A30
+005BAA32  8038     		strh r0, [r7]
+
+#96							JMP		$label11	{LNXT:19|20|23}
+(-) INT
+005BAA34  E00F     		b #30 ; 0x005BAA56
+
+
+#97		$label10:
+#98		
+#99						(* ELSE *)
+#100		
+#101							(* Delay.IN:=NOT Delay.Q; *)
+#102							LD		Delay.Q	{LNXT:23|24|-1}
+(*) UNDEF
+005BAA38  F8DF 7404		ldr r7, [pc, #+1028] ; 0x20414A24
+005BAA3C  7838     		ldrb r0, [r7]
+
+#103							NOT	{LNXT:23|24|-1}
+(*) BOOL
+005BAA3E  2800     		cmp r0, #0
+005BAA40  BF08 2001		eqmov r0, #1
+005BAA44  BF18 2000		nemov r0, #0
+
+#104							ST		Delay.IN	{LNXT:23|24|-1}
+(*) BOOL
+005BAA48  F8DF 73EC		ldr r7, [pc, #+1004] ; 0x20414A1C
+005BAA4C  7038     		strb r0, [r7]
+
+#105		
+#106							(* Fase := 0; *)
+#107							MOVE		0,Fase	{LNXT:24|1|-1}
+(*) BOOL
+005BAA4E  2000     		mov r0, #0 ; 0
+005BAA50  F8DF 73F8		ldr r7, [pc, #+1016] ; 0x20414A30
+005BAA54  8038     		strh r0, [r7]
+
+#108		
+#109		$label11:
+#110						(* END_IF *)
+#111						JMP		$label9	{LNXT:16|17|26}
+(-) INT
+005BAA56  E024     		b #72 ; 0x005BAAA2
+
+
+#112		$label8:
+#113		
+#114					(* ELSIF Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#115					LD		Temp_puffer	{LNXT:26|-1|-1}
+(*) UNDEF
+005BAA5A  F8DF 73EC		ldr r7, [pc, #+1004] ; 0x20414A2E
+005BAA5E  F9B7 0000		ldrsh r0, [r7]
+
+#116					GT(		Temp_setpoint_inverno	{LNXT:26|-1|-1}
+(*) INT
+005BAA62  B082     		sub sp, sp, #8
+005BAA64  F8CD 0000		str r0, [sp]
+005BAA68  F8DF 73E4		ldr r7, [pc, #+996] ; 0x20414A32
+005BAA6C  F9B7 0000		ldrsh r0, [r7]
+
+#117					SUB		T_tolleranza	{LNXT:26|-1|-1}
+(*) INT
+005BAA70  F8DF 73E0		ldr r7, [pc, #+992] ; 0x20414A34
+005BAA74  F9B7 7000		ldrsh r7, [r7]
+005BAA78  1BC0     		sub r0, r0, r7
+
+#118					)	{LNXT:26|-1|-1}
+(*) INT
+005BAA7A  4607     		mov r7, r0
+005BAA7C  F8DD 0000		ldr r0, [sp]
+005BAA80  B002     		add sp, sp, #8
+005BAA82  42B8     		cmp r0, r7
+005BAA84  BFD8 2000		lemov r0, #0
+005BAA88  BFC8 2001		gtmov r0, #1
+
+#119					JMPCN	$label9	{LNXT:26|27|1}
+(-) BOOL
+005BAA8C  2800     		cmp r0, #0
+005BAA8E  D008     		beq #16 ; 0x005BAAA2
+
+
+#120		
+#121					(* THEN *)
+#122		
+#123						(* Delay.IN:=FALSE; *)
+#124						MOVE		FALSE,Delay.IN	{LNXT:27|28|-1}
+(*) BOOL
+005BAA92  2000     		mov r0, #0 ; 0
+005BAA94  F8DF 73A0		ldr r7, [pc, #+928] ; 0x20414A1C
+005BAA98  7038     		strb r0, [r7]
+
+#125		
+#126						(* Fase := 1; *)
+#127						MOVE		1,Fase	{LNXT:28|1|-1}
+(*) BOOL
+005BAA9A  2001     		mov r0, #1 ; 1
+005BAA9C  F8DF 73AC		ldr r7, [pc, #+940] ; 0x20414A30
+005BAAA0  8038     		strh r0, [r7]
+
+#128		
+#129		$label9:
+#130					(* END_IF *)
+#131					JMP		$label2	{LNXT:11|1|-1}
+(-) INT
+005BAAA2  E184     		b #776 ; 0x005BADAE
+
+
+#132		
+#133		$label4:
+#134					(* Comando_caldaia := TRUE; *)
+#135					MOVE		TRUE,Comando_caldaia	{LNXT:32|33|-1}
+(*) INT
+005BAAA6  2001     		mov r0, #1 ; 1
+005BAAA8  F8DF 73AC		ldr r7, [pc, #+940] ; 0x2041A198
+005BAAAC  7038     		strb r0, [r7]
+
+#136		
+#137					(* Comando_pompe := TRUE; *)
+#138					MOVE		TRUE,Comando_pompe	{LNXT:33|34|-1}
+(*) BOOL
+005BAAAE  2001     		mov r0, #1 ; 1
+005BAAB0  F8DF 73AC		ldr r7, [pc, #+940] ; 0x2041A19A
+005BAAB4  7038     		strb r0, [r7]
+
+#139		
+#140					(* Comando_PdC := FALSE; *)
+#141					MOVE		FALSE,Comando_PdC	{LNXT:34|35|-1}
+(*) BOOL
+005BAAB6  2000     		mov r0, #0 ; 0
+005BAAB8  F8DF 73A0		ldr r7, [pc, #+928] ; 0x2041A199
+005BAABC  7038     		strb r0, [r7]
+
+#142		
+#143					(* Comando_fancoil := FALSE; *)
+#144					MOVE		FALSE,Comando_fancoil	{LNXT:35|37|-1}
+(*) BOOL
+005BAABE  2000     		mov r0, #0 ; 0
+005BAAC0  F8DF 73A0		ldr r7, [pc, #+928] ; 0x2041A19B
+005BAAC4  7038     		strb r0, [r7]
+
+#145		
+#146					(* Delay.IN:=TRUE; *)
+#147					MOVE		TRUE,Delay.IN	{LNXT:37|38|-1}
+(*) BOOL
+005BAAC6  2001     		mov r0, #1 ; 1
+005BAAC8  F8DF 736C		ldr r7, [pc, #+876] ; 0x20414A1C
+005BAACC  7038     		strb r0, [r7]
+
+#148		
+#149		
+#150					(* IF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#151					LD		Temp_puffer	{LNXT:38|-1|-1}
+(*) UNDEF
+005BAACE  F8DF 7378		ldr r7, [pc, #+888] ; 0x20414A2E
+005BAAD2  F9B7 0000		ldrsh r0, [r7]
+
+#152					GT(		Temp_setpoint_inverno	{LNXT:38|-1|-1}
+(*) INT
+005BAAD6  B082     		sub sp, sp, #8
+005BAAD8  F8CD 0000		str r0, [sp]
+005BAADC  F8DF 7370		ldr r7, [pc, #+880] ; 0x20414A32
+005BAAE0  F9B7 0000		ldrsh r0, [r7]
+
+#153					SUB		T_tolleranza	{LNXT:38|-1|-1}
+(*) INT
+005BAAE4  F8DF 736C		ldr r7, [pc, #+876] ; 0x20414A34
+005BAAE8  F9B7 7000		ldrsh r7, [r7]
+005BAAEC  1BC0     		sub r0, r0, r7
+
+#154					)	{LNXT:38|-1|-1}
+(*) INT
+005BAAEE  4607     		mov r7, r0
+005BAAF0  F8DD 0000		ldr r0, [sp]
+005BAAF4  B002     		add sp, sp, #8
+005BAAF6  42B8     		cmp r0, r7
+005BAAF8  BFD8 2000		lemov r0, #0
+005BAAFC  BFC8 2001		gtmov r0, #1
+
+#155					AND		Delay.Q	{LNXT:38|-1|-1}
+(*) BOOL
+005BAB00  F8DF 733C		ldr r7, [pc, #+828] ; 0x20414A24
+005BAB04  783F     		ldrb r7, [r7]
+005BAB06  4038     		and r0, r0, r7
+
+#156					JMPCN	$label12	{LNXT:38|39|42}
+(-) BOOL
+005BAB08  2800     		cmp r0, #0
+005BAB0A  D00A     		beq #20 ; 0x005BAB22
+
+
+#157		
+#158					(* THEN *)
+#159		
+#160						(* Delay.IN:=FALSE; *)
+#161						MOVE		FALSE,Delay.IN	{LNXT:39|40|-1}
+(*) BOOL
+005BAB0E  2000     		mov r0, #0 ; 0
+005BAB10  F8DF 7324		ldr r7, [pc, #+804] ; 0x20414A1C
+005BAB14  7038     		strb r0, [r7]
+
+#162		
+#163						(* Fase := 2; *)
+#164						MOVE		2,Fase	{LNXT:40|1|-1}
+(*) BOOL
+005BAB16  2002     		mov r0, #2 ; 2
+005BAB18  F8DF 7330		ldr r7, [pc, #+816] ; 0x20414A30
+005BAB1C  8038     		strh r0, [r7]
+
+#165						JMP		$label13	{LNXT:38|39|42}
+(-) INT
+005BAB1E  E00F     		b #30 ; 0x005BAB40
+
+
+#166		$label12:
+#167		
+#168					(* ELSE *)
+#169		
+#170						(* Delay.IN:=NOT Delay.Q; *)
+#171						LD		Delay.Q	{LNXT:42|43|-1}
+(*) UNDEF
+005BAB22  F8DF 731C		ldr r7, [pc, #+796] ; 0x20414A24
+005BAB26  7838     		ldrb r0, [r7]
+
+#172						NOT	{LNXT:42|43|-1}
+(*) BOOL
+005BAB28  2800     		cmp r0, #0
+005BAB2A  BF08 2001		eqmov r0, #1
+005BAB2E  BF18 2000		nemov r0, #0
+
+#173						ST		Delay.IN	{LNXT:42|43|-1}
+(*) BOOL
+005BAB32  F8DF 7304		ldr r7, [pc, #+772] ; 0x20414A1C
+005BAB36  7038     		strb r0, [r7]
+
+#174		
+#175						(* Fase :=1; *)
+#176						MOVE		1,Fase	{LNXT:43|1|-1}
+(*) BOOL
+005BAB38  2001     		mov r0, #1 ; 1
+005BAB3A  F8DF 7310		ldr r7, [pc, #+784] ; 0x20414A30
+005BAB3E  8038     		strh r0, [r7]
+
+#177		
+#178		$label13:
+#179					(* END_IF *)
+#180					JMP		$label2	{LNXT:32|42|-1}
+(-) INT
+005BAB40  E135     		b #618 ; 0x005BADAE
+
+
+#181		
+#182		$label5:
+#183					(* Comando_caldaia := FALSE; *)
+#184					MOVE		FALSE,Comando_caldaia	{LNXT:47|48|-1}
+(*) INT
+005BAB44  2000     		mov r0, #0 ; 0
+005BAB46  F8DF 7310		ldr r7, [pc, #+784] ; 0x2041A198
+005BAB4A  7038     		strb r0, [r7]
+
+#185		
+#186					(* Comando_pompe := TRUE; *)
+#187					MOVE		TRUE,Comando_pompe	{LNXT:48|49|-1}
+(*) BOOL
+005BAB4C  2001     		mov r0, #1 ; 1
+005BAB4E  F8DF 7310		ldr r7, [pc, #+784] ; 0x2041A19A
+005BAB52  7038     		strb r0, [r7]
+
+#188		
+#189					(* Comando_PdC := TRUE; *)
+#190					MOVE		TRUE,Comando_PdC	{LNXT:49|50|-1}
+(*) BOOL
+005BAB54  2001     		mov r0, #1 ; 1
+005BAB56  F8DF 7304		ldr r7, [pc, #+772] ; 0x2041A199
+005BAB5A  7038     		strb r0, [r7]
+
+#191		
+#192					(* Comando_fancoil := FALSE; *)
+#193					MOVE		FALSE,Comando_fancoil	{LNXT:50|52|-1}
+(*) BOOL
+005BAB5C  2000     		mov r0, #0 ; 0
+005BAB5E  F8DF 7304		ldr r7, [pc, #+772] ; 0x2041A19B
+005BAB62  7038     		strb r0, [r7]
+
+#194		
+#195					(* Delay.IN:=TRUE; *)
+#196					MOVE		TRUE,Delay.IN	{LNXT:52|53|-1}
+(*) BOOL
+005BAB64  2001     		mov r0, #1 ; 1
+005BAB66  F8DF 72D0		ldr r7, [pc, #+720] ; 0x20414A1C
+005BAB6A  7038     		strb r0, [r7]
+
+#197		
+#198		
+#199					(* IF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#200					LD		Temp_puffer	{LNXT:53|-1|-1}
+(*) UNDEF
+005BAB6C  F8DF 72D8		ldr r7, [pc, #+728] ; 0x20414A2E
+005BAB70  F9B7 0000		ldrsh r0, [r7]
+
+#201					GT(		Temp_setpoint_inverno	{LNXT:53|-1|-1}
+(*) INT
+005BAB74  B082     		sub sp, sp, #8
+005BAB76  F8CD 0000		str r0, [sp]
+005BAB7A  F8DF 72D4		ldr r7, [pc, #+724] ; 0x20414A32
+005BAB7E  F9B7 0000		ldrsh r0, [r7]
+
+#202					SUB		T_tolleranza	{LNXT:53|-1|-1}
+(*) INT
+005BAB82  F8DF 72D0		ldr r7, [pc, #+720] ; 0x20414A34
+005BAB86  F9B7 7000		ldrsh r7, [r7]
+005BAB8A  1BC0     		sub r0, r0, r7
+
+#203					)	{LNXT:53|-1|-1}
+(*) INT
+005BAB8C  4607     		mov r7, r0
+005BAB8E  F8DD 0000		ldr r0, [sp]
+005BAB92  B002     		add sp, sp, #8
+005BAB94  42B8     		cmp r0, r7
+005BAB96  BFD8 2000		lemov r0, #0
+005BAB9A  BFC8 2001		gtmov r0, #1
+
+#204					AND		Delay.Q	{LNXT:53|-1|-1}
+(*) BOOL
+005BAB9E  F8DF 72A0		ldr r7, [pc, #+672] ; 0x20414A24
+005BABA2  783F     		ldrb r7, [r7]
+005BABA4  4038     		and r0, r0, r7
+
+#205					JMPCN	$label14	{LNXT:53|54|58}
+(-) BOOL
+005BABA6  2800     		cmp r0, #0
+005BABA8  D00E     		beq #28 ; 0x005BABC8
+
+
+#206		
+#207					(* THEN *)
+#208		
+#209						(* Comando_fancoil := TRUE; *)
+#210						MOVE		TRUE,Comando_fancoil	{LNXT:54|55|-1}
+(*) BOOL
+005BABAC  2001     		mov r0, #1 ; 1
+005BABAE  F8DF 72B4		ldr r7, [pc, #+692] ; 0x2041A19B
+005BABB2  7038     		strb r0, [r7]
+
+#211		
+#212						(* Delay.IN:=FALSE; *)
+#213						MOVE		FALSE,Delay.IN	{LNXT:55|56|-1}
+(*) BOOL
+005BABB4  2000     		mov r0, #0 ; 0
+005BABB6  F8DF 7280		ldr r7, [pc, #+640] ; 0x20414A1C
+005BABBA  7038     		strb r0, [r7]
+
+#214		
+#215						(* Fase := 3; *)
+#216						MOVE		3,Fase	{LNXT:56|1|-1}
+(*) BOOL
+005BABBC  2003     		mov r0, #3 ; 3
+005BABBE  F8DF 728C		ldr r7, [pc, #+652] ; 0x20414A30
+005BABC2  8038     		strh r0, [r7]
+
+#217						JMP		$label15	{LNXT:53|54|58}
+(-) INT
+005BABC4  E013     		b #38 ; 0x005BABEE
+
+
+#218		$label14:
+#219		
+#220					(* ELSE *)
+#221		
+#222						(* Comando_fancoil := FALSE; *)
+#223						MOVE		FALSE,Comando_fancoil	{LNXT:58|59|-1}
+(*) INT
+005BABC8  2000     		mov r0, #0 ; 0
+005BABCA  F8DF 7298		ldr r7, [pc, #+664] ; 0x2041A19B
+005BABCE  7038     		strb r0, [r7]
+
+#224		
+#225						(* Delay.IN:=NOT Delay.Q; *)
+#226						LD		Delay.Q	{LNXT:59|60|-1}
+(*) UNDEF
+005BABD0  F8DF 726C		ldr r7, [pc, #+620] ; 0x20414A24
+005BABD4  7838     		ldrb r0, [r7]
+
+#227						NOT	{LNXT:59|60|-1}
+(*) BOOL
+005BABD6  2800     		cmp r0, #0
+005BABD8  BF08 2001		eqmov r0, #1
+005BABDC  BF18 2000		nemov r0, #0
+
+#228						ST		Delay.IN	{LNXT:59|60|-1}
+(*) BOOL
+005BABE0  F8DF 7254		ldr r7, [pc, #+596] ; 0x20414A1C
+005BABE4  7038     		strb r0, [r7]
+
+#229		
+#230						(* Fase := 2; *)
+#231						MOVE		2,Fase	{LNXT:60|1|-1}
+(*) BOOL
+005BABE6  2002     		mov r0, #2 ; 2
+005BABE8  F8DF 7260		ldr r7, [pc, #+608] ; 0x20414A30
+005BABEC  8038     		strh r0, [r7]
+
+#232		
+#233		$label15:
+#234					(* END_IF *)
+#235					JMP		$label2	{LNXT:47|58|-1}
+(-) INT
+005BABEE  E0DE     		b #444 ; 0x005BADAE
+
+
+#236		
+#237		$label6:
+#238					(* Comando_caldaia := FALSE; *)
+#239					MOVE		FALSE,Comando_caldaia	{LNXT:66|67|-1}
+(*) INT
+005BABF2  2000     		mov r0, #0 ; 0
+005BABF4  F8DF 7260		ldr r7, [pc, #+608] ; 0x2041A198
+005BABF8  7038     		strb r0, [r7]
+
+#240		
+#241					(* Comando_pompe := TRUE; *)
+#242					MOVE		TRUE,Comando_pompe	{LNXT:67|68|-1}
+(*) BOOL
+005BABFA  2001     		mov r0, #1 ; 1
+005BABFC  F8DF 7260		ldr r7, [pc, #+608] ; 0x2041A19A
+005BAC00  7038     		strb r0, [r7]
+
+#243		
+#244					(* Comando_PdC := TRUE; *)
+#245					MOVE		TRUE,Comando_PdC	{LNXT:68|69|-1}
+(*) BOOL
+005BAC02  2001     		mov r0, #1 ; 1
+005BAC04  F8DF 7254		ldr r7, [pc, #+596] ; 0x2041A199
+005BAC08  7038     		strb r0, [r7]
+
+#246		
+#247					(* Comando_fancoil := TRUE; *)
+#248					MOVE		TRUE,Comando_fancoil	{LNXT:69|71|-1}
+(*) BOOL
+005BAC0A  2001     		mov r0, #1 ; 1
+005BAC0C  F8DF 7254		ldr r7, [pc, #+596] ; 0x2041A19B
+005BAC10  7038     		strb r0, [r7]
+
+#249		
+#250					(* Delay.IN := TRUE; *)
+#251					MOVE		TRUE,Delay.IN	{LNXT:71|72|-1}
+(*) BOOL
+005BAC12  2001     		mov r0, #1 ; 1
+005BAC14  F8DF 7220		ldr r7, [pc, #+544] ; 0x20414A1C
+005BAC18  7038     		strb r0, [r7]
+
+#252		
+#253		
+#254					(* IF Temp_puffer < Temp_setpoint_inverno - T_tolleranza - 3 *)
+#255					LD		Temp_puffer	{LNXT:72|-1|-1}
+(*) UNDEF
+005BAC1A  F8DF 722C		ldr r7, [pc, #+556] ; 0x20414A2E
+005BAC1E  F9B7 0000		ldrsh r0, [r7]
+
+#256					LT(		Temp_setpoint_inverno	{LNXT:72|-1|-1}
+(*) INT
+005BAC22  B082     		sub sp, sp, #8
+005BAC24  F8CD 0000		str r0, [sp]
+005BAC28  F8DF 7224		ldr r7, [pc, #+548] ; 0x20414A32
+005BAC2C  F9B7 0000		ldrsh r0, [r7]
+
+#257					SUB		T_tolleranza	{LNXT:72|-1|-1}
+(*) INT
+005BAC30  F8DF 7220		ldr r7, [pc, #+544] ; 0x20414A34
+005BAC34  F9B7 7000		ldrsh r7, [r7]
+005BAC38  1BC0     		sub r0, r0, r7
+
+#258					SUB		3	{LNXT:72|-1|-1}
+(-) INT
+005BAC3A  1EC0     		sub r0, r0, #3
+
+#259					)	{LNXT:72|-1|-1}
+(*) INT
+005BAC3C  4607     		mov r7, r0
+005BAC3E  F8DD 0000		ldr r0, [sp]
+005BAC42  B002     		add sp, sp, #8
+005BAC44  42B8     		cmp r0, r7
+005BAC46  BFA8 2000		gemov r0, #0
+005BAC4A  BFB8 2001		ltmov r0, #1
+
+#260					JMPCN	$label16	{LNXT:72|73|76}
+(-) BOOL
+005BAC4E  2800     		cmp r0, #0
+005BAC50  D015     		beq #42 ; 0x005BAC7E
+
+
+#261		
+#262					(* THEN *)
+#263		
+#264						(* Comando_caldaia := TRUE; *)
+#265						MOVE		TRUE,Comando_caldaia	{LNXT:73|74|-1}
+(*) BOOL
+005BAC54  2001     		mov r0, #1 ; 1
+005BAC56  F8DF 7200		ldr r7, [pc, #+512] ; 0x2041A198
+005BAC5A  7038     		strb r0, [r7]
+
+#266		
+#267						(* Delay.IN := NOT Delay.Q; *)
+#268						LD		Delay.Q	{LNXT:74|75|-1}
+(*) UNDEF
+005BAC5C  F8DF 71E0		ldr r7, [pc, #+480] ; 0x20414A24
+005BAC60  7838     		ldrb r0, [r7]
+
+#269						NOT	{LNXT:74|75|-1}
+(*) BOOL
+005BAC62  2800     		cmp r0, #0
+005BAC64  BF08 2001		eqmov r0, #1
+005BAC68  BF18 2000		nemov r0, #0
+
+#270						ST		Delay.IN	{LNXT:74|75|-1}
+(*) BOOL
+005BAC6C  F8DF 71C8		ldr r7, [pc, #+456] ; 0x20414A1C
+005BAC70  7038     		strb r0, [r7]
+
+#271		
+#272						(* Fase := 4; *)
+#273						MOVE		4,Fase	{LNXT:75|1|-1}
+(*) BOOL
+005BAC72  2004     		mov r0, #4 ; 4
+005BAC74  F8DF 71D4		ldr r7, [pc, #+468] ; 0x20414A30
+005BAC78  8038     		strh r0, [r7]
+
+#274						JMP		$label18	{LNXT:72|73|76}
+(-) INT
+005BAC7A  E03D     		b #122 ; 0x005BACF8
+
+
+#275		$label16:
+#276		
+#277					(* ELSIF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#278					LD		Temp_puffer	{LNXT:76|-1|-1}
+(*) UNDEF
+005BAC7E  F8DF 71C8		ldr r7, [pc, #+456] ; 0x20414A2E
+005BAC82  F9B7 0000		ldrsh r0, [r7]
+
+#279					GT(		Temp_setpoint_inverno	{LNXT:76|-1|-1}
+(*) INT
+005BAC86  B082     		sub sp, sp, #8
+005BAC88  F8CD 0000		str r0, [sp]
+005BAC8C  F8DF 71C0		ldr r7, [pc, #+448] ; 0x20414A32
+005BAC90  F9B7 0000		ldrsh r0, [r7]
+
+#280					SUB		T_tolleranza	{LNXT:76|-1|-1}
+(*) INT
+005BAC94  F8DF 71BC		ldr r7, [pc, #+444] ; 0x20414A34
+005BAC98  F9B7 7000		ldrsh r7, [r7]
+005BAC9C  1BC0     		sub r0, r0, r7
+
+#281					)	{LNXT:76|-1|-1}
+(*) INT
+005BAC9E  4607     		mov r7, r0
+005BACA0  F8DD 0000		ldr r0, [sp]
+005BACA4  B002     		add sp, sp, #8
+005BACA6  42B8     		cmp r0, r7
+005BACA8  BFD8 2000		lemov r0, #0
+005BACAC  BFC8 2001		gtmov r0, #1
+
+#282					AND		Delay.Q	{LNXT:76|-1|-1}
+(*) BOOL
+005BACB0  F8DF 718C		ldr r7, [pc, #+396] ; 0x20414A24
+005BACB4  783F     		ldrb r7, [r7]
+005BACB6  4038     		and r0, r0, r7
+
+#283					JMPCN	$label17	{LNXT:76|77|81}
+(-) BOOL
+005BACB8  2800     		cmp r0, #0
+005BACBA  D015     		beq #42 ; 0x005BACE8
+
+
+#284		
+#285					(* THEN *)
+#286		
+#287						(* Comando_caldaia := FALSE; *)
+#288						MOVE		FALSE,Comando_caldaia	{LNXT:77|78|-1}
+(*) BOOL
+005BACBE  2000     		mov r0, #0 ; 0
+005BACC0  F8DF 7194		ldr r7, [pc, #+404] ; 0x2041A198
+005BACC4  7038     		strb r0, [r7]
+
+#289		
+#290						(* Delay.IN := NOT Delay.Q; *)
+#291						LD		Delay.Q	{LNXT:78|79|-1}
+(*) UNDEF
+005BACC6  F8DF 7178		ldr r7, [pc, #+376] ; 0x20414A24
+005BACCA  7838     		ldrb r0, [r7]
+
+#292						NOT	{LNXT:78|79|-1}
+(*) BOOL
+005BACCC  2800     		cmp r0, #0
+005BACCE  BF08 2001		eqmov r0, #1
+005BACD2  BF18 2000		nemov r0, #0
+
+#293						ST		Delay.IN	{LNXT:78|79|-1}
+(*) BOOL
+005BACD6  F8DF 7160		ldr r7, [pc, #+352] ; 0x20414A1C
+005BACDA  7038     		strb r0, [r7]
+
+#294		
+#295						(* Fase := 3; *)
+#296						MOVE		3,Fase	{LNXT:79|1|-1}
+(*) BOOL
+005BACDC  2003     		mov r0, #3 ; 3
+005BACDE  F8DF 716C		ldr r7, [pc, #+364] ; 0x20414A30
+005BACE2  8038     		strh r0, [r7]
+
+#297						JMP		$label18	{LNXT:76|77|81}
+(-) INT
+005BACE4  E008     		b #16 ; 0x005BACF8
+
+
+#298		$label17:
+#299		
+#300					(* ELSE *)
+#301		
+#302						(* Fase := 3; *)
+#303						MOVE		3,Fase	{LNXT:81|82|-1}
+(*) INT
+005BACE8  2003     		mov r0, #3 ; 3
+005BACEA  F8DF 7160		ldr r7, [pc, #+352] ; 0x20414A30
+005BACEE  8038     		strh r0, [r7]
+
+#304		
+#305						(* Delay.IN := FALSE; *)
+#306						MOVE		FALSE,Delay.IN	{LNXT:82|1|-1}
+(*) INT
+005BACF0  2000     		mov r0, #0 ; 0
+005BACF2  F8DF 7144		ldr r7, [pc, #+324] ; 0x20414A1C
+005BACF6  7038     		strb r0, [r7]
+
+#307		
+#308		$label18:
+#309					(* END_IF *)
+#310					JMP		$label2	{LNXT:66|81|-1}
+(-) BOOL
+005BACF8  E059     		b #178 ; 0x005BADAE
+
+
+#311		
+#312		$label7:
+#313					(* Delay.IN := TRUE; *)
+#314					MOVE		TRUE,Delay.IN	{LNXT:86|87|-1}
+(*) BOOL
+005BACFC  2001     		mov r0, #1 ; 1
+005BACFE  F8DF 7138		ldr r7, [pc, #+312] ; 0x20414A1C
+005BAD02  7038     		strb r0, [r7]
+
+#315		
+#316		
+#317					(* IF Delay.Q AND Temp_puffer < Temp_setpoint_inverno - T_tolleranza *)
+#318					LD		Temp_puffer	{LNXT:87|-1|-1}
+(*) UNDEF
+005BAD04  F8DF 7140		ldr r7, [pc, #+320] ; 0x20414A2E
+005BAD08  F9B7 0000		ldrsh r0, [r7]
+
+#319					LT(		Temp_setpoint_inverno	{LNXT:87|-1|-1}
+(*) INT
+005BAD0C  B082     		sub sp, sp, #8
+005BAD0E  F8CD 0000		str r0, [sp]
+005BAD12  F8DF 713C		ldr r7, [pc, #+316] ; 0x20414A32
+005BAD16  F9B7 0000		ldrsh r0, [r7]
+
+#320					SUB		T_tolleranza	{LNXT:87|-1|-1}
+(*) INT
+005BAD1A  F8DF 7138		ldr r7, [pc, #+312] ; 0x20414A34
+005BAD1E  F9B7 7000		ldrsh r7, [r7]
+005BAD22  1BC0     		sub r0, r0, r7
+
+#321					)	{LNXT:87|-1|-1}
+(*) INT
+005BAD24  4607     		mov r7, r0
+005BAD26  F8DD 0000		ldr r0, [sp]
+005BAD2A  B002     		add sp, sp, #8
+005BAD2C  42B8     		cmp r0, r7
+005BAD2E  BFA8 2000		gemov r0, #0
+005BAD32  BFB8 2001		ltmov r0, #1
+
+#322					AND		Delay.Q	{LNXT:87|-1|-1}
+(*) BOOL
+005BAD36  F8DF 7108		ldr r7, [pc, #+264] ; 0x20414A24
+005BAD3A  783F     		ldrb r7, [r7]
+005BAD3C  4038     		and r0, r0, r7
+
+#323					JMPCN	$label19	{LNXT:87|88|91}
+(-) BOOL
+005BAD3E  2800     		cmp r0, #0
+005BAD40  D015     		beq #42 ; 0x005BAD6E
+
+
+#324		
+#325					(* THEN *)
+#326		
+#327						(* Comando_caldaia := TRUE; *)
+#328						MOVE		TRUE,Comando_caldaia	{LNXT:88|89|-1}
+(*) BOOL
+005BAD44  2001     		mov r0, #1 ; 1
+005BAD46  F8DF 7110		ldr r7, [pc, #+272] ; 0x2041A198
+005BAD4A  7038     		strb r0, [r7]
+
+#329		
+#330						(* Delay.IN := NOT Delay.Q; *)
+#331						LD		Delay.Q	{LNXT:89|90|-1}
+(*) UNDEF
+005BAD4C  F8DF 70F0		ldr r7, [pc, #+240] ; 0x20414A24
+005BAD50  7838     		ldrb r0, [r7]
+
+#332						NOT	{LNXT:89|90|-1}
+(*) BOOL
+005BAD52  2800     		cmp r0, #0
+005BAD54  BF08 2001		eqmov r0, #1
+005BAD58  BF18 2000		nemov r0, #0
+
+#333						ST		Delay.IN	{LNXT:89|90|-1}
+(*) BOOL
+005BAD5C  F8DF 70D8		ldr r7, [pc, #+216] ; 0x20414A1C
+005BAD60  7038     		strb r0, [r7]
+
+#334		
+#335						(* Fase := 4; *)
+#336						MOVE		4,Fase	{LNXT:90|1|-1}
+(*) BOOL
+005BAD62  2004     		mov r0, #4 ; 4
+005BAD64  F8DF 70E4		ldr r7, [pc, #+228] ; 0x20414A30
+005BAD68  8038     		strh r0, [r7]
+
+#337						JMP		$label20	{LNXT:87|88|91}
+(-) INT
+005BAD6A  E020     		b #64 ; 0x005BADAE
+
+
+#338		$label19:
+#339		
+#340					(* ELSIF Temp_puffer >= Temp_setpoint_inverno - T_tolleranza *)
+#341					LD		Temp_puffer	{LNXT:91|-1|-1}
+(*) UNDEF
+005BAD6E  F8DF 70D8		ldr r7, [pc, #+216] ; 0x20414A2E
+005BAD72  F9B7 0000		ldrsh r0, [r7]
+
+#342					GE(		Temp_setpoint_inverno	{LNXT:91|-1|-1}
+(*) INT
+005BAD76  B082     		sub sp, sp, #8
+005BAD78  F8CD 0000		str r0, [sp]
+005BAD7C  F8DF 70D0		ldr r7, [pc, #+208] ; 0x20414A32
+005BAD80  F9B7 0000		ldrsh r0, [r7]
+
+#343					SUB		T_tolleranza	{LNXT:91|-1|-1}
+(*) INT
+005BAD84  F8DF 70CC		ldr r7, [pc, #+204] ; 0x20414A34
+005BAD88  F9B7 7000		ldrsh r7, [r7]
+005BAD8C  1BC0     		sub r0, r0, r7
+
+#344					)	{LNXT:91|-1|-1}
+(*) INT
+005BAD8E  4607     		mov r7, r0
+005BAD90  F8DD 0000		ldr r0, [sp]
+005BAD94  B002     		add sp, sp, #8
+005BAD96  42B8     		cmp r0, r7
+005BAD98  BFB8 2000		ltmov r0, #0
+005BAD9C  BFA8 2001		gemov r0, #1
+
+#345					JMPCN	$label20	{LNXT:91|92|1}
+(-) BOOL
+005BADA0  2800     		cmp r0, #0
+005BADA2  D004     		beq #8 ; 0x005BADAE
+
+
+#346		
+#347					(* THEN *)
+#348		
+#349						(* Fase := 3; *)
+#350						MOVE		3,Fase	{LNXT:92|1|-1}
+(*) BOOL
+005BADA6  2003     		mov r0, #3 ; 3
+005BADA8  F8DF 70A0		ldr r7, [pc, #+160] ; 0x20414A30
+005BADAC  8038     		strh r0, [r7]
+
+#351		
+#352		$label20:
+#353					(* END_IF *)
+#354		
+#355		$label2:
+#356		
+#357				(* END_CASE *)
+#358				JMP		$label1	{LNXT:1|3|97}
+(-) INT
+005BADAE  E033     		b #102 ; 0x005BAE18
+
+
+#359		$label0:
+#360		
+#361			(* ELSIF CalendarOnOff XOR NOT Estate_Inverno *)
+#362			LD		Estate_Inverno	{LNXT:97|-1|-1}
+(*) UNDEF
+005BADB2  F8DF 7078		ldr r7, [pc, #+120] ; 0x20414A15
+005BADB6  7838     		ldrb r0, [r7]
+
+#363			NOT	{LNXT:97|-1|-1}
+(*) BOOL
+005BADB8  2800     		cmp r0, #0
+005BADBA  BF08 2001		eqmov r0, #1
+005BADBE  BF18 2000		nemov r0, #0
+
+#364			XOR(		CalendarOnOff	{LNXT:97|-1|-1}
+(*) BOOL
+005BADC2  B082     		sub sp, sp, #8
+005BADC4  F8CD 0000		str r0, [sp]
+005BADC8  F8DF 7064		ldr r7, [pc, #+100] ; 0x20414A16
+005BADCC  7838     		ldrb r0, [r7]
+
+#365			NOT	{LNXT:97|-1|-1}
+(*) BOOL
+005BADCE  2800     		cmp r0, #0
+005BADD0  BF08 2001		eqmov r0, #1
+005BADD4  BF18 2000		nemov r0, #0
+
+#366			)	{LNXT:97|-1|-1}
+(*) BOOL
+005BADD8  4607     		mov r7, r0
+005BADDA  F8DD 0000		ldr r0, [sp]
+005BADDE  B002     		add sp, sp, #8
+005BADE0  4078     		eor r0, r0, r7
+
+#367			JMPCN	$label1	{LNXT:97|98|1}
+(-) BOOL
+005BADE2  2800     		cmp r0, #0
+005BADE4  D018     		beq #48 ; 0x005BAE18
+
+
+#368		
+#369			(* THEN *)
+#370		
+#371				(* Fase :=0; *)
+#372				MOVE		0,Fase	{LNXT:98|99|-1}
+(*) BOOL
+005BADE8  2000     		mov r0, #0 ; 0
+005BADEA  F8DF 7060		ldr r7, [pc, #+96] ; 0x20414A30
+005BADEE  8038     		strh r0, [r7]
+
+#373		
+#374				(* Delay.IN:=FALSE; *)
+#375				MOVE		FALSE,Delay.IN	{LNXT:99|100|-1}
+(*) INT
+005BADF0  2000     		mov r0, #0 ; 0
+005BADF2  F8DF 7044		ldr r7, [pc, #+68] ; 0x20414A1C
+005BADF6  7038     		strb r0, [r7]
+
+#376		
+#377				(* Comando_caldaia := FALSE; *)
+#378				MOVE		FALSE,Comando_caldaia	{LNXT:100|101|-1}
+(*) BOOL
+005BADF8  2000     		mov r0, #0 ; 0
+005BADFA  F8DF 705C		ldr r7, [pc, #+92] ; 0x2041A198
+005BADFE  7038     		strb r0, [r7]
+
+#379		
+#380				(* Comando_pompe := FALSE; *)
+#381				MOVE		FALSE,Comando_pompe	{LNXT:101|102|-1}
+(*) BOOL
+005BAE00  2000     		mov r0, #0 ; 0
+005BAE02  F8DF 705C		ldr r7, [pc, #+92] ; 0x2041A19A
+005BAE06  7038     		strb r0, [r7]
+
+#382		
+#383				(* Comando_PdC := FALSE; *)
+#384				MOVE		FALSE,Comando_PdC	{LNXT:102|103|-1}
+(*) BOOL
+005BAE08  2000     		mov r0, #0 ; 0
+005BAE0A  F8DF 7050		ldr r7, [pc, #+80] ; 0x2041A199
+005BAE0E  7038     		strb r0, [r7]
+
+#385		
+#386				(* Comando_fancoil := FALSE; *)
+#387				MOVE		FALSE,Comando_fancoil	{LNXT:103|1|-1}
+(*) BOOL
+005BAE10  2000     		mov r0, #0 ; 0
+005BAE12  F8DF 7050		ldr r7, [pc, #+80] ; 0x2041A19B
+005BAE16  7038     		strb r0, [r7]
+
+005BAE18  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+005BAE1C  F8DD E000		ldr lr, [sp]
+005BAE20  B002     		add sp, sp, #8
+
+005BAE22  4770     		bx lr
+
+005BAE24  005BA0D0		; 0x005BA0D0
+005BAE28  005BA0F8		; 0x005BA0F8
+005BAE2C  20414A15		; 0x20414A15
+005BAE30  20414A16		; 0x20414A16
+005BAE34  20414A18		; 0x20414A18
+005BAE38  20414A1C		; 0x20414A1C
+005BAE3C  20414A20		; 0x20414A20
+005BAE40  20414A24		; 0x20414A24
+005BAE44  20414A2C		; 0x20414A2C
+005BAE48  20414A2E		; 0x20414A2E
+005BAE4C  20414A30		; 0x20414A30
+005BAE50  20414A32		; 0x20414A32
+005BAE54  20414A34		; 0x20414A34
+005BAE58  2041A198		; 0x2041A198
+005BAE5C  2041A199		; 0x2041A199
+005BAE60  2041A19A		; 0x2041A19A
+005BAE64  2041A19B		; 0x2041A19B
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+005BAE68  4770     		bx lr
+
+
+*** OUTPUT:
+005BAE6A  4770     		bx lr
+
+
+
+**************************************************
+	Task Slow init code
+**************************************************
+
+005BAE6C  B082     		sub sp, sp, #8
+005BAE6E  F8CD E000		str lr, [sp]
+005BAE72  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+
+005BAE76  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+005BAE7A  F8DD E000		ldr lr, [sp]
+005BAE7E  B002     		add sp, sp, #8
+
+005BAE80  4770     		bx lr
+
+**************************************************
+	List program: UpdateOrologio
+**************************************************
+
+PROGRAM UpdateOrologio
+
+        VAR
+Datetime : LINT;
+tset : LINT;
+time : LINT;
+Default : SysETimeToDate;
+Done : BOOL;
+Error : BOOL;
+YY : UINT;
+MM : INT;
+DD : INT;
+dd : INT;
+hh : INT;
+mm : INT;
+ss : INT;
+OnOff_calendario : INT;
+A : OnOffCalendar;
+OnOffCalendar : OnOffCalendar;
+onoff : OnOffCalendar;
+	END_VAR
+
+END_PROGRAM
+
+005BAEA0  B082     		sub sp, sp, #8
+005BAEA2  F8CD E000		str lr, [sp]
+005BAEA6  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+
+#0		{SRC:UpdateOrologio}
+#1		
+#2		
+#3		
+#4		(*** Network 1 ***)
+#5		
+#6		(* Call for FB SysETimeToDate instance Default *)
+#7		MOVE	SysDateTime,Default.EpochTime	{R:"1$FB:Default"}
+(*) UDINT
+005BAEAA  F8DF 7464		ldr r7, [pc, #+1124] ; 0x2041A2BC
+005BAEAE  6838     		ldr r0, [r7]
+005BAEB0  F8DF 72F0		ldr r7, [pc, #+752] ; 0x20414A40
+005BAEB4  6038     		str r0, [r7]
+
+#8		CAL	Default	{R:"1$FB:Default"}
+(*) UDINT
+005BAEB6  E92D 0021		stmdb sp!, { r0, r5 }
+005BAEBA  F8DF 72E4		ldr r7, [pc, #+740] ; 0x20414A38
+005BAEBE  4638     		mov r0, r7
+005BAEC0  F8DF 42C4		ldr r4, [pc, #+708] ; 0x498A5D
+005BAEC4  F044 0401		orr r4, r4, #1
+005BAEC8  47A0     		blx r4
+005BAECA  E8BD 0021		ldmia sp!, { r0, r5 }
+
+#9		MOVE	Default.Done,Done	{R:"1$FB:Default"}
+(*) UDINT
+005BAECE  F8DF 72D8		ldr r7, [pc, #+728] ; 0x20414A44
+005BAED2  7838     		ldrb r0, [r7]
+005BAED4  F8DF 72BC		ldr r7, [pc, #+700] ; 0x20414A17
+005BAED8  7038     		strb r0, [r7]
+
+#10		MOVE	Default.Fault,Error	{R:"1$FB:Default"}
+(*) BOOL
+005BAEDA  F8DF 72D0		ldr r7, [pc, #+720] ; 0x20414A45
+005BAEDE  7838     		ldrb r0, [r7]
+005BAEE0  F8DF 72B8		ldr r7, [pc, #+696] ; 0x20414A37
+005BAEE4  7038     		strb r0, [r7]
+
+#11		MOVE	Default.Year,YY	{R:"1$FB:Default"}
+(*) BOOL
+005BAEE6  F8DF 72C8		ldr r7, [pc, #+712] ; 0x20414A46
+005BAEEA  8838     		ldrh r0, [r7]
+005BAEEC  F8DF 72DC		ldr r7, [pc, #+732] ; 0x20414A50
+005BAEF0  8038     		strh r0, [r7]
+
+#12		MOVE	Default.Month,MM	{R:"1$FB:Default"}
+(*) UINT
+005BAEF2  F8DF 72C0		ldr r7, [pc, #+704] ; 0x20414A48
+005BAEF6  7838     		ldrb r0, [r7]
+005BAEF8  F8DF 72D4		ldr r7, [pc, #+724] ; 0x20414A52
+005BAEFC  8038     		strh r0, [r7]
+
+#13		MOVE	Default.Second,ss	{R:"1$FB:Default"}
+(*) USINT
+005BAEFE  F8DF 72C8		ldr r7, [pc, #+712] ; 0x20414A4D
+005BAF02  7838     		ldrb r0, [r7]
+005BAF04  F8DF 72CC		ldr r7, [pc, #+716] ; 0x20414A54
+005BAF08  8038     		strh r0, [r7]
+
+#14		
+#15		(* Call for function TO_INT *)
+#16		LD	Default.Day	{R:"1$F:7"}
+(*) UNDEF
+005BAF0A  F8DF 72AC		ldr r7, [pc, #+684] ; 0x20414A49
+005BAF0E  7838     		ldrb r0, [r7]
+
+#17		TO_INT	{R:"1$F:7"}
+(-) USINT
+#18		ST	Giorno	{R:"1$F:7"}
+(*) INT
+005BAF10  F8DF 72C4		ldr r7, [pc, #+708] ; 0x20414A56
+005BAF14  8038     		strh r0, [r7]
+
+#19		
+#20		(* Call for function TO_INT *)
+#21		LD	Default.WeekDay	{R:"1$F:9"}
+(*) UNDEF
+005BAF16  F8DF 72A4		ldr r7, [pc, #+676] ; 0x20414A4A
+005BAF1A  7838     		ldrb r0, [r7]
+
+#22		TO_INT	{R:"1$F:9"}
+(-) USINT
+#23		ST	DayWeek	{R:"1$F:9"}
+(*) INT
+005BAF1C  F8DF 72BC		ldr r7, [pc, #+700] ; 0x20414A58
+005BAF20  8038     		strh r0, [r7]
+
+#24		
+#25		(* Call for function TO_INT *)
+#26		LD	Default.Hour	{R:"1$F:11"}
+(*) UNDEF
+005BAF22  F8DF 729C		ldr r7, [pc, #+668] ; 0x20414A4B
+005BAF26  7838     		ldrb r0, [r7]
+
+#27		TO_INT	{R:"1$F:11"}
+(-) USINT
+#28		ST	Ora	{R:"1$F:11"}
+(*) INT
+005BAF28  F8DF 72B4		ldr r7, [pc, #+692] ; 0x20414A5A
+005BAF2C  8038     		strh r0, [r7]
+
+#29		
+#30		(* Call for function TO_INT *)
+#31		LD	Default.Minute	{R:"1$F:13"}
+(*) UNDEF
+005BAF2E  F8DF 7294		ldr r7, [pc, #+660] ; 0x20414A4C
+005BAF32  7838     		ldrb r0, [r7]
+
+#32		TO_INT	{R:"1$F:13"}
+(-) USINT
+#33		ST	Minuto	{R:"1$F:13"}
+(*) INT
+005BAF34  F8DF 72AC		ldr r7, [pc, #+684] ; 0x20414A5C
+005BAF38  8038     		strh r0, [r7]
+
+#34		
+#35		
+#36		
+#37		
+#38		(*** Network 2 ***)
+#39		
+#40		(* Call for FB OnOffCalendar instance onoff *)
+#41		MOVE	DayWeek,onoff.Giorno_settimana	{R:"2$FB:onoff"}
+(*) INT
+005BAF3A  F8DF 72A0		ldr r7, [pc, #+672] ; 0x20414A58
+005BAF3E  F9B7 0000		ldrsh r0, [r7]
+005BAF42  F8DF 72AC		ldr r7, [pc, #+684] ; 0x20414A62
+005BAF46  8038     		strh r0, [r7]
+
+#42		MOVE	Ora,onoff.Ora	{R:"2$FB:onoff"}
+(*) INT
+005BAF48  F8DF 7294		ldr r7, [pc, #+660] ; 0x20414A5A
+005BAF4C  F9B7 0000		ldrsh r0, [r7]
+005BAF50  F8DF 72A0		ldr r7, [pc, #+672] ; 0x20414A64
+005BAF54  8038     		strh r0, [r7]
+
+#43		MOVE	Minuto,onoff.Minuto	{R:"2$FB:onoff"}
+(*) INT
+005BAF56  F8DF 728C		ldr r7, [pc, #+652] ; 0x20414A5C
+005BAF5A  F9B7 0000		ldrsh r0, [r7]
+005BAF5E  F8DF 7298		ldr r7, [pc, #+664] ; 0x20414A66
+005BAF62  8038     		strh r0, [r7]
+
+#44		MOVE	P11On,onoff.P11On	{R:"2$FB:onoff"}
+(*) INT
+005BAF64  F8DF 7280		ldr r7, [pc, #+640] ; 0x20414A5E
+005BAF68  F9B7 0000		ldrsh r0, [r7]
+005BAF6C  F8DF 728C		ldr r7, [pc, #+652] ; 0x20414A68
+005BAF70  8038     		strh r0, [r7]
+
+#45		MOVE	P12Off,onoff.P12Off	{R:"2$FB:onoff"}
+(*) INT
+005BAF72  F8DF 7318		ldr r7, [pc, #+792] ; 0x20414AAC
+005BAF76  F9B7 0000		ldrsh r0, [r7]
+005BAF7A  F8DF 7284		ldr r7, [pc, #+644] ; 0x20414A6A
+005BAF7E  8038     		strh r0, [r7]
+
+#46		MOVE	P13On,onoff.P13On	{R:"2$FB:onoff"}
+(*) INT
+005BAF80  F8DF 730C		ldr r7, [pc, #+780] ; 0x20414AAE
+005BAF84  F9B7 0000		ldrsh r0, [r7]
+005BAF88  F8DF 7278		ldr r7, [pc, #+632] ; 0x20414A6C
+005BAF8C  8038     		strh r0, [r7]
+
+#47		MOVE	P14Off,onoff.P14Off	{R:"2$FB:onoff"}
+(*) INT
+005BAF8E  F8DF 7304		ldr r7, [pc, #+772] ; 0x20414AB0
+005BAF92  F9B7 0000		ldrsh r0, [r7]
+005BAF96  F8DF 7270		ldr r7, [pc, #+624] ; 0x20414A6E
+005BAF9A  8038     		strh r0, [r7]
+
+#48		MOVE	P21On,onoff.P21On	{R:"2$FB:onoff"}
+(*) INT
+005BAF9C  F8DF 72F8		ldr r7, [pc, #+760] ; 0x20414AB2
+005BAFA0  F9B7 0000		ldrsh r0, [r7]
+005BAFA4  F8DF 7264		ldr r7, [pc, #+612] ; 0x20414A70
+005BAFA8  8038     		strh r0, [r7]
+
+#49		MOVE	P22Off,onoff.P22Off	{R:"2$FB:onoff"}
+(*) INT
+005BAFAA  F8DF 72F0		ldr r7, [pc, #+752] ; 0x20414AB4
+005BAFAE  F9B7 0000		ldrsh r0, [r7]
+005BAFB2  F8DF 725C		ldr r7, [pc, #+604] ; 0x20414A72
+005BAFB6  8038     		strh r0, [r7]
+
+#50		MOVE	P23On,onoff.P23On	{R:"2$FB:onoff"}
+(*) INT
+005BAFB8  F8DF 72E4		ldr r7, [pc, #+740] ; 0x20414AB6
+005BAFBC  F9B7 0000		ldrsh r0, [r7]
+005BAFC0  F8DF 7250		ldr r7, [pc, #+592] ; 0x20414A74
+005BAFC4  8038     		strh r0, [r7]
+
+#51		MOVE	P24Off,onoff.P24Off	{R:"2$FB:onoff"}
+(*) INT
+005BAFC6  F8DF 72DC		ldr r7, [pc, #+732] ; 0x20414AB8
+005BAFCA  F9B7 0000		ldrsh r0, [r7]
+005BAFCE  F8DF 7248		ldr r7, [pc, #+584] ; 0x20414A76
+005BAFD2  8038     		strh r0, [r7]
+
+#52		MOVE	P31On,onoff.P31On	{R:"2$FB:onoff"}
+(*) INT
+005BAFD4  F8DF 72D0		ldr r7, [pc, #+720] ; 0x20414ABA
+005BAFD8  F9B7 0000		ldrsh r0, [r7]
+005BAFDC  F8DF 723C		ldr r7, [pc, #+572] ; 0x20414A78
+005BAFE0  8038     		strh r0, [r7]
+
+#53		MOVE	P32Off,onoff.P32Off	{R:"2$FB:onoff"}
+(*) INT
+005BAFE2  F8DF 72C8		ldr r7, [pc, #+712] ; 0x20414ABC
+005BAFE6  F9B7 0000		ldrsh r0, [r7]
+005BAFEA  F8DF 7234		ldr r7, [pc, #+564] ; 0x20414A7A
+005BAFEE  8038     		strh r0, [r7]
+
+#54		MOVE	P33On,onoff.P33On	{R:"2$FB:onoff"}
+(*) INT
+005BAFF0  F8DF 72BC		ldr r7, [pc, #+700] ; 0x20414ABE
+005BAFF4  F9B7 0000		ldrsh r0, [r7]
+005BAFF8  F8DF 7228		ldr r7, [pc, #+552] ; 0x20414A7C
+005BAFFC  8038     		strh r0, [r7]
+
+#55		MOVE	P34Off,onoff.P34Off	{R:"2$FB:onoff"}
+(*) INT
+005BAFFE  F8DF 72B4		ldr r7, [pc, #+692] ; 0x20414AC0
+005BB002  F9B7 0000		ldrsh r0, [r7]
+005BB006  F8DF 7220		ldr r7, [pc, #+544] ; 0x20414A7E
+005BB00A  8038     		strh r0, [r7]
+
+#56		MOVE	P41On,onoff.P41On	{R:"2$FB:onoff"}
+(*) INT
+005BB00C  F8DF 72A8		ldr r7, [pc, #+680] ; 0x20414AC2
+005BB010  F9B7 0000		ldrsh r0, [r7]
+005BB014  F8DF 7214		ldr r7, [pc, #+532] ; 0x20414A80
+005BB018  8038     		strh r0, [r7]
+
+#57		MOVE	P42Off,onoff.P42Off	{R:"2$FB:onoff"}
+(*) INT
+005BB01A  F8DF 72A0		ldr r7, [pc, #+672] ; 0x20414AC4
+005BB01E  F9B7 0000		ldrsh r0, [r7]
+005BB022  F8DF 720C		ldr r7, [pc, #+524] ; 0x20414A82
+005BB026  8038     		strh r0, [r7]
+
+#58		MOVE	P43On,onoff.P43On	{R:"2$FB:onoff"}
+(*) INT
+005BB028  F8DF 7294		ldr r7, [pc, #+660] ; 0x20414AC6
+005BB02C  F9B7 0000		ldrsh r0, [r7]
+005BB030  F8DF 7200		ldr r7, [pc, #+512] ; 0x20414A84
+005BB034  8038     		strh r0, [r7]
+
+#59		MOVE	P44Off,onoff.P44Off	{R:"2$FB:onoff"}
+(*) INT
+005BB036  F8DF 728C		ldr r7, [pc, #+652] ; 0x20414AC8
+005BB03A  F9B7 0000		ldrsh r0, [r7]
+005BB03E  F8DF 71F8		ldr r7, [pc, #+504] ; 0x20414A86
+005BB042  8038     		strh r0, [r7]
+
+#60		MOVE	P51On,onoff.P51On	{R:"2$FB:onoff"}
+(*) INT
+005BB044  F8DF 7280		ldr r7, [pc, #+640] ; 0x20414ACA
+005BB048  F9B7 0000		ldrsh r0, [r7]
+005BB04C  F8DF 71EC		ldr r7, [pc, #+492] ; 0x20414A88
+005BB050  8038     		strh r0, [r7]
+
+#61		MOVE	P52Off,onoff.P52Off	{R:"2$FB:onoff"}
+(*) INT
+005BB052  F8DF 7278		ldr r7, [pc, #+632] ; 0x20414ACC
+005BB056  F9B7 0000		ldrsh r0, [r7]
+005BB05A  F8DF 71E4		ldr r7, [pc, #+484] ; 0x20414A8A
+005BB05E  8038     		strh r0, [r7]
+
+#62		MOVE	P53On,onoff.P53On	{R:"2$FB:onoff"}
+(*) INT
+005BB060  F8DF 726C		ldr r7, [pc, #+620] ; 0x20414ACE
+005BB064  F9B7 0000		ldrsh r0, [r7]
+005BB068  F8DF 71D8		ldr r7, [pc, #+472] ; 0x20414A8C
+005BB06C  8038     		strh r0, [r7]
+
+#63		MOVE	P54Off,onoff.P54Off	{R:"2$FB:onoff"}
+(*) INT
+005BB06E  F8DF 7264		ldr r7, [pc, #+612] ; 0x20414AD0
+005BB072  F9B7 0000		ldrsh r0, [r7]
+005BB076  F8DF 71D0		ldr r7, [pc, #+464] ; 0x20414A8E
+005BB07A  8038     		strh r0, [r7]
+
+#64		MOVE	P61On,onoff.P61On	{R:"2$FB:onoff"}
+(*) INT
+005BB07C  F8DF 7258		ldr r7, [pc, #+600] ; 0x20414AD2
+005BB080  F9B7 0000		ldrsh r0, [r7]
+005BB084  F8DF 71C4		ldr r7, [pc, #+452] ; 0x20414A90
+005BB088  8038     		strh r0, [r7]
+
+#65		MOVE	P62Off,onoff.P62Off	{R:"2$FB:onoff"}
+(*) INT
+005BB08A  F8DF 7250		ldr r7, [pc, #+592] ; 0x20414AD4
+005BB08E  F9B7 0000		ldrsh r0, [r7]
+005BB092  F8DF 71BC		ldr r7, [pc, #+444] ; 0x20414A92
+005BB096  8038     		strh r0, [r7]
+
+#66		MOVE	P63On,onoff.P63On	{R:"2$FB:onoff"}
+(*) INT
+005BB098  F8DF 7244		ldr r7, [pc, #+580] ; 0x20414AD6
+005BB09C  F9B7 0000		ldrsh r0, [r7]
+005BB0A0  F8DF 71B0		ldr r7, [pc, #+432] ; 0x20414A94
+005BB0A4  8038     		strh r0, [r7]
+
+#67		MOVE	P64Off,onoff.P64Off	{R:"2$FB:onoff"}
+(*) INT
+005BB0A6  F8DF 723C		ldr r7, [pc, #+572] ; 0x20414AD8
+005BB0AA  F9B7 0000		ldrsh r0, [r7]
+005BB0AE  F8DF 71A8		ldr r7, [pc, #+424] ; 0x20414A96
+005BB0B2  8038     		strh r0, [r7]
+
+#68		MOVE	P71On,onoff.P71On	{R:"2$FB:onoff"}
+(*) INT
+005BB0B4  F8DF 7230		ldr r7, [pc, #+560] ; 0x20414ADA
+005BB0B8  F9B7 0000		ldrsh r0, [r7]
+005BB0BC  F8DF 719C		ldr r7, [pc, #+412] ; 0x20414A98
+005BB0C0  8038     		strh r0, [r7]
+
+#69		MOVE	P72Off,onoff.P72Off	{R:"2$FB:onoff"}
+(*) INT
+005BB0C2  F8DF 7228		ldr r7, [pc, #+552] ; 0x20414ADC
+005BB0C6  F9B7 0000		ldrsh r0, [r7]
+005BB0CA  F8DF 7194		ldr r7, [pc, #+404] ; 0x20414A9A
+005BB0CE  8038     		strh r0, [r7]
+
+#70		MOVE	P73On,onoff.P73On	{R:"2$FB:onoff"}
+(*) INT
+005BB0D0  F8DF 721C		ldr r7, [pc, #+540] ; 0x20414ADE
+005BB0D4  F9B7 0000		ldrsh r0, [r7]
+005BB0D8  F8DF 7188		ldr r7, [pc, #+392] ; 0x20414A9C
+005BB0DC  8038     		strh r0, [r7]
+
+#71		MOVE	P74Off,onoff.P74Off	{R:"2$FB:onoff"}
+(*) INT
+005BB0DE  F8DF 7214		ldr r7, [pc, #+532] ; 0x20414AE0
+005BB0E2  F9B7 0000		ldrsh r0, [r7]
+005BB0E6  F8DF 7180		ldr r7, [pc, #+384] ; 0x20414A9E
+005BB0EA  8038     		strh r0, [r7]
+
+#72		MOVE	Lun_enabled,onoff.Lun_enabled	{R:"2$FB:onoff"}
+(*) INT
+005BB0EC  F8DF 70A8		ldr r7, [pc, #+168] ; 0x20414A36
+005BB0F0  7838     		ldrb r0, [r7]
+005BB0F2  F8DF 7178		ldr r7, [pc, #+376] ; 0x20414AA0
+005BB0F6  7038     		strb r0, [r7]
+
+#73		MOVE	Mar_enabled,onoff.Mar_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+005BB0F8  F8DF 71FC		ldr r7, [pc, #+508] ; 0x20414AE2
+005BB0FC  7838     		ldrb r0, [r7]
+005BB0FE  F8DF 7170		ldr r7, [pc, #+368] ; 0x20414AA1
+005BB102  7038     		strb r0, [r7]
+
+#74		MOVE	Mer_enabled,onoff.Mer_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+005BB104  F8DF 71F4		ldr r7, [pc, #+500] ; 0x20414AE3
+005BB108  7838     		ldrb r0, [r7]
+005BB10A  F8DF 7168		ldr r7, [pc, #+360] ; 0x20414AA2
+005BB10E  7038     		strb r0, [r7]
+
+#75		MOVE	Gio_enabled,onoff.Gio_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+005BB110  F8DF 71EC		ldr r7, [pc, #+492] ; 0x20414AE4
+005BB114  7838     		ldrb r0, [r7]
+005BB116  F8DF 7160		ldr r7, [pc, #+352] ; 0x20414AA3
+005BB11A  7038     		strb r0, [r7]
+
+#76		MOVE	Ven_enabled,onoff.Ven_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+005BB11C  F8DF 71E4		ldr r7, [pc, #+484] ; 0x20414AE5
+005BB120  7838     		ldrb r0, [r7]
+005BB122  F8DF 7158		ldr r7, [pc, #+344] ; 0x20414AA4
+005BB126  7038     		strb r0, [r7]
+
+#77		MOVE	Sab_enabled,onoff.Sab_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+005BB128  F8DF 71DC		ldr r7, [pc, #+476] ; 0x20414AE6
+005BB12C  7838     		ldrb r0, [r7]
+005BB12E  F8DF 7150		ldr r7, [pc, #+336] ; 0x20414AA5
+005BB132  7038     		strb r0, [r7]
+
+#78		MOVE	Dom_enabled,onoff.Dom_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+005BB134  F8DF 71D4		ldr r7, [pc, #+468] ; 0x20414AE7
+005BB138  7838     		ldrb r0, [r7]
+005BB13A  F8DF 7148		ldr r7, [pc, #+328] ; 0x20414AA6
+005BB13E  7038     		strb r0, [r7]
+
+#79		CAL	onoff	{R:"2$FB:onoff"}
+(*) BOOL
+005BB140  E92D 0021		stmdb sp!, { r0, r5 }
+005BB144  F8DF 70A4		ldr r7, [pc, #+164] ; 0x20414A60
+005BB148  463D     		mov r5, r7
+005BB14A  F8DF 4040		ldr r4, [pc, #+64] ; 0x5BA1C0
+005BB14E  F044 0401		orr r4, r4, #1
+005BB152  47A0     		blx r4
+005BB154  E8BD 0021		ldmia sp!, { r0, r5 }
+
+#80		MOVE	onoff.OnByCalendar,CalendarOnOff	{R:"2$FB:onoff"}
+(*) BOOL
+005BB158  F8DF 712C		ldr r7, [pc, #+300] ; 0x20414AA8
+005BB15C  F9B7 0000		ldrsh r0, [r7]
+005BB160  F8DF 702C		ldr r7, [pc, #+44] ; 0x20414A16
+005BB164  B082     		sub sp, sp, #8
+005BB166  F8CD 0000		str r0, [sp]
+005BB16A  2800     		cmp r0, #0
+005BB16C  BF18 2001		nemov r0, #1
+005BB170  BF08 2000		eqmov r0, #0
+005BB174  7038     		strb r0, [r7]
+005BB176  F8DD 0000		ldr r0, [sp]
+005BB17A  B002     		add sp, sp, #8
+
+005BB17C  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+005BB180  F8DD E000		ldr lr, [sp]
+005BB184  B002     		add sp, sp, #8
+
+005BB186  4770     		bx lr
+
+005BB188  00498A5D		; 0x00498A5D
+005BB18C  005BA1C0		; 0x005BA1C0
+005BB190  20414A16		; 0x20414A16
+005BB194  20414A17		; 0x20414A17
+005BB198  20414A36		; 0x20414A36
+005BB19C  20414A37		; 0x20414A37
+005BB1A0  20414A38		; 0x20414A38
+005BB1A4  20414A40		; 0x20414A40
+005BB1A8  20414A44		; 0x20414A44
+005BB1AC  20414A45		; 0x20414A45
+005BB1B0  20414A46		; 0x20414A46
+005BB1B4  20414A48		; 0x20414A48
+005BB1B8  20414A49		; 0x20414A49
+005BB1BC  20414A4A		; 0x20414A4A
+005BB1C0  20414A4B		; 0x20414A4B
+005BB1C4  20414A4C		; 0x20414A4C
+005BB1C8  20414A4D		; 0x20414A4D
+005BB1CC  20414A50		; 0x20414A50
+005BB1D0  20414A52		; 0x20414A52
+005BB1D4  20414A54		; 0x20414A54
+005BB1D8  20414A56		; 0x20414A56
+005BB1DC  20414A58		; 0x20414A58
+005BB1E0  20414A5A		; 0x20414A5A
+005BB1E4  20414A5C		; 0x20414A5C
+005BB1E8  20414A5E		; 0x20414A5E
+005BB1EC  20414A60		; 0x20414A60
+005BB1F0  20414A62		; 0x20414A62
+005BB1F4  20414A64		; 0x20414A64
+005BB1F8  20414A66		; 0x20414A66
+005BB1FC  20414A68		; 0x20414A68
+005BB200  20414A6A		; 0x20414A6A
+005BB204  20414A6C		; 0x20414A6C
+005BB208  20414A6E		; 0x20414A6E
+005BB20C  20414A70		; 0x20414A70
+005BB210  20414A72		; 0x20414A72
+005BB214  20414A74		; 0x20414A74
+005BB218  20414A76		; 0x20414A76
+005BB21C  20414A78		; 0x20414A78
+005BB220  20414A7A		; 0x20414A7A
+005BB224  20414A7C		; 0x20414A7C
+005BB228  20414A7E		; 0x20414A7E
+005BB22C  20414A80		; 0x20414A80
+005BB230  20414A82		; 0x20414A82
+005BB234  20414A84		; 0x20414A84
+005BB238  20414A86		; 0x20414A86
+005BB23C  20414A88		; 0x20414A88
+005BB240  20414A8A		; 0x20414A8A
+005BB244  20414A8C		; 0x20414A8C
+005BB248  20414A8E		; 0x20414A8E
+005BB24C  20414A90		; 0x20414A90
+005BB250  20414A92		; 0x20414A92
+005BB254  20414A94		; 0x20414A94
+005BB258  20414A96		; 0x20414A96
+005BB25C  20414A98		; 0x20414A98
+005BB260  20414A9A		; 0x20414A9A
+005BB264  20414A9C		; 0x20414A9C
+005BB268  20414A9E		; 0x20414A9E
+005BB26C  20414AA0		; 0x20414AA0
+005BB270  20414AA1		; 0x20414AA1
+005BB274  20414AA2		; 0x20414AA2
+005BB278  20414AA3		; 0x20414AA3
+005BB27C  20414AA4		; 0x20414AA4
+005BB280  20414AA5		; 0x20414AA5
+005BB284  20414AA6		; 0x20414AA6
+005BB288  20414AA8		; 0x20414AA8
+005BB28C  20414AAC		; 0x20414AAC
+005BB290  20414AAE		; 0x20414AAE
+005BB294  20414AB0		; 0x20414AB0
+005BB298  20414AB2		; 0x20414AB2
+005BB29C  20414AB4		; 0x20414AB4
+005BB2A0  20414AB6		; 0x20414AB6
+005BB2A4  20414AB8		; 0x20414AB8
+005BB2A8  20414ABA		; 0x20414ABA
+005BB2AC  20414ABC		; 0x20414ABC
+005BB2B0  20414ABE		; 0x20414ABE
+005BB2B4  20414AC0		; 0x20414AC0
+005BB2B8  20414AC2		; 0x20414AC2
+005BB2BC  20414AC4		; 0x20414AC4
+005BB2C0  20414AC6		; 0x20414AC6
+005BB2C4  20414AC8		; 0x20414AC8
+005BB2C8  20414ACA		; 0x20414ACA
+005BB2CC  20414ACC		; 0x20414ACC
+005BB2D0  20414ACE		; 0x20414ACE
+005BB2D4  20414AD0		; 0x20414AD0
+005BB2D8  20414AD2		; 0x20414AD2
+005BB2DC  20414AD4		; 0x20414AD4
+005BB2E0  20414AD6		; 0x20414AD6
+005BB2E4  20414AD8		; 0x20414AD8
+005BB2E8  20414ADA		; 0x20414ADA
+005BB2EC  20414ADC		; 0x20414ADC
+005BB2F0  20414ADE		; 0x20414ADE
+005BB2F4  20414AE0		; 0x20414AE0
+005BB2F8  20414AE2		; 0x20414AE2
+005BB2FC  20414AE3		; 0x20414AE3
+005BB300  20414AE4		; 0x20414AE4
+005BB304  20414AE5		; 0x20414AE5
+005BB308  20414AE6		; 0x20414AE6
+005BB30C  20414AE7		; 0x20414AE7
+005BB310  2041A2BC		; 0x2041A2BC
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+005BB314  4770     		bx lr
+
+
+*** OUTPUT:
+005BB316  4770     		bx lr
+
+
+
+**************************************************
+	Task Back init code
+**************************************************
+
+005BB318  B082     		sub sp, sp, #8
+005BB31A  F8CD E000		str lr, [sp]
+005BB31E  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+
+005BB322  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+005BB326  F8DD E000		ldr lr, [sp]
+005BB32A  B002     		add sp, sp, #8
+
+005BB32C  4770     		bx lr
+
+
+
+**************************************************
+	Global init code
+**************************************************
+
+005BB340  B082     		sub sp, sp, #8
+005BB342  F8CD E000		str lr, [sp]
+005BB346  E92D 0FF0		stmdb sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+
+Var init: Temp_setpoint_inverno = 50
+005BB34A  F8DF 7138		ldr r7, [pc, #+312] ; 0x20414A32
+005BB34E  F240 0032		movw r0, #0x0032
+005BB352  8038     		strh r0, [r7]
+
+Var init: T_tolleranza = 4
+005BB354  F8DF 7130		ldr r7, [pc, #+304] ; 0x20414A34
+005BB358  F240 0004		movw r0, #0x0004
+005BB35C  8038     		strh r0, [r7]
+
+Var init: P11On = 480
+005BB35E  F8DF 712C		ldr r7, [pc, #+300] ; 0x20414A5E
+005BB362  F240 10E0		movw r0, #0x01E0
+005BB366  8038     		strh r0, [r7]
+
+Var init: P12Off = 780
+005BB368  F8DF 7124		ldr r7, [pc, #+292] ; 0x20414AAC
+005BB36C  F240 300C		movw r0, #0x030C
+005BB370  8038     		strh r0, [r7]
+
+Var init: P13On = 900
+005BB372  F8DF 7120		ldr r7, [pc, #+288] ; 0x20414AAE
+005BB376  F240 3084		movw r0, #0x0384
+005BB37A  8038     		strh r0, [r7]
+
+Var init: P14Off = 1140
+005BB37C  F8DF 7118		ldr r7, [pc, #+280] ; 0x20414AB0
+005BB380  F240 4074		movw r0, #0x0474
+005BB384  8038     		strh r0, [r7]
+
+Var init: P21On = 480
+005BB386  F8DF 7114		ldr r7, [pc, #+276] ; 0x20414AB2
+005BB38A  F240 10E0		movw r0, #0x01E0
+005BB38E  8038     		strh r0, [r7]
+
+Var init: P22Off = 780
+005BB390  F8DF 710C		ldr r7, [pc, #+268] ; 0x20414AB4
+005BB394  F240 300C		movw r0, #0x030C
+005BB398  8038     		strh r0, [r7]
+
+Var init: P23On = 900
+005BB39A  F8DF 7108		ldr r7, [pc, #+264] ; 0x20414AB6
+005BB39E  F240 3084		movw r0, #0x0384
+005BB3A2  8038     		strh r0, [r7]
+
+Var init: P24Off = 1140
+005BB3A4  F8DF 7100		ldr r7, [pc, #+256] ; 0x20414AB8
+005BB3A8  F240 4074		movw r0, #0x0474
+005BB3AC  8038     		strh r0, [r7]
+
+Var init: P31On = 480
+005BB3AE  F8DF 70FC		ldr r7, [pc, #+252] ; 0x20414ABA
+005BB3B2  F240 10E0		movw r0, #0x01E0
+005BB3B6  8038     		strh r0, [r7]
+
+Var init: P32Off = 780
+005BB3B8  F8DF 70F4		ldr r7, [pc, #+244] ; 0x20414ABC
+005BB3BC  F240 300C		movw r0, #0x030C
+005BB3C0  8038     		strh r0, [r7]
+
+Var init: P33On = 900
+005BB3C2  F8DF 70F0		ldr r7, [pc, #+240] ; 0x20414ABE
+005BB3C6  F240 3084		movw r0, #0x0384
+005BB3CA  8038     		strh r0, [r7]
+
+Var init: P34Off = 1140
+005BB3CC  F8DF 70E8		ldr r7, [pc, #+232] ; 0x20414AC0
+005BB3D0  F240 4074		movw r0, #0x0474
+005BB3D4  8038     		strh r0, [r7]
+
+Var init: P41On = 480
+005BB3D6  F8DF 70E4		ldr r7, [pc, #+228] ; 0x20414AC2
+005BB3DA  F240 10E0		movw r0, #0x01E0
+005BB3DE  8038     		strh r0, [r7]
+
+Var init: P42Off = 780
+005BB3E0  F8DF 70DC		ldr r7, [pc, #+220] ; 0x20414AC4
+005BB3E4  F240 300C		movw r0, #0x030C
+005BB3E8  8038     		strh r0, [r7]
+
+Var init: P43On = 900
+005BB3EA  F8DF 70D8		ldr r7, [pc, #+216] ; 0x20414AC6
+005BB3EE  F240 3084		movw r0, #0x0384
+005BB3F2  8038     		strh r0, [r7]
+
+Var init: P44Off = 1140
+005BB3F4  F8DF 70D0		ldr r7, [pc, #+208] ; 0x20414AC8
+005BB3F8  F240 4074		movw r0, #0x0474
+005BB3FC  8038     		strh r0, [r7]
+
+Var init: P51On = 480
+005BB3FE  F8DF 70CC		ldr r7, [pc, #+204] ; 0x20414ACA
+005BB402  F240 10E0		movw r0, #0x01E0
+005BB406  8038     		strh r0, [r7]
+
+Var init: P52Off = 780
+005BB408  F8DF 70C4		ldr r7, [pc, #+196] ; 0x20414ACC
+005BB40C  F240 300C		movw r0, #0x030C
+005BB410  8038     		strh r0, [r7]
+
+Var init: P53On = 900
+005BB412  F8DF 70C0		ldr r7, [pc, #+192] ; 0x20414ACE
+005BB416  F240 3084		movw r0, #0x0384
+005BB41A  8038     		strh r0, [r7]
+
+Var init: P54Off = 1200
+005BB41C  F8DF 70B8		ldr r7, [pc, #+184] ; 0x20414AD0
+005BB420  F240 40B0		movw r0, #0x04B0
+005BB424  8038     		strh r0, [r7]
+
+Var init: P61On = 480
+005BB426  F8DF 70B4		ldr r7, [pc, #+180] ; 0x20414AD2
+005BB42A  F240 10E0		movw r0, #0x01E0
+005BB42E  8038     		strh r0, [r7]
+
+Var init: P62Off = 780
+005BB430  F8DF 70AC		ldr r7, [pc, #+172] ; 0x20414AD4
+005BB434  F240 300C		movw r0, #0x030C
+005BB438  8038     		strh r0, [r7]
+
+Var init: P63On = 900
+005BB43A  F8DF 70A8		ldr r7, [pc, #+168] ; 0x20414AD6
+005BB43E  F240 3084		movw r0, #0x0384
+005BB442  8038     		strh r0, [r7]
+
+Var init: P64Off = 1140
+005BB444  F8DF 70A0		ldr r7, [pc, #+160] ; 0x20414AD8
+005BB448  F240 4074		movw r0, #0x0474
+005BB44C  8038     		strh r0, [r7]
+
+Var init: P71On = 480
+005BB44E  F8DF 709C		ldr r7, [pc, #+156] ; 0x20414ADA
+005BB452  F240 10E0		movw r0, #0x01E0
+005BB456  8038     		strh r0, [r7]
+
+Var init: P72Off = 780
+005BB458  F8DF 7094		ldr r7, [pc, #+148] ; 0x20414ADC
+005BB45C  F240 300C		movw r0, #0x030C
+005BB460  8038     		strh r0, [r7]
+
+Var init: P73On = 900
+005BB462  F8DF 7090		ldr r7, [pc, #+144] ; 0x20414ADE
+005BB466  F240 3084		movw r0, #0x0384
+005BB46A  8038     		strh r0, [r7]
+
+Var init: P74Off = 1140
+005BB46C  F8DF 7088		ldr r7, [pc, #+136] ; 0x20414AE0
+005BB470  F240 4074		movw r0, #0x0474
+005BB474  8038     		strh r0, [r7]
+
+005BB476  E8BD 0FF0		ldmia sp!, { r4, r5, r6, r7, r8, r9, r10, r11 }
+005BB47A  F8DD E000		ldr lr, [sp]
+005BB47E  B002     		add sp, sp, #8
+
+005BB480  4770     		bx lr
+
+005BB484  20414A32		; 0x20414A32
+005BB488  20414A34		; 0x20414A34
+005BB48C  20414A5E		; 0x20414A5E
+005BB490  20414AAC		; 0x20414AAC
+005BB494  20414AAE		; 0x20414AAE
+005BB498  20414AB0		; 0x20414AB0
+005BB49C  20414AB2		; 0x20414AB2
+005BB4A0  20414AB4		; 0x20414AB4
+005BB4A4  20414AB6		; 0x20414AB6
+005BB4A8  20414AB8		; 0x20414AB8
+005BB4AC  20414ABA		; 0x20414ABA
+005BB4B0  20414ABC		; 0x20414ABC
+005BB4B4  20414ABE		; 0x20414ABE
+005BB4B8  20414AC0		; 0x20414AC0
+005BB4BC  20414AC2		; 0x20414AC2
+005BB4C0  20414AC4		; 0x20414AC4
+005BB4C4  20414AC6		; 0x20414AC6
+005BB4C8  20414AC8		; 0x20414AC8
+005BB4CC  20414ACA		; 0x20414ACA
+005BB4D0  20414ACC		; 0x20414ACC
+005BB4D4  20414ACE		; 0x20414ACE
+005BB4D8  20414AD0		; 0x20414AD0
+005BB4DC  20414AD2		; 0x20414AD2
+005BB4E0  20414AD4		; 0x20414AD4
+005BB4E4  20414AD6		; 0x20414AD6
+005BB4E8  20414AD8		; 0x20414AD8
+005BB4EC  20414ADA		; 0x20414ADA
+005BB4F0  20414ADC		; 0x20414ADC
+005BB4F4  20414ADE		; 0x20414ADE
+005BB4F8  20414AE0		; 0x20414AE0
+
+
+
+********************************************
+MEMORY MAP
+********************************************
+
+Code area type:          		       main code
+Start code area:          		00000000005BA000h
+End code area:            		00000000005BB500h
+Code size:                		00001500h
+
+Start local data area:    		0000000020414A08h
+End local data area:      		0000000020414AE8h
+Local data size:          		000000E0h
+
+Start retentive data area:		000000002041461Ch
+End retentive data area:  		000000002041461Ch
+Retentive data size:      		00000000h
+
+Start bit data area:      		0000000000000000h
+End bit data area:        		0000000000000000h
+Bit data size:            		00000000h
+
+
+
+********************************************
+CODE ID:                                3F807107
+DEBUG MEMO ID:                          0000BB57
+FULL MEMO ID:                           000009BA
+********************************************

@@ -1,0 +1,3130 @@
+***********************************************************************
+*
+*	CODE GENERATION LISTING FOR: CT Sinago
+*	COMPILER VERSION: 3.1.1.0
+*
+***********************************************************************
+
+***********************************************************************
+UNUSED FUNCTION BLOCKS:
+
+	eTP
+***********************************************************************
+
+**************************************************
+	List function block: eTON
+**************************************************
+
+FUNCTION_BLOCK eTON
+
+	{ DE:"(Sfr053c000) eLLabStdLib - On delay timer" }
+
+        VAR_INPUT
+IN : BOOL;	{ DE:"Timer input" }
+PT : UDINT;	{ DE:"Preset time value (mS)" }
+	END_VAR
+
+        VAR_OUTPUT
+Q : BOOL;	{ DE:"Delayed output" }
+ET : UDINT;	{ DE:"Executing time (mS)" }
+	END_VAR
+
+        VAR_EXTERNAL
+	{G:"SystemVariables"}
+SysTime AT %MB0.320 : UDINT;	{ DE:"System time [mS]" }
+	END_VAR
+
+        VAR
+TimeBf : UDINT;	{ DE:"Time buffer" }
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+05A50100  55                            push ebp
+05A50101  8B EB                         mov ebp, ebx
+
+05A50103  33 C0                         xor eax, eax
+05A50105  8A 45 04                      mov al, 4[ebp]
+
+05A50108  84 C0                         test al, al
+05A5010A  0F 94 C0                      sete al
+
+05A5010D  84 C0                         test al, al
+05A5010F  90 74 24 90 90 90             je 05A50136H
+
+05A50115  8B 05 CC CC CC CC             mov eax, [CCCCCCCCH] ; %M0+320
+05A5011B  89 45 00                      mov [ebp], eax
+
+05A5011E  B8 00 00 00 00                mov eax, 00H
+05A50123  84 C0                         test al, al
+05A50125  0F 95 45 09                   setne 9[ebp]
+
+05A50129  B8 00 00 00 00                mov eax, 00H
+05A5012E  89 45 0A                      mov 10[ebp], eax
+
+05A50131  EB 69 90 90 90                jmp 05A5019CH
+
+05A50136  33 C0                         xor eax, eax
+05A50138  8A 45 09                      mov al, 9[ebp]
+
+05A5013B  84 C0                         test al, al
+05A5013D  90 74 29 90 90 90             je 05A50169H
+
+05A50143  8B 45 05                      mov eax, 5[ebp]
+
+05A50146  3B 45 0A                      cmp eax, [ebp+10]
+05A50149  0F 97 C0                      seta al
+05A5014C  25 FF 00 00 00                and eax, 0FFh
+
+05A50151  84 C0                         test al, al
+05A50153  90 74 0E 90 90 90             je 05A50164H
+
+05A50159  B8 00 00 00 00                mov eax, 00H
+05A5015E  84 C0                         test al, al
+05A50160  0F 95 45 09                   setne 9[ebp]
+
+05A50164  EB 36 90 90 90                jmp 05A5019CH
+
+05A50169  8B 05 CC CC CC CC             mov eax, [CCCCCCCCH] ; %M0+320
+
+05A5016F  2B 45 00                      sub eax, [ebp]
+
+05A50172  89 45 0A                      mov 10[ebp], eax
+
+05A50175  8B 45 0A                      mov eax, 10[ebp]
+
+05A50178  3B 45 05                      cmp eax, [ebp+5]
+05A5017B  0F 93 C0                      setae al
+05A5017E  25 FF 00 00 00                and eax, 0FFh
+
+05A50183  84 C0                         test al, al
+05A50185  90 74 14 90 90 90             je 05A5019CH
+
+05A5018B  B8 01 00 00 00                mov eax, 01H
+05A50190  84 C0                         test al, al
+05A50192  0F 95 45 09                   setne 9[ebp]
+
+05A50196  8B 45 05                      mov eax, 5[ebp]
+05A50199  89 45 0A                      mov 10[ebp], eax
+
+05A5019C  5D                            pop ebp
+
+05A5019D  C3                            ret
+
+
+Frame allocation:
+
+	0000       : VAR TimeBf
+	0004 bit  0: VAR IN
+	0005       : VAR PT
+	0009 bit  0: VAR Q
+	000A       : VAR ET
+
+END_FUNCTION_BLOCK
+**************************************************
+	List function block: OnOffCalendar
+**************************************************
+
+FUNCTION_BLOCK OnOffCalendar
+
+        VAR_INPUT
+Giorno_settimana : INT;
+Ora : INT;
+Minuto : INT;
+P11On : INT;
+P12Off : INT;
+P13On : INT;
+P14Off : INT;
+P21On : INT;
+P22Off : INT;
+P23On : INT;
+P24Off : INT;
+P31On : INT;
+P32Off : INT;
+P33On : INT;
+P34Off : INT;
+P41On : INT;
+P42Off : INT;
+P43On : INT;
+P44Off : INT;
+P51On : INT;
+P52Off : INT;
+P53On : INT;
+P54Off : INT;
+P61On : INT;
+P62Off : INT;
+P63On : INT;
+P64Off : INT;
+P71On : INT;
+P72Off : INT;
+P73On : INT;
+P74Off : INT;
+Lun_enabled : BOOL;
+Mar_enabled : BOOL;
+Mer_enabled : BOOL;
+Gio_enabled : BOOL;
+Ven_enabled : BOOL;
+Sab_enabled : BOOL;
+Dom_enabled : BOOL;
+	END_VAR
+
+        VAR_OUTPUT
+OnByCalendar : INT;
+	END_VAR
+
+        VAR
+NOW : INT;
+	END_VAR
+
+END_FUNCTION_BLOCK
+
+05A5019E  55                            push ebp
+05A5019F  8B EB                         mov ebp, ebx
+
+#0		{SRC:OnOffCalendar}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* NOW := Ora*60+Minuto; *)
+#4			LD		Ora	{LNXT:1|4|-1}
+(*) UNDEF
+05A501A1  0F BF 45 04                   movsx eax, word ptr 4[ebp]
+
+#5			MUL		60	{LNXT:1|4|-1}
+(*) INT
+05A501A5  B9 3C 00 00 00                mov ecx, 60
+05A501AA  F7 E9                         imul ecx
+
+#6			ADD		Minuto	{LNXT:1|4|-1}
+(*) INT
+05A501AC  0F BF 4D 06                   movsx ecx, word ptr 6[ebp]
+05A501B0  03 C1                         add eax, ecx
+
+#7			ST		NOW	{LNXT:1|4|-1}
+(*) INT
+05A501B2  66 89 45 00                   mov [ebp], ax
+
+#8		
+#9		
+#10			(* CASE Giorno_settimana OF *)
+#11		
+#12			(* 1: *)
+#13			LD		Giorno_settimana	{LNXT:4|-1|-1}
+(*) UNDEF
+05A501B6  0F BF 45 02                   movsx eax, word ptr 2[ebp]
+
+#14			EQ		1	{LNXT:4|-1|-1}
+(*) INT
+05A501BA  3D 01 00 00 00                cmp eax, 1
+05A501BF  0F 94 C0                      sete al
+05A501C2  25 FF 00 00 00                and eax, 0FFh
+
+#15			JMPC		$label1	{LNXT:4|5|13}
+(-) BOOL
+05A501C7  84 C0                         test al, al
+05A501C9  0F 85 9B 00 00 00             jne 05A5026AH
+
+#16		
+#17			(* 2: *)
+#18			LD		Giorno_settimana	{LNXT:13|-1|-1}
+(*) UNDEF
+05A501CF  0F BF 45 02                   movsx eax, word ptr 2[ebp]
+
+#19			EQ		2	{LNXT:13|-1|-1}
+(*) INT
+05A501D3  3D 02 00 00 00                cmp eax, 2
+05A501D8  0F 94 C0                      sete al
+05A501DB  25 FF 00 00 00                and eax, 0FFh
+
+#20			JMPC		$label2	{LNXT:13|14|22}
+(-) BOOL
+05A501E0  84 C0                         test al, al
+05A501E2  0F 85 17 01 00 00             jne 05A502FFH
+
+#21		
+#22			(* 3: *)
+#23			LD		Giorno_settimana	{LNXT:22|-1|-1}
+(*) UNDEF
+05A501E8  0F BF 45 02                   movsx eax, word ptr 2[ebp]
+
+#24			EQ		3	{LNXT:22|-1|-1}
+(*) INT
+05A501EC  3D 03 00 00 00                cmp eax, 3
+05A501F1  0F 94 C0                      sete al
+05A501F4  25 FF 00 00 00                and eax, 0FFh
+
+#25			JMPC		$label3	{LNXT:22|23|31}
+(-) BOOL
+05A501F9  84 C0                         test al, al
+05A501FB  0F 85 93 01 00 00             jne 05A50394H
+
+#26		
+#27			(* 4: *)
+#28			LD		Giorno_settimana	{LNXT:31|-1|-1}
+(*) UNDEF
+05A50201  0F BF 45 02                   movsx eax, word ptr 2[ebp]
+
+#29			EQ		4	{LNXT:31|-1|-1}
+(*) INT
+05A50205  3D 04 00 00 00                cmp eax, 4
+05A5020A  0F 94 C0                      sete al
+05A5020D  25 FF 00 00 00                and eax, 0FFh
+
+#30			JMPC		$label4	{LNXT:31|32|40}
+(-) BOOL
+05A50212  84 C0                         test al, al
+05A50214  0F 85 0F 02 00 00             jne 05A50429H
+
+#31		
+#32			(* 5: *)
+#33			LD		Giorno_settimana	{LNXT:40|-1|-1}
+(*) UNDEF
+05A5021A  0F BF 45 02                   movsx eax, word ptr 2[ebp]
+
+#34			EQ		5	{LNXT:40|-1|-1}
+(*) INT
+05A5021E  3D 05 00 00 00                cmp eax, 5
+05A50223  0F 94 C0                      sete al
+05A50226  25 FF 00 00 00                and eax, 0FFh
+
+#35			JMPC		$label5	{LNXT:40|41|49}
+(-) BOOL
+05A5022B  84 C0                         test al, al
+05A5022D  0F 85 8B 02 00 00             jne 05A504BEH
+
+#36		
+#37			(* 6: *)
+#38			LD		Giorno_settimana	{LNXT:49|-1|-1}
+(*) UNDEF
+05A50233  0F BF 45 02                   movsx eax, word ptr 2[ebp]
+
+#39			EQ		6	{LNXT:49|-1|-1}
+(*) INT
+05A50237  3D 06 00 00 00                cmp eax, 6
+05A5023C  0F 94 C0                      sete al
+05A5023F  25 FF 00 00 00                and eax, 0FFh
+
+#40			JMPC		$label6	{LNXT:49|50|58}
+(-) BOOL
+05A50244  84 C0                         test al, al
+05A50246  0F 85 07 03 00 00             jne 05A50553H
+
+#41		
+#42			(* 7: *)
+#43			LD		Giorno_settimana	{LNXT:58|-1|-1}
+(*) UNDEF
+05A5024C  0F BF 45 02                   movsx eax, word ptr 2[ebp]
+
+#44			EQ		7	{LNXT:58|-1|-1}
+(*) INT
+05A50250  3D 07 00 00 00                cmp eax, 7
+05A50255  0F 94 C0                      sete al
+05A50258  25 FF 00 00 00                and eax, 0FFh
+
+#45			JMPC		$label7	{LNXT:58|59|68}
+(-) BOOL
+05A5025D  84 C0                         test al, al
+05A5025F  0F 85 83 03 00 00             jne 05A505E8H
+
+#46		
+#47			(* ELSE *)
+#48			JMP		$label8	{LNXT:58|59|68}
+(-) BOOL
+05A50265  E9 13 04 00 00                jmp 05A5067DH
+
+#49		
+#50			(* Istruzioni di ciascun CASE: *)
+#51		
+#52		$label1:
+#53		
+#54				(* IF NOW >= P11On AND NOW < P12Off AND Lun_enabled *)
+#55				LD		NOW	{LNXT:5|-1|-1}
+(*) UNDEF
+05A5026A  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#56				LT		P12Off	{LNXT:5|-1|-1}
+(*) INT
+05A5026E  0F BF 4D 0A                   movsx ecx, word ptr 10[ebp]
+05A50272  3B C1                         cmp eax, ecx
+05A50274  0F 9C C0                      setl al
+05A50277  25 FF 00 00 00                and eax, 0FFh
+
+#57				AND(		NOW	{LNXT:5|-1|-1}
+(*) BOOL
+05A5027C  50                            push eax
+05A5027D  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#58				GE		P11On	{LNXT:5|-1|-1}
+(*) INT
+05A50281  0F BF 4D 08                   movsx ecx, word ptr 8[ebp]
+05A50285  3B C1                         cmp eax, ecx
+05A50287  0F 9D C0                      setge al
+05A5028A  25 FF 00 00 00                and eax, 0FFh
+
+#59				)	{LNXT:5|-1|-1}
+(*) BOOL
+05A5028F  8B C8                         mov ecx, eax
+05A50291  58                            pop eax
+05A50292  23 C1                         and eax, ecx
+
+#60				AND		Lun_enabled	{LNXT:5|-1|-1}
+(*) BOOL
+05A50294  33 C9                         xor ecx, ecx
+05A50296  8A 4D 40                      mov cl, 64[ebp]
+05A50299  23 C1                         and eax, ecx
+
+#61				JMPCN	$label9	{LNXT:5|6|7}
+(-) BOOL
+05A5029B  84 C0                         test al, al
+05A5029D  90 74 11 90 90 90             je 05A502B1H
+
+#62		
+#63				(* THEN *)
+#64		
+#65					(* OnByCalendar := 1; *)
+#66					MOVE		1,OnByCalendar	{LNXT:6|-1|-1}
+(*) BOOL
+05A502A3  B8 01 00 00 00                mov eax, 01H
+05A502A8  66 89 45 47                   mov 71[ebp], ax
+
+#67					JMP		$label11	{LNXT:5|6|7}
+(-) INT
+05A502AC  EB 4C 90 90 90                jmp 05A502FAH
+
+#68		$label9:
+#69		
+#70				(* ELSIF NOW >= P13On AND NOW < P14Off *)
+#71				LD		NOW	{LNXT:7|-1|-1}
+(*) UNDEF
+05A502B1  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#72				LT		P14Off	{LNXT:7|-1|-1}
+(*) INT
+05A502B5  0F BF 4D 0E                   movsx ecx, word ptr 14[ebp]
+05A502B9  3B C1                         cmp eax, ecx
+05A502BB  0F 9C C0                      setl al
+05A502BE  25 FF 00 00 00                and eax, 0FFh
+
+#73				AND(		NOW	{LNXT:7|-1|-1}
+(*) BOOL
+05A502C3  50                            push eax
+05A502C4  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#74				GE		P13On	{LNXT:7|-1|-1}
+(*) INT
+05A502C8  0F BF 4D 0C                   movsx ecx, word ptr 12[ebp]
+05A502CC  3B C1                         cmp eax, ecx
+05A502CE  0F 9D C0                      setge al
+05A502D1  25 FF 00 00 00                and eax, 0FFh
+
+#75				)	{LNXT:7|-1|-1}
+(*) BOOL
+05A502D6  8B C8                         mov ecx, eax
+05A502D8  58                            pop eax
+05A502D9  23 C1                         and eax, ecx
+
+#76				JMPCN	$label10	{LNXT:7|8|10}
+(-) BOOL
+05A502DB  84 C0                         test al, al
+05A502DD  90 74 11 90 90 90             je 05A502F1H
+
+#77		
+#78				(* THEN *)
+#79		
+#80					(* OnByCalendar := 1; *)
+#81					MOVE		1,OnByCalendar	{LNXT:8|-1|-1}
+(*) BOOL
+05A502E3  B8 01 00 00 00                mov eax, 01H
+05A502E8  66 89 45 47                   mov 71[ebp], ax
+
+#82					JMP		$label11	{LNXT:7|8|10}
+(-) INT
+05A502EC  EB 0C 90 90 90                jmp 05A502FAH
+
+#83		$label10:
+#84		
+#85				(* ELSE *)
+#86		
+#87					(* OnByCalendar := 0; *)
+#88					MOVE		0,OnByCalendar	{LNXT:10|-1|-1}
+(*) INT
+05A502F1  B8 00 00 00 00                mov eax, 00H
+05A502F6  66 89 45 47                   mov 71[ebp], ax
+
+#89		
+#90		$label11:
+#91				(* END_IF *)
+#92				JMP		$label0	{LNXT:1|10|-1}
+(-) INT
+05A502FA  E9 87 03 00 00                jmp 05A50686H
+
+#93		
+#94		$label2:
+#95		
+#96				(* IF NOW >= P21On AND NOW < P22Off AND Mar_enabled *)
+#97				LD		NOW	{LNXT:14|-1|-1}
+(*) UNDEF
+05A502FF  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#98				LT		P22Off	{LNXT:14|-1|-1}
+(*) INT
+05A50303  0F BF 4D 12                   movsx ecx, word ptr 18[ebp]
+05A50307  3B C1                         cmp eax, ecx
+05A50309  0F 9C C0                      setl al
+05A5030C  25 FF 00 00 00                and eax, 0FFh
+
+#99				AND(		NOW	{LNXT:14|-1|-1}
+(*) BOOL
+05A50311  50                            push eax
+05A50312  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#100				GE		P21On	{LNXT:14|-1|-1}
+(*) INT
+05A50316  0F BF 4D 10                   movsx ecx, word ptr 16[ebp]
+05A5031A  3B C1                         cmp eax, ecx
+05A5031C  0F 9D C0                      setge al
+05A5031F  25 FF 00 00 00                and eax, 0FFh
+
+#101				)	{LNXT:14|-1|-1}
+(*) BOOL
+05A50324  8B C8                         mov ecx, eax
+05A50326  58                            pop eax
+05A50327  23 C1                         and eax, ecx
+
+#102				AND		Mar_enabled	{LNXT:14|-1|-1}
+(*) BOOL
+05A50329  33 C9                         xor ecx, ecx
+05A5032B  8A 4D 41                      mov cl, 65[ebp]
+05A5032E  23 C1                         and eax, ecx
+
+#103				JMPCN	$label12	{LNXT:14|15|16}
+(-) BOOL
+05A50330  84 C0                         test al, al
+05A50332  90 74 11 90 90 90             je 05A50346H
+
+#104		
+#105				(* THEN *)
+#106		
+#107					(* OnByCalendar := 1; *)
+#108					MOVE		1,OnByCalendar	{LNXT:15|-1|-1}
+(*) BOOL
+05A50338  B8 01 00 00 00                mov eax, 01H
+05A5033D  66 89 45 47                   mov 71[ebp], ax
+
+#109					JMP		$label14	{LNXT:14|15|16}
+(-) INT
+05A50341  EB 4C 90 90 90                jmp 05A5038FH
+
+#110		$label12:
+#111		
+#112				(* ELSIF NOW >= P23On AND NOW < P24Off *)
+#113				LD		NOW	{LNXT:16|-1|-1}
+(*) UNDEF
+05A50346  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#114				LT		P24Off	{LNXT:16|-1|-1}
+(*) INT
+05A5034A  0F BF 4D 16                   movsx ecx, word ptr 22[ebp]
+05A5034E  3B C1                         cmp eax, ecx
+05A50350  0F 9C C0                      setl al
+05A50353  25 FF 00 00 00                and eax, 0FFh
+
+#115				AND(		NOW	{LNXT:16|-1|-1}
+(*) BOOL
+05A50358  50                            push eax
+05A50359  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#116				GE		P23On	{LNXT:16|-1|-1}
+(*) INT
+05A5035D  0F BF 4D 14                   movsx ecx, word ptr 20[ebp]
+05A50361  3B C1                         cmp eax, ecx
+05A50363  0F 9D C0                      setge al
+05A50366  25 FF 00 00 00                and eax, 0FFh
+
+#117				)	{LNXT:16|-1|-1}
+(*) BOOL
+05A5036B  8B C8                         mov ecx, eax
+05A5036D  58                            pop eax
+05A5036E  23 C1                         and eax, ecx
+
+#118				JMPCN	$label13	{LNXT:16|17|19}
+(-) BOOL
+05A50370  84 C0                         test al, al
+05A50372  90 74 11 90 90 90             je 05A50386H
+
+#119		
+#120				(* THEN *)
+#121		
+#122					(* OnByCalendar := 1; *)
+#123					MOVE		1,OnByCalendar	{LNXT:17|-1|-1}
+(*) BOOL
+05A50378  B8 01 00 00 00                mov eax, 01H
+05A5037D  66 89 45 47                   mov 71[ebp], ax
+
+#124					JMP		$label14	{LNXT:16|17|19}
+(-) INT
+05A50381  EB 0C 90 90 90                jmp 05A5038FH
+
+#125		$label13:
+#126		
+#127				(* ELSE *)
+#128		
+#129					(* OnByCalendar := 0; *)
+#130					MOVE		0,OnByCalendar	{LNXT:19|-1|-1}
+(*) INT
+05A50386  B8 00 00 00 00                mov eax, 00H
+05A5038B  66 89 45 47                   mov 71[ebp], ax
+
+#131		
+#132		$label14:
+#133				(* END_IF *)
+#134				JMP		$label0	{LNXT:1|19|-1}
+(-) INT
+05A5038F  E9 F2 02 00 00                jmp 05A50686H
+
+#135		
+#136		$label3:
+#137		
+#138				(* IF NOW >= P31On AND NOW < P32Off AND Mer_enabled *)
+#139				LD		NOW	{LNXT:23|-1|-1}
+(*) UNDEF
+05A50394  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#140				LT		P32Off	{LNXT:23|-1|-1}
+(*) INT
+05A50398  0F BF 4D 1A                   movsx ecx, word ptr 26[ebp]
+05A5039C  3B C1                         cmp eax, ecx
+05A5039E  0F 9C C0                      setl al
+05A503A1  25 FF 00 00 00                and eax, 0FFh
+
+#141				AND(		NOW	{LNXT:23|-1|-1}
+(*) BOOL
+05A503A6  50                            push eax
+05A503A7  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#142				GE		P31On	{LNXT:23|-1|-1}
+(*) INT
+05A503AB  0F BF 4D 18                   movsx ecx, word ptr 24[ebp]
+05A503AF  3B C1                         cmp eax, ecx
+05A503B1  0F 9D C0                      setge al
+05A503B4  25 FF 00 00 00                and eax, 0FFh
+
+#143				)	{LNXT:23|-1|-1}
+(*) BOOL
+05A503B9  8B C8                         mov ecx, eax
+05A503BB  58                            pop eax
+05A503BC  23 C1                         and eax, ecx
+
+#144				AND		Mer_enabled	{LNXT:23|-1|-1}
+(*) BOOL
+05A503BE  33 C9                         xor ecx, ecx
+05A503C0  8A 4D 42                      mov cl, 66[ebp]
+05A503C3  23 C1                         and eax, ecx
+
+#145				JMPCN	$label15	{LNXT:23|24|25}
+(-) BOOL
+05A503C5  84 C0                         test al, al
+05A503C7  90 74 11 90 90 90             je 05A503DBH
+
+#146		
+#147				(* THEN *)
+#148		
+#149					(* OnByCalendar := 1; *)
+#150					MOVE		1,OnByCalendar	{LNXT:24|-1|-1}
+(*) BOOL
+05A503CD  B8 01 00 00 00                mov eax, 01H
+05A503D2  66 89 45 47                   mov 71[ebp], ax
+
+#151					JMP		$label17	{LNXT:23|24|25}
+(-) INT
+05A503D6  EB 4C 90 90 90                jmp 05A50424H
+
+#152		$label15:
+#153		
+#154				(* ELSIF NOW >= P33On AND NOW < P34Off *)
+#155				LD		NOW	{LNXT:25|-1|-1}
+(*) UNDEF
+05A503DB  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#156				LT		P34Off	{LNXT:25|-1|-1}
+(*) INT
+05A503DF  0F BF 4D 1E                   movsx ecx, word ptr 30[ebp]
+05A503E3  3B C1                         cmp eax, ecx
+05A503E5  0F 9C C0                      setl al
+05A503E8  25 FF 00 00 00                and eax, 0FFh
+
+#157				AND(		NOW	{LNXT:25|-1|-1}
+(*) BOOL
+05A503ED  50                            push eax
+05A503EE  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#158				GE		P33On	{LNXT:25|-1|-1}
+(*) INT
+05A503F2  0F BF 4D 1C                   movsx ecx, word ptr 28[ebp]
+05A503F6  3B C1                         cmp eax, ecx
+05A503F8  0F 9D C0                      setge al
+05A503FB  25 FF 00 00 00                and eax, 0FFh
+
+#159				)	{LNXT:25|-1|-1}
+(*) BOOL
+05A50400  8B C8                         mov ecx, eax
+05A50402  58                            pop eax
+05A50403  23 C1                         and eax, ecx
+
+#160				JMPCN	$label16	{LNXT:25|26|28}
+(-) BOOL
+05A50405  84 C0                         test al, al
+05A50407  90 74 11 90 90 90             je 05A5041BH
+
+#161		
+#162				(* THEN *)
+#163		
+#164					(* OnByCalendar := 1; *)
+#165					MOVE		1,OnByCalendar	{LNXT:26|-1|-1}
+(*) BOOL
+05A5040D  B8 01 00 00 00                mov eax, 01H
+05A50412  66 89 45 47                   mov 71[ebp], ax
+
+#166					JMP		$label17	{LNXT:25|26|28}
+(-) INT
+05A50416  EB 0C 90 90 90                jmp 05A50424H
+
+#167		$label16:
+#168		
+#169				(* ELSE *)
+#170		
+#171					(* OnByCalendar := 0; *)
+#172					MOVE		0,OnByCalendar	{LNXT:28|-1|-1}
+(*) INT
+05A5041B  B8 00 00 00 00                mov eax, 00H
+05A50420  66 89 45 47                   mov 71[ebp], ax
+
+#173		
+#174		$label17:
+#175				(* END_IF *)
+#176				JMP		$label0	{LNXT:1|28|-1}
+(-) INT
+05A50424  E9 5D 02 00 00                jmp 05A50686H
+
+#177		
+#178		$label4:
+#179		
+#180				(* IF NOW >= P41On AND NOW < P42Off AND Gio_enabled *)
+#181				LD		NOW	{LNXT:32|-1|-1}
+(*) UNDEF
+05A50429  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#182				LT		P42Off	{LNXT:32|-1|-1}
+(*) INT
+05A5042D  0F BF 4D 22                   movsx ecx, word ptr 34[ebp]
+05A50431  3B C1                         cmp eax, ecx
+05A50433  0F 9C C0                      setl al
+05A50436  25 FF 00 00 00                and eax, 0FFh
+
+#183				AND(		NOW	{LNXT:32|-1|-1}
+(*) BOOL
+05A5043B  50                            push eax
+05A5043C  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#184				GE		P41On	{LNXT:32|-1|-1}
+(*) INT
+05A50440  0F BF 4D 20                   movsx ecx, word ptr 32[ebp]
+05A50444  3B C1                         cmp eax, ecx
+05A50446  0F 9D C0                      setge al
+05A50449  25 FF 00 00 00                and eax, 0FFh
+
+#185				)	{LNXT:32|-1|-1}
+(*) BOOL
+05A5044E  8B C8                         mov ecx, eax
+05A50450  58                            pop eax
+05A50451  23 C1                         and eax, ecx
+
+#186				AND		Gio_enabled	{LNXT:32|-1|-1}
+(*) BOOL
+05A50453  33 C9                         xor ecx, ecx
+05A50455  8A 4D 43                      mov cl, 67[ebp]
+05A50458  23 C1                         and eax, ecx
+
+#187				JMPCN	$label18	{LNXT:32|33|34}
+(-) BOOL
+05A5045A  84 C0                         test al, al
+05A5045C  90 74 11 90 90 90             je 05A50470H
+
+#188		
+#189				(* THEN *)
+#190		
+#191					(* OnByCalendar := 1; *)
+#192					MOVE		1,OnByCalendar	{LNXT:33|-1|-1}
+(*) BOOL
+05A50462  B8 01 00 00 00                mov eax, 01H
+05A50467  66 89 45 47                   mov 71[ebp], ax
+
+#193					JMP		$label20	{LNXT:32|33|34}
+(-) INT
+05A5046B  EB 4C 90 90 90                jmp 05A504B9H
+
+#194		$label18:
+#195		
+#196				(* ELSIF NOW >= P43On AND NOW < P44Off *)
+#197				LD		NOW	{LNXT:34|-1|-1}
+(*) UNDEF
+05A50470  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#198				LT		P44Off	{LNXT:34|-1|-1}
+(*) INT
+05A50474  0F BF 4D 26                   movsx ecx, word ptr 38[ebp]
+05A50478  3B C1                         cmp eax, ecx
+05A5047A  0F 9C C0                      setl al
+05A5047D  25 FF 00 00 00                and eax, 0FFh
+
+#199				AND(		NOW	{LNXT:34|-1|-1}
+(*) BOOL
+05A50482  50                            push eax
+05A50483  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#200				GE		P43On	{LNXT:34|-1|-1}
+(*) INT
+05A50487  0F BF 4D 24                   movsx ecx, word ptr 36[ebp]
+05A5048B  3B C1                         cmp eax, ecx
+05A5048D  0F 9D C0                      setge al
+05A50490  25 FF 00 00 00                and eax, 0FFh
+
+#201				)	{LNXT:34|-1|-1}
+(*) BOOL
+05A50495  8B C8                         mov ecx, eax
+05A50497  58                            pop eax
+05A50498  23 C1                         and eax, ecx
+
+#202				JMPCN	$label19	{LNXT:34|35|37}
+(-) BOOL
+05A5049A  84 C0                         test al, al
+05A5049C  90 74 11 90 90 90             je 05A504B0H
+
+#203		
+#204				(* THEN *)
+#205		
+#206					(* OnByCalendar := 1; *)
+#207					MOVE		1,OnByCalendar	{LNXT:35|-1|-1}
+(*) BOOL
+05A504A2  B8 01 00 00 00                mov eax, 01H
+05A504A7  66 89 45 47                   mov 71[ebp], ax
+
+#208					JMP		$label20	{LNXT:34|35|37}
+(-) INT
+05A504AB  EB 0C 90 90 90                jmp 05A504B9H
+
+#209		$label19:
+#210		
+#211				(* ELSE *)
+#212		
+#213					(* OnByCalendar := 0; *)
+#214					MOVE		0,OnByCalendar	{LNXT:37|-1|-1}
+(*) INT
+05A504B0  B8 00 00 00 00                mov eax, 00H
+05A504B5  66 89 45 47                   mov 71[ebp], ax
+
+#215		
+#216		$label20:
+#217				(* END_IF *)
+#218				JMP		$label0	{LNXT:1|37|-1}
+(-) INT
+05A504B9  E9 C8 01 00 00                jmp 05A50686H
+
+#219		
+#220		$label5:
+#221		
+#222				(* IF NOW >= P51On AND NOW < P52Off AND Ven_enabled *)
+#223				LD		NOW	{LNXT:41|-1|-1}
+(*) UNDEF
+05A504BE  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#224				LT		P52Off	{LNXT:41|-1|-1}
+(*) INT
+05A504C2  0F BF 4D 2A                   movsx ecx, word ptr 42[ebp]
+05A504C6  3B C1                         cmp eax, ecx
+05A504C8  0F 9C C0                      setl al
+05A504CB  25 FF 00 00 00                and eax, 0FFh
+
+#225				AND(		NOW	{LNXT:41|-1|-1}
+(*) BOOL
+05A504D0  50                            push eax
+05A504D1  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#226				GE		P51On	{LNXT:41|-1|-1}
+(*) INT
+05A504D5  0F BF 4D 28                   movsx ecx, word ptr 40[ebp]
+05A504D9  3B C1                         cmp eax, ecx
+05A504DB  0F 9D C0                      setge al
+05A504DE  25 FF 00 00 00                and eax, 0FFh
+
+#227				)	{LNXT:41|-1|-1}
+(*) BOOL
+05A504E3  8B C8                         mov ecx, eax
+05A504E5  58                            pop eax
+05A504E6  23 C1                         and eax, ecx
+
+#228				AND		Ven_enabled	{LNXT:41|-1|-1}
+(*) BOOL
+05A504E8  33 C9                         xor ecx, ecx
+05A504EA  8A 4D 44                      mov cl, 68[ebp]
+05A504ED  23 C1                         and eax, ecx
+
+#229				JMPCN	$label21	{LNXT:41|42|43}
+(-) BOOL
+05A504EF  84 C0                         test al, al
+05A504F1  90 74 11 90 90 90             je 05A50505H
+
+#230		
+#231				(* THEN *)
+#232		
+#233					(* OnByCalendar := 1; *)
+#234					MOVE		1,OnByCalendar	{LNXT:42|-1|-1}
+(*) BOOL
+05A504F7  B8 01 00 00 00                mov eax, 01H
+05A504FC  66 89 45 47                   mov 71[ebp], ax
+
+#235					JMP		$label23	{LNXT:41|42|43}
+(-) INT
+05A50500  EB 4C 90 90 90                jmp 05A5054EH
+
+#236		$label21:
+#237		
+#238				(* ELSIF NOW >= P53On AND NOW < P54Off *)
+#239				LD		NOW	{LNXT:43|-1|-1}
+(*) UNDEF
+05A50505  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#240				LT		P54Off	{LNXT:43|-1|-1}
+(*) INT
+05A50509  0F BF 4D 2E                   movsx ecx, word ptr 46[ebp]
+05A5050D  3B C1                         cmp eax, ecx
+05A5050F  0F 9C C0                      setl al
+05A50512  25 FF 00 00 00                and eax, 0FFh
+
+#241				AND(		NOW	{LNXT:43|-1|-1}
+(*) BOOL
+05A50517  50                            push eax
+05A50518  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#242				GE		P53On	{LNXT:43|-1|-1}
+(*) INT
+05A5051C  0F BF 4D 2C                   movsx ecx, word ptr 44[ebp]
+05A50520  3B C1                         cmp eax, ecx
+05A50522  0F 9D C0                      setge al
+05A50525  25 FF 00 00 00                and eax, 0FFh
+
+#243				)	{LNXT:43|-1|-1}
+(*) BOOL
+05A5052A  8B C8                         mov ecx, eax
+05A5052C  58                            pop eax
+05A5052D  23 C1                         and eax, ecx
+
+#244				JMPCN	$label22	{LNXT:43|44|46}
+(-) BOOL
+05A5052F  84 C0                         test al, al
+05A50531  90 74 11 90 90 90             je 05A50545H
+
+#245		
+#246				(* THEN *)
+#247		
+#248					(* OnByCalendar := 1; *)
+#249					MOVE		1,OnByCalendar	{LNXT:44|-1|-1}
+(*) BOOL
+05A50537  B8 01 00 00 00                mov eax, 01H
+05A5053C  66 89 45 47                   mov 71[ebp], ax
+
+#250					JMP		$label23	{LNXT:43|44|46}
+(-) INT
+05A50540  EB 0C 90 90 90                jmp 05A5054EH
+
+#251		$label22:
+#252		
+#253				(* ELSE *)
+#254		
+#255					(* OnByCalendar := 0; *)
+#256					MOVE		0,OnByCalendar	{LNXT:46|-1|-1}
+(*) INT
+05A50545  B8 00 00 00 00                mov eax, 00H
+05A5054A  66 89 45 47                   mov 71[ebp], ax
+
+#257		
+#258		$label23:
+#259				(* END_IF *)
+#260				JMP		$label0	{LNXT:1|46|-1}
+(-) INT
+05A5054E  E9 33 01 00 00                jmp 05A50686H
+
+#261		
+#262		$label6:
+#263		
+#264				(* IF NOW >= P61On AND NOW < P62Off AND Sab_enabled *)
+#265				LD		NOW	{LNXT:50|-1|-1}
+(*) UNDEF
+05A50553  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#266				LT		P62Off	{LNXT:50|-1|-1}
+(*) INT
+05A50557  0F BF 4D 32                   movsx ecx, word ptr 50[ebp]
+05A5055B  3B C1                         cmp eax, ecx
+05A5055D  0F 9C C0                      setl al
+05A50560  25 FF 00 00 00                and eax, 0FFh
+
+#267				AND(		NOW	{LNXT:50|-1|-1}
+(*) BOOL
+05A50565  50                            push eax
+05A50566  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#268				GE		P61On	{LNXT:50|-1|-1}
+(*) INT
+05A5056A  0F BF 4D 30                   movsx ecx, word ptr 48[ebp]
+05A5056E  3B C1                         cmp eax, ecx
+05A50570  0F 9D C0                      setge al
+05A50573  25 FF 00 00 00                and eax, 0FFh
+
+#269				)	{LNXT:50|-1|-1}
+(*) BOOL
+05A50578  8B C8                         mov ecx, eax
+05A5057A  58                            pop eax
+05A5057B  23 C1                         and eax, ecx
+
+#270				AND		Sab_enabled	{LNXT:50|-1|-1}
+(*) BOOL
+05A5057D  33 C9                         xor ecx, ecx
+05A5057F  8A 4D 45                      mov cl, 69[ebp]
+05A50582  23 C1                         and eax, ecx
+
+#271				JMPCN	$label24	{LNXT:50|51|52}
+(-) BOOL
+05A50584  84 C0                         test al, al
+05A50586  90 74 11 90 90 90             je 05A5059AH
+
+#272		
+#273				(* THEN *)
+#274		
+#275					(* OnByCalendar := 1; *)
+#276					MOVE		1,OnByCalendar	{LNXT:51|-1|-1}
+(*) BOOL
+05A5058C  B8 01 00 00 00                mov eax, 01H
+05A50591  66 89 45 47                   mov 71[ebp], ax
+
+#277					JMP		$label26	{LNXT:50|51|52}
+(-) INT
+05A50595  EB 4C 90 90 90                jmp 05A505E3H
+
+#278		$label24:
+#279		
+#280				(* ELSIF NOW >= P63On AND NOW < P64Off *)
+#281				LD		NOW	{LNXT:52|-1|-1}
+(*) UNDEF
+05A5059A  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#282				LT		P64Off	{LNXT:52|-1|-1}
+(*) INT
+05A5059E  0F BF 4D 36                   movsx ecx, word ptr 54[ebp]
+05A505A2  3B C1                         cmp eax, ecx
+05A505A4  0F 9C C0                      setl al
+05A505A7  25 FF 00 00 00                and eax, 0FFh
+
+#283				AND(		NOW	{LNXT:52|-1|-1}
+(*) BOOL
+05A505AC  50                            push eax
+05A505AD  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#284				GE		P63On	{LNXT:52|-1|-1}
+(*) INT
+05A505B1  0F BF 4D 34                   movsx ecx, word ptr 52[ebp]
+05A505B5  3B C1                         cmp eax, ecx
+05A505B7  0F 9D C0                      setge al
+05A505BA  25 FF 00 00 00                and eax, 0FFh
+
+#285				)	{LNXT:52|-1|-1}
+(*) BOOL
+05A505BF  8B C8                         mov ecx, eax
+05A505C1  58                            pop eax
+05A505C2  23 C1                         and eax, ecx
+
+#286				JMPCN	$label25	{LNXT:52|53|55}
+(-) BOOL
+05A505C4  84 C0                         test al, al
+05A505C6  90 74 11 90 90 90             je 05A505DAH
+
+#287		
+#288				(* THEN *)
+#289		
+#290					(* OnByCalendar := 1; *)
+#291					MOVE		1,OnByCalendar	{LNXT:53|-1|-1}
+(*) BOOL
+05A505CC  B8 01 00 00 00                mov eax, 01H
+05A505D1  66 89 45 47                   mov 71[ebp], ax
+
+#292					JMP		$label26	{LNXT:52|53|55}
+(-) INT
+05A505D5  EB 0C 90 90 90                jmp 05A505E3H
+
+#293		$label25:
+#294		
+#295				(* ELSE *)
+#296		
+#297					(* OnByCalendar := 0; *)
+#298					MOVE		0,OnByCalendar	{LNXT:55|-1|-1}
+(*) INT
+05A505DA  B8 00 00 00 00                mov eax, 00H
+05A505DF  66 89 45 47                   mov 71[ebp], ax
+
+#299		
+#300		$label26:
+#301				(* END_IF *)
+#302				JMP		$label0	{LNXT:1|55|-1}
+(-) INT
+05A505E3  E9 9E 00 00 00                jmp 05A50686H
+
+#303		
+#304		$label7:
+#305		
+#306				(* IF NOW >= P71On AND NOW < P72Off AND Dom_enabled *)
+#307				LD		NOW	{LNXT:59|-1|-1}
+(*) UNDEF
+05A505E8  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#308				LT		P72Off	{LNXT:59|-1|-1}
+(*) INT
+05A505EC  0F BF 4D 3A                   movsx ecx, word ptr 58[ebp]
+05A505F0  3B C1                         cmp eax, ecx
+05A505F2  0F 9C C0                      setl al
+05A505F5  25 FF 00 00 00                and eax, 0FFh
+
+#309				AND(		NOW	{LNXT:59|-1|-1}
+(*) BOOL
+05A505FA  50                            push eax
+05A505FB  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#310				GE		P71On	{LNXT:59|-1|-1}
+(*) INT
+05A505FF  0F BF 4D 38                   movsx ecx, word ptr 56[ebp]
+05A50603  3B C1                         cmp eax, ecx
+05A50605  0F 9D C0                      setge al
+05A50608  25 FF 00 00 00                and eax, 0FFh
+
+#311				)	{LNXT:59|-1|-1}
+(*) BOOL
+05A5060D  8B C8                         mov ecx, eax
+05A5060F  58                            pop eax
+05A50610  23 C1                         and eax, ecx
+
+#312				AND		Dom_enabled	{LNXT:59|-1|-1}
+(*) BOOL
+05A50612  33 C9                         xor ecx, ecx
+05A50614  8A 4D 46                      mov cl, 70[ebp]
+05A50617  23 C1                         and eax, ecx
+
+#313				JMPCN	$label27	{LNXT:59|60|61}
+(-) BOOL
+05A50619  84 C0                         test al, al
+05A5061B  90 74 11 90 90 90             je 05A5062FH
+
+#314		
+#315				(* THEN *)
+#316		
+#317					(* OnByCalendar := 1; *)
+#318					MOVE		1,OnByCalendar	{LNXT:60|-1|-1}
+(*) BOOL
+05A50621  B8 01 00 00 00                mov eax, 01H
+05A50626  66 89 45 47                   mov 71[ebp], ax
+
+#319					JMP		$label29	{LNXT:59|60|61}
+(-) INT
+05A5062A  EB 4C 90 90 90                jmp 05A50678H
+
+#320		$label27:
+#321		
+#322				(* ELSIF NOW >= P73On AND NOW < P74Off *)
+#323				LD		NOW	{LNXT:61|-1|-1}
+(*) UNDEF
+05A5062F  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#324				LT		P74Off	{LNXT:61|-1|-1}
+(*) INT
+05A50633  0F BF 4D 3E                   movsx ecx, word ptr 62[ebp]
+05A50637  3B C1                         cmp eax, ecx
+05A50639  0F 9C C0                      setl al
+05A5063C  25 FF 00 00 00                and eax, 0FFh
+
+#325				AND(		NOW	{LNXT:61|-1|-1}
+(*) BOOL
+05A50641  50                            push eax
+05A50642  0F BF 45 00                   movsx eax, word ptr [ebp]
+
+#326				GE		P73On	{LNXT:61|-1|-1}
+(*) INT
+05A50646  0F BF 4D 3C                   movsx ecx, word ptr 60[ebp]
+05A5064A  3B C1                         cmp eax, ecx
+05A5064C  0F 9D C0                      setge al
+05A5064F  25 FF 00 00 00                and eax, 0FFh
+
+#327				)	{LNXT:61|-1|-1}
+(*) BOOL
+05A50654  8B C8                         mov ecx, eax
+05A50656  58                            pop eax
+05A50657  23 C1                         and eax, ecx
+
+#328				JMPCN	$label28	{LNXT:61|62|64}
+(-) BOOL
+05A50659  84 C0                         test al, al
+05A5065B  90 74 11 90 90 90             je 05A5066FH
+
+#329		
+#330				(* THEN *)
+#331		
+#332					(* OnByCalendar := 1; *)
+#333					MOVE		1,OnByCalendar	{LNXT:62|-1|-1}
+(*) BOOL
+05A50661  B8 01 00 00 00                mov eax, 01H
+05A50666  66 89 45 47                   mov 71[ebp], ax
+
+#334					JMP		$label29	{LNXT:61|62|64}
+(-) INT
+05A5066A  EB 0C 90 90 90                jmp 05A50678H
+
+#335		$label28:
+#336		
+#337				(* ELSE *)
+#338		
+#339					(* OnByCalendar := 0; *)
+#340					MOVE		0,OnByCalendar	{LNXT:64|-1|-1}
+(*) INT
+05A5066F  B8 00 00 00 00                mov eax, 00H
+05A50674  66 89 45 47                   mov 71[ebp], ax
+
+#341		
+#342		$label29:
+#343				(* END_IF *)
+#344				JMP		$label0	{LNXT:1|64|-1}
+(-) INT
+05A50678  EB 0C 90 90 90                jmp 05A50686H
+
+#345		
+#346		$label8:
+#347				(* OnByCalendar := 0; *)
+#348				MOVE		0,OnByCalendar	{LNXT:68|-1|-1}
+(*) INT
+05A5067D  B8 00 00 00 00                mov eax, 00H
+05A50682  66 89 45 47                   mov 71[ebp], ax
+
+05A50686  5D                            pop ebp
+
+05A50687  C3                            ret
+
+
+Frame allocation:
+
+	0000       : VAR NOW
+	0002       : VAR Giorno_settimana
+	0004       : VAR Ora
+	0006       : VAR Minuto
+	0008       : VAR P11On
+	000A       : VAR P12Off
+	000C       : VAR P13On
+	000E       : VAR P14Off
+	0010       : VAR P21On
+	0012       : VAR P22Off
+	0014       : VAR P23On
+	0016       : VAR P24Off
+	0018       : VAR P31On
+	001A       : VAR P32Off
+	001C       : VAR P33On
+	001E       : VAR P34Off
+	0020       : VAR P41On
+	0022       : VAR P42Off
+	0024       : VAR P43On
+	0026       : VAR P44Off
+	0028       : VAR P51On
+	002A       : VAR P52Off
+	002C       : VAR P53On
+	002E       : VAR P54Off
+	0030       : VAR P61On
+	0032       : VAR P62Off
+	0034       : VAR P63On
+	0036       : VAR P64Off
+	0038       : VAR P71On
+	003A       : VAR P72Off
+	003C       : VAR P73On
+	003E       : VAR P74Off
+	0040 bit  0: VAR Lun_enabled
+	0041 bit  0: VAR Mar_enabled
+	0042 bit  0: VAR Mer_enabled
+	0043 bit  0: VAR Gio_enabled
+	0044 bit  0: VAR Ven_enabled
+	0045 bit  0: VAR Sab_enabled
+	0046 bit  0: VAR Dom_enabled
+	0047       : VAR OnByCalendar
+
+END_FUNCTION_BLOCK
+**************************************************
+	List function: XUnifiedLibInit
+**************************************************
+
+FUNCTION XUnifiedLibInit : BOOL
+
+	{ DE:"XUnified library init" }
+
+        VAR_INPUT
+Cmd : BOOL;	{ DE:"Command" }
+	END_VAR
+
+        VAR
+b : BOOL;	{ DE:"Dummy" }
+ver : STRING[ 10 ];	{ DE:"Lib version" }
+ptr : @BYTE;
+	END_VAR
+
+END_FUNCTION
+
+	*** Function data allocation
+
+	Res XUnifiedLibInit: LOCAL STACK FRAME AT -4(ebp)
+	Par Cmd: CALLER STACK FRAME AT 8(ebp)
+	Var b: LOCAL STACK FRAME AT -8(ebp)
+	Var ver: LOCAL STACK FRAME AT -20(ebp)
+	Var ptr: LOCAL STACK FRAME AT -24(ebp)
+
+05A50688  55                            push ebp
+05A50689  8B EC                         mov ebp, esp
+05A5068B  81 EC 1C 00 00 00             sub esp, 28
+
+#0		{SRC:XUnifiedLibInit}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* ver:='SFR094A020'; *)
+#4			MOVE		'SFR094A020',ver	{LNXT:2|3|-1}
+(*) INT
+05A50691  B8 CC CC CC CC                mov eax, CCCCCCCCH ; $$CODE$$+244
+05A50696  50                            push eax
+05A50697  68 0B 00 00 00                push 11
+05A5069C  8B D5                         mov edx, ebp
+05A5069E  81 C2 EC FF FF FF             add edx, -20
+05A506A4  52                            push edx
+05A506A5  50                            push eax
+05A506A6  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; ST_STRING_SAFE
+05A506AB  FF D1                         call ecx
+05A506AD  81 C4 0C 00 00 00             add esp, 12
+05A506B3  58                            pop eax
+
+#5		
+#6			(* ptr:=ADR(ver); *)
+#7			ADR		ver	{LNXT:3|4|-1}
+(*) STRING
+05A506B4  8D 45 EC                      lea eax, -20[ebp]
+
+#8			ST		ptr	{LNXT:3|4|-1}
+(*) @STRING
+05A506B7  89 45 E8                      mov -24[ebp], eax
+
+#9		
+#10			(* b:=SysXUnifiedValue(TRUE, 1, ptr); *)
+#11			LD		TRUE	{LNXT:4|5|-1}
+(*) UNDEF
+05A506BA  B8 01 00 00 00                mov eax, 01H
+
+#12			SysXUnifiedValue		1, ptr	{LNXT:4|5|-1}
+(*) BOOL
+05A506BF  FF 75 E8                      push -24[ebp]
+05A506C2  68 01 00 00 00                push 1
+05A506C7  50                            push eax
+05A506C8  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; SysXUnifiedValue
+05A506CD  FF D1                         call ecx
+05A506CF  81 C4 0C 00 00 00             add esp, 12
+
+#13			ST		b	{LNXT:4|5|-1}
+(*) BOOL
+05A506D5  84 C0                         test al, al
+05A506D7  0F 95 45 F8                   setne -8[ebp]
+
+#14		
+#15			(* XUnifiedLibInit:=TRUE; *)
+#16			MOVE		TRUE,XUnifiedLibInit	{LNXT:5|-1|-1}
+(*) BOOL
+05A506DB  B8 01 00 00 00                mov eax, 01H
+05A506E0  84 C0                         test al, al
+05A506E2  0F 95 45 FC                   setne -4[ebp]
+
+05A506E6  33 C0                         xor eax, eax
+05A506E8  8A 45 FC                      mov al, -4[ebp]
+05A506EB  8B E5                         mov esp, ebp
+05A506ED  5D                            pop ebp
+
+05A506EE  C3                            ret
+
+END_FUNCTION
+**************************************************
+	List program: $$ElsistInit
+**************************************************
+
+PROGRAM $$ElsistInit
+
+        VAR
+dummy : BOOL;
+	END_VAR
+
+END_PROGRAM
+
+05A506F0  55                            push ebp
+05A506F1  8B EC                         mov ebp, esp
+05A506F3  60                            pushad
+
+#0		{SRC:$$ElsistInit}
+#1		(*$WAITSWITCH$*)
+#2		
+#3			(* dummy:=XUnifiedLibInit(TRUE); *)
+#4			LD		TRUE	{LNXT:2|2|-1}
+(*) UNDEF
+05A506F4  B8 01 00 00 00                mov eax, 01H
+
+#5			XUnifiedLibInit	{LNXT:2|2|-1}
+(*) BOOL
+05A506F9  50                            push eax
+05A506FA  E8 89 FF FF FF                call 05A50688H ; $$CODE$$+1672
+05A506FF  81 C4 04 00 00 00             add esp, 4
+
+#6			ST		dummy	{LNXT:2|2|-1}
+(*) BOOL
+05A50705  84 C0                         test al, al
+05A50707  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+12
+
+05A5070E  61                            popad
+05A5070F  5D                            pop ebp
+
+05A50710  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+05A50711  C3                            ret
+
+
+*** OUTPUT:
+05A50712  C3                            ret
+
+
+
+**************************************************
+	Task Boot init code
+**************************************************
+
+05A50713  55                            push ebp
+05A50714  8B EC                         mov ebp, esp
+
+05A50716  8B E5                         mov esp, ebp
+05A50718  5D                            pop ebp
+
+05A50719  C3                            ret
+
+**************************************************
+	List program: Controllo_HVAC_inverno
+**************************************************
+
+PROGRAM Controllo_HVAC_inverno
+
+        VAR
+Comando_caldaia AT %QX255.0 : BOOL;
+Comando_PdC AT %QX255.1 : BOOL;
+Comando_pompe AT %QX255.2 : BOOL;
+Comando_fancoil AT %QX255.3 : BOOL;
+Apertura_valvola AT %QX0.4 : BOOL;
+Fase : INT := 0;
+Temp_puffer : INT;
+Delay : eTON;
+Delay1 : eTON;
+Delay2 : eTON;
+Delay3 : eTON;
+	END_VAR
+
+END_PROGRAM
+
+05A50730  55                            push ebp
+05A50731  8B EC                         mov ebp, esp
+05A50733  60                            pushad
+
+#0		{SRC:Controllo_HVAC_inverno}
+#1		(*$WAITSWITCH$*)
+#2		
+#3		
+#4			(* IF Estate_Inverno AND CalendarOnOff *)
+#5			LD		Estate_Inverno	{LNXT:1|-1|-1}
+(*) UNDEF
+05A50734  33 C0                         xor eax, eax
+05A50736  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+13
+
+#6			AND		CalendarOnOff	{LNXT:1|-1|-1}
+(*) BOOL
+05A5073C  33 C9                         xor ecx, ecx
+05A5073E  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; $$DATA$$+14
+05A50744  23 C1                         and eax, ecx
+
+#7			JMPCN	$label0	{LNXT:1|3|97}
+(-) BOOL
+05A50746  84 C0                         test al, al
+05A50748  0F 84 92 05 00 00             je 05A50CE0H
+
+#8		
+#9			(* THEN *)
+#10		
+#11				(* Delay.PT := 20000; *)
+#12				MOVE		20000,Delay.PT	{LNXT:3|4|-1}
+(*) BOOL
+05A5074E  B8 20 4E 00 00                mov eax, 4E20H
+05A50753  89 05 CC CC CC CC             mov [CCCCCCCCH], eax ; $$DATA$$+1147
+
+#13		
+#14				(* Delay *)
+#15				CAL		Delay	{LNXT:4|5|-1}
+(*) UDINT
+05A50759  50                            push eax
+05A5075A  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+1142
+05A5075F  E8 9C F9 FF FF                call 05A50100H ; $$CODE$$+256
+05A50764  58                            pop eax
+
+#16		
+#17				(* Temp_puffer := Temp_accumulo; *)
+#18				MOVE		Temp_accumulo,Temp_puffer	{LNXT:5|9|-1}
+(*) UDINT
+05A50765  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+16
+05A5076C  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1156
+
+#19		
+#20		
+#21				(* CASE Fase OF *)
+#22		
+#23				(* 0: *)
+#24				LD		Fase	{LNXT:10|-1|-1}
+(*) UNDEF
+05A50773  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1158
+
+#25				EQ		0	{LNXT:10|-1|-1}
+(*) INT
+05A5077A  3D 00 00 00 00                cmp eax, 0
+05A5077F  0F 94 C0                      sete al
+05A50782  25 FF 00 00 00                and eax, 0FFh
+
+#26				JMPC		$label3	{LNXT:10|11|31}
+(-) BOOL
+05A50787  84 C0                         test al, al
+05A50789  90 75 78 90 90 90             jne 05A50804H
+
+#27		
+#28				(* 1: *)
+#29				LD		Fase	{LNXT:31|-1|-1}
+(*) UNDEF
+05A5078F  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1158
+
+#30				EQ		1	{LNXT:31|-1|-1}
+(*) INT
+05A50796  3D 01 00 00 00                cmp eax, 1
+05A5079B  0F 94 C0                      sete al
+05A5079E  25 FF 00 00 00                and eax, 0FFh
+
+#31				JMPC		$label4	{LNXT:31|32|46}
+(-) BOOL
+05A507A3  84 C0                         test al, al
+05A507A5  0F 85 A3 01 00 00             jne 05A5094EH
+
+#32		
+#33				(* 2: *)
+#34				LD		Fase	{LNXT:46|-1|-1}
+(*) UNDEF
+05A507AB  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1158
+
+#35				EQ		2	{LNXT:46|-1|-1}
+(*) INT
+05A507B2  3D 02 00 00 00                cmp eax, 2
+05A507B7  0F 94 C0                      sete al
+05A507BA  25 FF 00 00 00                and eax, 0FFh
+
+#36				JMPC		$label5	{LNXT:46|47|65}
+(-) BOOL
+05A507BF  84 C0                         test al, al
+05A507C1  0F 85 4A 02 00 00             jne 05A50A11H
+
+#37		
+#38				(* 3: *)
+#39				LD		Fase	{LNXT:65|-1|-1}
+(*) UNDEF
+05A507C7  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1158
+
+#40				EQ		3	{LNXT:65|-1|-1}
+(*) INT
+05A507CE  3D 03 00 00 00                cmp eax, 3
+05A507D3  0F 94 C0                      sete al
+05A507D6  25 FF 00 00 00                and eax, 0FFh
+
+#41				JMPC		$label6	{LNXT:65|66|85}
+(-) BOOL
+05A507DB  84 C0                         test al, al
+05A507DD  0F 85 0D 03 00 00             jne 05A50AF0H
+
+#42		
+#43				(* 4: *)
+#44				LD		Fase	{LNXT:85|-1|-1}
+(*) UNDEF
+05A507E3  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1158
+
+#45				EQ		4	{LNXT:85|-1|-1}
+(*) INT
+05A507EA  3D 04 00 00 00                cmp eax, 4
+05A507EF  0F 94 C0                      sete al
+05A507F2  25 FF 00 00 00                and eax, 0FFh
+
+#46				JMPC		$label7	{LNXT:85|86|1}
+(-) BOOL
+05A507F7  84 C0                         test al, al
+05A507F9  0F 85 29 04 00 00             jne 05A50C28H
+
+#47				JMP		$label2	{LNXT:85|86|1}
+(-) BOOL
+05A507FF  E9 D7 04 00 00                jmp 05A50CDBH
+
+#48		
+#49				(* Istruzioni di ciascun CASE: *)
+#50		
+#51		$label3:
+#52					(* Comando_caldaia := TRUE; *)
+#53					MOVE		TRUE,Comando_caldaia	{LNXT:11|12|-1}
+(*) BOOL
+05A50804  B8 01 00 00 00                mov eax, 01H
+05A50809  84 C0                         test al, al
+05A5080B  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#54		
+#55					(* Comando_pompe := FALSE; *)
+#56					MOVE		FALSE,Comando_pompe	{LNXT:12|13|-1}
+(*) BOOL
+05A50812  B8 00 00 00 00                mov eax, 00H
+05A50817  84 C0                         test al, al
+05A50819  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+2
+
+#57		
+#58					(* Comando_PdC := FALSE; *)
+#59					MOVE		FALSE,Comando_PdC	{LNXT:13|14|-1}
+(*) BOOL
+05A50820  B8 00 00 00 00                mov eax, 00H
+05A50825  84 C0                         test al, al
+05A50827  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+1
+
+#60		
+#61					(* Comando_fancoil := FALSE; *)
+#62					MOVE		FALSE,Comando_fancoil	{LNXT:14|16|-1}
+(*) BOOL
+05A5082E  B8 00 00 00 00                mov eax, 00H
+05A50833  84 C0                         test al, al
+05A50835  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+3
+
+#63		
+#64		
+#65					(* IF Temp_puffer < Temp_setpoint_inverno - T_tolleranza *)
+#66					LD		Temp_puffer	{LNXT:16|-1|-1}
+(*) UNDEF
+05A5083C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#67					LT(		Temp_setpoint_inverno	{LNXT:16|-1|-1}
+(*) INT
+05A50843  50                            push eax
+05A50844  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#68					SUB		T_tolleranza	{LNXT:16|-1|-1}
+(*) INT
+05A5084B  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A50852  2B C1                         sub eax, ecx
+
+#69					)	{LNXT:16|-1|-1}
+(*) INT
+05A50854  8B C8                         mov ecx, eax
+05A50856  58                            pop eax
+05A50857  3B C1                         cmp eax, ecx
+05A50859  0F 9C C0                      setl al
+05A5085C  25 FF 00 00 00                and eax, 0FFh
+
+#70					JMPCN	$label8	{LNXT:16|17|26}
+(-) BOOL
+05A50861  84 C0                         test al, al
+05A50863  0F 84 99 00 00 00             je 05A50902H
+
+#71		
+#72					(* THEN *)
+#73		
+#74						(* Comando_caldaia := TRUE; *)
+#75						MOVE		TRUE,Comando_caldaia	{LNXT:17|18|-1}
+(*) BOOL
+05A50869  B8 01 00 00 00                mov eax, 01H
+05A5086E  84 C0                         test al, al
+05A50870  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#76		
+#77						(* Delay.IN:=TRUE; *)
+#78						MOVE		TRUE,Delay.IN	{LNXT:18|19|-1}
+(*) BOOL
+05A50877  B8 01 00 00 00                mov eax, 01H
+05A5087C  84 C0                         test al, al
+05A5087E  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#79		
+#80		
+#81						(* IF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#82						LD		Temp_puffer	{LNXT:19|-1|-1}
+(*) UNDEF
+05A50885  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#83						GT(		Temp_setpoint_inverno	{LNXT:19|-1|-1}
+(*) INT
+05A5088C  50                            push eax
+05A5088D  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#84						SUB		T_tolleranza	{LNXT:19|-1|-1}
+(*) INT
+05A50894  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A5089B  2B C1                         sub eax, ecx
+
+#85						)	{LNXT:19|-1|-1}
+(*) INT
+05A5089D  8B C8                         mov ecx, eax
+05A5089F  58                            pop eax
+05A508A0  3B C1                         cmp eax, ecx
+05A508A2  0F 9F C0                      setg al
+05A508A5  25 FF 00 00 00                and eax, 0FFh
+
+#86						AND		Delay.Q	{LNXT:19|-1|-1}
+(*) BOOL
+05A508AA  33 C9                         xor ecx, ecx
+05A508AC  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; $$DATA$$+1151
+05A508B2  23 C1                         and eax, ecx
+
+#87						JMPCN	$label10	{LNXT:19|20|23}
+(-) BOOL
+05A508B4  84 C0                         test al, al
+05A508B6  90 74 22 90 90 90             je 05A508DBH
+
+#88		
+#89						(* THEN *)
+#90		
+#91							(* Delay.IN:=FALSE; *)
+#92							MOVE		FALSE,Delay.IN	{LNXT:20|21|-1}
+(*) BOOL
+05A508BC  B8 00 00 00 00                mov eax, 00H
+05A508C1  84 C0                         test al, al
+05A508C3  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#93		
+#94							(* Fase := 1; *)
+#95							MOVE		1,Fase	{LNXT:21|1|-1}
+(*) BOOL
+05A508CA  B8 01 00 00 00                mov eax, 01H
+05A508CF  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#96							JMP		$label11	{LNXT:19|20|23}
+(-) INT
+05A508D6  EB 25 90 90 90                jmp 05A508FDH
+
+#97		$label10:
+#98		
+#99						(* ELSE *)
+#100		
+#101							(* Delay.IN:=NOT Delay.Q; *)
+#102							LD		Delay.Q	{LNXT:23|24|-1}
+(*) UNDEF
+05A508DB  33 C0                         xor eax, eax
+05A508DD  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+1151
+
+#103							NOT	{LNXT:23|24|-1}
+(*) BOOL
+05A508E3  84 C0                         test al, al
+05A508E5  0F 94 C0                      sete al
+
+#104							ST		Delay.IN	{LNXT:23|24|-1}
+(*) BOOL
+05A508E8  84 C0                         test al, al
+05A508EA  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#105		
+#106							(* Fase := 0; *)
+#107							MOVE		0,Fase	{LNXT:24|1|-1}
+(*) BOOL
+05A508F1  B8 00 00 00 00                mov eax, 00H
+05A508F6  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#108		
+#109		$label11:
+#110						(* END_IF *)
+#111						JMP		$label9	{LNXT:16|17|26}
+(-) INT
+05A508FD  EB 4A 90 90 90                jmp 05A50949H
+
+#112		$label8:
+#113		
+#114					(* ELSIF Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#115					LD		Temp_puffer	{LNXT:26|-1|-1}
+(*) UNDEF
+05A50902  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#116					GT(		Temp_setpoint_inverno	{LNXT:26|-1|-1}
+(*) INT
+05A50909  50                            push eax
+05A5090A  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#117					SUB		T_tolleranza	{LNXT:26|-1|-1}
+(*) INT
+05A50911  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A50918  2B C1                         sub eax, ecx
+
+#118					)	{LNXT:26|-1|-1}
+(*) INT
+05A5091A  8B C8                         mov ecx, eax
+05A5091C  58                            pop eax
+05A5091D  3B C1                         cmp eax, ecx
+05A5091F  0F 9F C0                      setg al
+05A50922  25 FF 00 00 00                and eax, 0FFh
+
+#119					JMPCN	$label9	{LNXT:26|27|1}
+(-) BOOL
+05A50927  84 C0                         test al, al
+05A50929  90 74 1D 90 90 90             je 05A50949H
+
+#120		
+#121					(* THEN *)
+#122		
+#123						(* Delay.IN:=FALSE; *)
+#124						MOVE		FALSE,Delay.IN	{LNXT:27|28|-1}
+(*) BOOL
+05A5092F  B8 00 00 00 00                mov eax, 00H
+05A50934  84 C0                         test al, al
+05A50936  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#125		
+#126						(* Fase := 1; *)
+#127						MOVE		1,Fase	{LNXT:28|1|-1}
+(*) BOOL
+05A5093D  B8 01 00 00 00                mov eax, 01H
+05A50942  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#128		
+#129		$label9:
+#130					(* END_IF *)
+#131					JMP		$label2	{LNXT:11|1|-1}
+(-) INT
+05A50949  E9 8D 03 00 00                jmp 05A50CDBH
+
+#132		
+#133		$label4:
+#134					(* Comando_caldaia := TRUE; *)
+#135					MOVE		TRUE,Comando_caldaia	{LNXT:32|33|-1}
+(*) INT
+05A5094E  B8 01 00 00 00                mov eax, 01H
+05A50953  84 C0                         test al, al
+05A50955  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#136		
+#137					(* Comando_pompe := TRUE; *)
+#138					MOVE		TRUE,Comando_pompe	{LNXT:33|34|-1}
+(*) BOOL
+05A5095C  B8 01 00 00 00                mov eax, 01H
+05A50961  84 C0                         test al, al
+05A50963  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+2
+
+#139		
+#140					(* Comando_PdC := FALSE; *)
+#141					MOVE		FALSE,Comando_PdC	{LNXT:34|35|-1}
+(*) BOOL
+05A5096A  B8 00 00 00 00                mov eax, 00H
+05A5096F  84 C0                         test al, al
+05A50971  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+1
+
+#142		
+#143					(* Comando_fancoil := FALSE; *)
+#144					MOVE		FALSE,Comando_fancoil	{LNXT:35|37|-1}
+(*) BOOL
+05A50978  B8 00 00 00 00                mov eax, 00H
+05A5097D  84 C0                         test al, al
+05A5097F  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+3
+
+#145		
+#146					(* Delay.IN:=TRUE; *)
+#147					MOVE		TRUE,Delay.IN	{LNXT:37|38|-1}
+(*) BOOL
+05A50986  B8 01 00 00 00                mov eax, 01H
+05A5098B  84 C0                         test al, al
+05A5098D  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#148		
+#149		
+#150					(* IF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#151					LD		Temp_puffer	{LNXT:38|-1|-1}
+(*) UNDEF
+05A50994  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#152					GT(		Temp_setpoint_inverno	{LNXT:38|-1|-1}
+(*) INT
+05A5099B  50                            push eax
+05A5099C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#153					SUB		T_tolleranza	{LNXT:38|-1|-1}
+(*) INT
+05A509A3  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A509AA  2B C1                         sub eax, ecx
+
+#154					)	{LNXT:38|-1|-1}
+(*) INT
+05A509AC  8B C8                         mov ecx, eax
+05A509AE  58                            pop eax
+05A509AF  3B C1                         cmp eax, ecx
+05A509B1  0F 9F C0                      setg al
+05A509B4  25 FF 00 00 00                and eax, 0FFh
+
+#155					AND		Delay.Q	{LNXT:38|-1|-1}
+(*) BOOL
+05A509B9  33 C9                         xor ecx, ecx
+05A509BB  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; $$DATA$$+1151
+05A509C1  23 C1                         and eax, ecx
+
+#156					JMPCN	$label12	{LNXT:38|39|42}
+(-) BOOL
+05A509C3  84 C0                         test al, al
+05A509C5  90 74 22 90 90 90             je 05A509EAH
+
+#157		
+#158					(* THEN *)
+#159		
+#160						(* Delay.IN:=FALSE; *)
+#161						MOVE		FALSE,Delay.IN	{LNXT:39|40|-1}
+(*) BOOL
+05A509CB  B8 00 00 00 00                mov eax, 00H
+05A509D0  84 C0                         test al, al
+05A509D2  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#162		
+#163						(* Fase := 2; *)
+#164						MOVE		2,Fase	{LNXT:40|1|-1}
+(*) BOOL
+05A509D9  B8 02 00 00 00                mov eax, 02H
+05A509DE  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#165						JMP		$label13	{LNXT:38|39|42}
+(-) INT
+05A509E5  EB 25 90 90 90                jmp 05A50A0CH
+
+#166		$label12:
+#167		
+#168					(* ELSE *)
+#169		
+#170						(* Delay.IN:=NOT Delay.Q; *)
+#171						LD		Delay.Q	{LNXT:42|43|-1}
+(*) UNDEF
+05A509EA  33 C0                         xor eax, eax
+05A509EC  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+1151
+
+#172						NOT	{LNXT:42|43|-1}
+(*) BOOL
+05A509F2  84 C0                         test al, al
+05A509F4  0F 94 C0                      sete al
+
+#173						ST		Delay.IN	{LNXT:42|43|-1}
+(*) BOOL
+05A509F7  84 C0                         test al, al
+05A509F9  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#174		
+#175						(* Fase :=1; *)
+#176						MOVE		1,Fase	{LNXT:43|1|-1}
+(*) BOOL
+05A50A00  B8 01 00 00 00                mov eax, 01H
+05A50A05  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#177		
+#178		$label13:
+#179					(* END_IF *)
+#180					JMP		$label2	{LNXT:32|42|-1}
+(-) INT
+05A50A0C  E9 CA 02 00 00                jmp 05A50CDBH
+
+#181		
+#182		$label5:
+#183					(* Comando_caldaia := FALSE; *)
+#184					MOVE		FALSE,Comando_caldaia	{LNXT:47|48|-1}
+(*) INT
+05A50A11  B8 00 00 00 00                mov eax, 00H
+05A50A16  84 C0                         test al, al
+05A50A18  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#185		
+#186					(* Comando_pompe := TRUE; *)
+#187					MOVE		TRUE,Comando_pompe	{LNXT:48|49|-1}
+(*) BOOL
+05A50A1F  B8 01 00 00 00                mov eax, 01H
+05A50A24  84 C0                         test al, al
+05A50A26  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+2
+
+#188		
+#189					(* Comando_PdC := TRUE; *)
+#190					MOVE		TRUE,Comando_PdC	{LNXT:49|50|-1}
+(*) BOOL
+05A50A2D  B8 01 00 00 00                mov eax, 01H
+05A50A32  84 C0                         test al, al
+05A50A34  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+1
+
+#191		
+#192					(* Comando_fancoil := FALSE; *)
+#193					MOVE		FALSE,Comando_fancoil	{LNXT:50|52|-1}
+(*) BOOL
+05A50A3B  B8 00 00 00 00                mov eax, 00H
+05A50A40  84 C0                         test al, al
+05A50A42  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+3
+
+#194		
+#195					(* Delay.IN:=TRUE; *)
+#196					MOVE		TRUE,Delay.IN	{LNXT:52|53|-1}
+(*) BOOL
+05A50A49  B8 01 00 00 00                mov eax, 01H
+05A50A4E  84 C0                         test al, al
+05A50A50  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#197		
+#198		
+#199					(* IF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#200					LD		Temp_puffer	{LNXT:53|-1|-1}
+(*) UNDEF
+05A50A57  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#201					GT(		Temp_setpoint_inverno	{LNXT:53|-1|-1}
+(*) INT
+05A50A5E  50                            push eax
+05A50A5F  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#202					SUB		T_tolleranza	{LNXT:53|-1|-1}
+(*) INT
+05A50A66  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A50A6D  2B C1                         sub eax, ecx
+
+#203					)	{LNXT:53|-1|-1}
+(*) INT
+05A50A6F  8B C8                         mov ecx, eax
+05A50A71  58                            pop eax
+05A50A72  3B C1                         cmp eax, ecx
+05A50A74  0F 9F C0                      setg al
+05A50A77  25 FF 00 00 00                and eax, 0FFh
+
+#204					AND		Delay.Q	{LNXT:53|-1|-1}
+(*) BOOL
+05A50A7C  33 C9                         xor ecx, ecx
+05A50A7E  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; $$DATA$$+1151
+05A50A84  23 C1                         and eax, ecx
+
+#205					JMPCN	$label14	{LNXT:53|54|58}
+(-) BOOL
+05A50A86  84 C0                         test al, al
+05A50A88  90 74 30 90 90 90             je 05A50ABBH
+
+#206		
+#207					(* THEN *)
+#208		
+#209						(* Comando_fancoil := TRUE; *)
+#210						MOVE		TRUE,Comando_fancoil	{LNXT:54|55|-1}
+(*) BOOL
+05A50A8E  B8 01 00 00 00                mov eax, 01H
+05A50A93  84 C0                         test al, al
+05A50A95  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+3
+
+#211		
+#212						(* Delay.IN:=FALSE; *)
+#213						MOVE		FALSE,Delay.IN	{LNXT:55|56|-1}
+(*) BOOL
+05A50A9C  B8 00 00 00 00                mov eax, 00H
+05A50AA1  84 C0                         test al, al
+05A50AA3  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#214		
+#215						(* Fase := 3; *)
+#216						MOVE		3,Fase	{LNXT:56|1|-1}
+(*) BOOL
+05A50AAA  B8 03 00 00 00                mov eax, 03H
+05A50AAF  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#217						JMP		$label15	{LNXT:53|54|58}
+(-) INT
+05A50AB6  EB 33 90 90 90                jmp 05A50AEBH
+
+#218		$label14:
+#219		
+#220					(* ELSE *)
+#221		
+#222						(* Comando_fancoil := FALSE; *)
+#223						MOVE		FALSE,Comando_fancoil	{LNXT:58|59|-1}
+(*) INT
+05A50ABB  B8 00 00 00 00                mov eax, 00H
+05A50AC0  84 C0                         test al, al
+05A50AC2  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+3
+
+#224		
+#225						(* Delay.IN:=NOT Delay.Q; *)
+#226						LD		Delay.Q	{LNXT:59|60|-1}
+(*) UNDEF
+05A50AC9  33 C0                         xor eax, eax
+05A50ACB  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+1151
+
+#227						NOT	{LNXT:59|60|-1}
+(*) BOOL
+05A50AD1  84 C0                         test al, al
+05A50AD3  0F 94 C0                      sete al
+
+#228						ST		Delay.IN	{LNXT:59|60|-1}
+(*) BOOL
+05A50AD6  84 C0                         test al, al
+05A50AD8  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#229		
+#230						(* Fase := 2; *)
+#231						MOVE		2,Fase	{LNXT:60|1|-1}
+(*) BOOL
+05A50ADF  B8 02 00 00 00                mov eax, 02H
+05A50AE4  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#232		
+#233		$label15:
+#234					(* END_IF *)
+#235					JMP		$label2	{LNXT:47|58|-1}
+(-) INT
+05A50AEB  E9 EB 01 00 00                jmp 05A50CDBH
+
+#236		
+#237		$label6:
+#238					(* Comando_caldaia := FALSE; *)
+#239					MOVE		FALSE,Comando_caldaia	{LNXT:66|67|-1}
+(*) INT
+05A50AF0  B8 00 00 00 00                mov eax, 00H
+05A50AF5  84 C0                         test al, al
+05A50AF7  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#240		
+#241					(* Comando_pompe := TRUE; *)
+#242					MOVE		TRUE,Comando_pompe	{LNXT:67|68|-1}
+(*) BOOL
+05A50AFE  B8 01 00 00 00                mov eax, 01H
+05A50B03  84 C0                         test al, al
+05A50B05  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+2
+
+#243		
+#244					(* Comando_PdC := TRUE; *)
+#245					MOVE		TRUE,Comando_PdC	{LNXT:68|69|-1}
+(*) BOOL
+05A50B0C  B8 01 00 00 00                mov eax, 01H
+05A50B11  84 C0                         test al, al
+05A50B13  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+1
+
+#246		
+#247					(* Comando_fancoil := TRUE; *)
+#248					MOVE		TRUE,Comando_fancoil	{LNXT:69|71|-1}
+(*) BOOL
+05A50B1A  B8 01 00 00 00                mov eax, 01H
+05A50B1F  84 C0                         test al, al
+05A50B21  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+3
+
+#249		
+#250					(* Delay.IN := TRUE; *)
+#251					MOVE		TRUE,Delay.IN	{LNXT:71|72|-1}
+(*) BOOL
+05A50B28  B8 01 00 00 00                mov eax, 01H
+05A50B2D  84 C0                         test al, al
+05A50B2F  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#252		
+#253		
+#254					(* IF Temp_puffer < Temp_setpoint_inverno - T_tolleranza - 3 *)
+#255					LD		Temp_puffer	{LNXT:72|-1|-1}
+(*) UNDEF
+05A50B36  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#256					LT(		Temp_setpoint_inverno	{LNXT:72|-1|-1}
+(*) INT
+05A50B3D  50                            push eax
+05A50B3E  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#257					SUB		T_tolleranza	{LNXT:72|-1|-1}
+(*) INT
+05A50B45  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A50B4C  2B C1                         sub eax, ecx
+
+#258					SUB		3	{LNXT:72|-1|-1}
+(*) INT
+05A50B4E  2D 03 00 00 00                sub eax, 3
+
+#259					)	{LNXT:72|-1|-1}
+(*) INT
+05A50B53  8B C8                         mov ecx, eax
+05A50B55  58                            pop eax
+05A50B56  3B C1                         cmp eax, ecx
+05A50B58  0F 9C C0                      setl al
+05A50B5B  25 FF 00 00 00                and eax, 0FFh
+
+#260					JMPCN	$label16	{LNXT:72|73|76}
+(-) BOOL
+05A50B60  84 C0                         test al, al
+05A50B62  90 74 38 90 90 90             je 05A50B9DH
+
+#261		
+#262					(* THEN *)
+#263		
+#264						(* Comando_caldaia := TRUE; *)
+#265						MOVE		TRUE,Comando_caldaia	{LNXT:73|74|-1}
+(*) BOOL
+05A50B68  B8 01 00 00 00                mov eax, 01H
+05A50B6D  84 C0                         test al, al
+05A50B6F  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#266		
+#267						(* Delay.IN := NOT Delay.Q; *)
+#268						LD		Delay.Q	{LNXT:74|75|-1}
+(*) UNDEF
+05A50B76  33 C0                         xor eax, eax
+05A50B78  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+1151
+
+#269						NOT	{LNXT:74|75|-1}
+(*) BOOL
+05A50B7E  84 C0                         test al, al
+05A50B80  0F 94 C0                      sete al
+
+#270						ST		Delay.IN	{LNXT:74|75|-1}
+(*) BOOL
+05A50B83  84 C0                         test al, al
+05A50B85  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#271		
+#272						(* Fase := 4; *)
+#273						MOVE		4,Fase	{LNXT:75|1|-1}
+(*) BOOL
+05A50B8C  B8 04 00 00 00                mov eax, 04H
+05A50B91  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#274						JMP		$label18	{LNXT:72|73|76}
+(-) INT
+05A50B98  E9 86 00 00 00                jmp 05A50C23H
+
+#275		$label16:
+#276		
+#277					(* ELSIF Delay.Q AND Temp_puffer > Temp_setpoint_inverno - T_tolleranza *)
+#278					LD		Temp_puffer	{LNXT:76|-1|-1}
+(*) UNDEF
+05A50B9D  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#279					GT(		Temp_setpoint_inverno	{LNXT:76|-1|-1}
+(*) INT
+05A50BA4  50                            push eax
+05A50BA5  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#280					SUB		T_tolleranza	{LNXT:76|-1|-1}
+(*) INT
+05A50BAC  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A50BB3  2B C1                         sub eax, ecx
+
+#281					)	{LNXT:76|-1|-1}
+(*) INT
+05A50BB5  8B C8                         mov ecx, eax
+05A50BB7  58                            pop eax
+05A50BB8  3B C1                         cmp eax, ecx
+05A50BBA  0F 9F C0                      setg al
+05A50BBD  25 FF 00 00 00                and eax, 0FFh
+
+#282					AND		Delay.Q	{LNXT:76|-1|-1}
+(*) BOOL
+05A50BC2  33 C9                         xor ecx, ecx
+05A50BC4  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; $$DATA$$+1151
+05A50BCA  23 C1                         and eax, ecx
+
+#283					JMPCN	$label17	{LNXT:76|77|81}
+(-) BOOL
+05A50BCC  84 C0                         test al, al
+05A50BCE  90 74 38 90 90 90             je 05A50C09H
+
+#284		
+#285					(* THEN *)
+#286		
+#287						(* Comando_caldaia := FALSE; *)
+#288						MOVE		FALSE,Comando_caldaia	{LNXT:77|78|-1}
+(*) BOOL
+05A50BD4  B8 00 00 00 00                mov eax, 00H
+05A50BD9  84 C0                         test al, al
+05A50BDB  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#289		
+#290						(* Delay.IN := NOT Delay.Q; *)
+#291						LD		Delay.Q	{LNXT:78|79|-1}
+(*) UNDEF
+05A50BE2  33 C0                         xor eax, eax
+05A50BE4  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+1151
+
+#292						NOT	{LNXT:78|79|-1}
+(*) BOOL
+05A50BEA  84 C0                         test al, al
+05A50BEC  0F 94 C0                      sete al
+
+#293						ST		Delay.IN	{LNXT:78|79|-1}
+(*) BOOL
+05A50BEF  84 C0                         test al, al
+05A50BF1  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#294		
+#295						(* Fase := 3; *)
+#296						MOVE		3,Fase	{LNXT:79|1|-1}
+(*) BOOL
+05A50BF8  B8 03 00 00 00                mov eax, 03H
+05A50BFD  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#297						JMP		$label18	{LNXT:76|77|81}
+(-) INT
+05A50C04  EB 1D 90 90 90                jmp 05A50C23H
+
+#298		$label17:
+#299		
+#300					(* ELSE *)
+#301		
+#302						(* Fase := 3; *)
+#303						MOVE		3,Fase	{LNXT:81|82|-1}
+(*) INT
+05A50C09  B8 03 00 00 00                mov eax, 03H
+05A50C0E  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#304		
+#305						(* Delay.IN := FALSE; *)
+#306						MOVE		FALSE,Delay.IN	{LNXT:82|1|-1}
+(*) INT
+05A50C15  B8 00 00 00 00                mov eax, 00H
+05A50C1A  84 C0                         test al, al
+05A50C1C  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#307		
+#308		$label18:
+#309					(* END_IF *)
+#310					JMP		$label2	{LNXT:66|81|-1}
+(-) BOOL
+05A50C23  E9 B3 00 00 00                jmp 05A50CDBH
+
+#311		
+#312		$label7:
+#313					(* Delay.IN := TRUE; *)
+#314					MOVE		TRUE,Delay.IN	{LNXT:86|87|-1}
+(*) BOOL
+05A50C28  B8 01 00 00 00                mov eax, 01H
+05A50C2D  84 C0                         test al, al
+05A50C2F  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#315		
+#316		
+#317					(* IF Delay.Q AND Temp_puffer < Temp_setpoint_inverno - T_tolleranza *)
+#318					LD		Temp_puffer	{LNXT:87|-1|-1}
+(*) UNDEF
+05A50C36  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#319					LT(		Temp_setpoint_inverno	{LNXT:87|-1|-1}
+(*) INT
+05A50C3D  50                            push eax
+05A50C3E  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#320					SUB		T_tolleranza	{LNXT:87|-1|-1}
+(*) INT
+05A50C45  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A50C4C  2B C1                         sub eax, ecx
+
+#321					)	{LNXT:87|-1|-1}
+(*) INT
+05A50C4E  8B C8                         mov ecx, eax
+05A50C50  58                            pop eax
+05A50C51  3B C1                         cmp eax, ecx
+05A50C53  0F 9C C0                      setl al
+05A50C56  25 FF 00 00 00                and eax, 0FFh
+
+#322					AND		Delay.Q	{LNXT:87|-1|-1}
+(*) BOOL
+05A50C5B  33 C9                         xor ecx, ecx
+05A50C5D  8A 0D CC CC CC CC             mov cl, [CCCCCCCCH] ; $$DATA$$+1151
+05A50C63  23 C1                         and eax, ecx
+
+#323					JMPCN	$label19	{LNXT:87|88|91}
+(-) BOOL
+05A50C65  84 C0                         test al, al
+05A50C67  90 74 38 90 90 90             je 05A50CA2H
+
+#324		
+#325					(* THEN *)
+#326		
+#327						(* Comando_caldaia := TRUE; *)
+#328						MOVE		TRUE,Comando_caldaia	{LNXT:88|89|-1}
+(*) BOOL
+05A50C6D  B8 01 00 00 00                mov eax, 01H
+05A50C72  84 C0                         test al, al
+05A50C74  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#329		
+#330						(* Delay.IN := NOT Delay.Q; *)
+#331						LD		Delay.Q	{LNXT:89|90|-1}
+(*) UNDEF
+05A50C7B  33 C0                         xor eax, eax
+05A50C7D  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+1151
+
+#332						NOT	{LNXT:89|90|-1}
+(*) BOOL
+05A50C83  84 C0                         test al, al
+05A50C85  0F 94 C0                      sete al
+
+#333						ST		Delay.IN	{LNXT:89|90|-1}
+(*) BOOL
+05A50C88  84 C0                         test al, al
+05A50C8A  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#334		
+#335						(* Fase := 4; *)
+#336						MOVE		4,Fase	{LNXT:90|1|-1}
+(*) BOOL
+05A50C91  B8 04 00 00 00                mov eax, 04H
+05A50C96  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#337						JMP		$label20	{LNXT:87|88|91}
+(-) INT
+05A50C9D  EB 3C 90 90 90                jmp 05A50CDBH
+
+#338		$label19:
+#339		
+#340					(* ELSIF Temp_puffer >= Temp_setpoint_inverno - T_tolleranza *)
+#341					LD		Temp_puffer	{LNXT:91|-1|-1}
+(*) UNDEF
+05A50CA2  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+1156
+
+#342					GE(		Temp_setpoint_inverno	{LNXT:91|-1|-1}
+(*) INT
+05A50CA9  50                            push eax
+05A50CAA  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+22
+
+#343					SUB		T_tolleranza	{LNXT:91|-1|-1}
+(*) INT
+05A50CB1  0F BF 0D CC CC CC CC          movsx ecx, word ptr [CCCCCCCCH] ; $$DATA$$+24
+05A50CB8  2B C1                         sub eax, ecx
+
+#344					)	{LNXT:91|-1|-1}
+(*) INT
+05A50CBA  8B C8                         mov ecx, eax
+05A50CBC  58                            pop eax
+05A50CBD  3B C1                         cmp eax, ecx
+05A50CBF  0F 9D C0                      setge al
+05A50CC2  25 FF 00 00 00                and eax, 0FFh
+
+#345					JMPCN	$label20	{LNXT:91|92|1}
+(-) BOOL
+05A50CC7  84 C0                         test al, al
+05A50CC9  90 74 0F 90 90 90             je 05A50CDBH
+
+#346		
+#347					(* THEN *)
+#348		
+#349						(* Fase := 3; *)
+#350						MOVE		3,Fase	{LNXT:92|1|-1}
+(*) BOOL
+05A50CCF  B8 03 00 00 00                mov eax, 03H
+05A50CD4  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#351		
+#352		$label20:
+#353					(* END_IF *)
+#354		
+#355		$label2:
+#356		
+#357				(* END_CASE *)
+#358				JMP		$label1	{LNXT:1|3|97}
+(-) INT
+05A50CDB  EB 7D 90 90 90                jmp 05A50D5AH
+
+#359		$label0:
+#360		
+#361			(* ELSIF CalendarOnOff XOR NOT Estate_Inverno *)
+#362			LD		Estate_Inverno	{LNXT:97|-1|-1}
+(*) UNDEF
+05A50CE0  33 C0                         xor eax, eax
+05A50CE2  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+13
+
+#363			NOT	{LNXT:97|-1|-1}
+(*) BOOL
+05A50CE8  84 C0                         test al, al
+05A50CEA  0F 94 C0                      sete al
+
+#364			XOR(		CalendarOnOff	{LNXT:97|-1|-1}
+(*) BOOL
+05A50CED  50                            push eax
+05A50CEE  33 C0                         xor eax, eax
+05A50CF0  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+14
+
+#365			NOT	{LNXT:97|-1|-1}
+(*) BOOL
+05A50CF6  84 C0                         test al, al
+05A50CF8  0F 94 C0                      sete al
+
+#366			)	{LNXT:97|-1|-1}
+(*) BOOL
+05A50CFB  8B C8                         mov ecx, eax
+05A50CFD  58                            pop eax
+05A50CFE  33 C1                         xor eax, ecx
+
+#367			JMPCN	$label1	{LNXT:97|98|1}
+(-) BOOL
+05A50D00  84 C0                         test al, al
+05A50D02  90 74 55 90 90 90             je 05A50D5AH
+
+#368		
+#369			(* THEN *)
+#370		
+#371				(* Fase :=0; *)
+#372				MOVE		0,Fase	{LNXT:98|99|-1}
+(*) BOOL
+05A50D08  B8 00 00 00 00                mov eax, 00H
+05A50D0D  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+1158
+
+#373		
+#374				(* Delay.IN:=FALSE; *)
+#375				MOVE		FALSE,Delay.IN	{LNXT:99|100|-1}
+(*) INT
+05A50D14  B8 00 00 00 00                mov eax, 00H
+05A50D19  84 C0                         test al, al
+05A50D1B  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+1146
+
+#376		
+#377				(* Comando_caldaia := FALSE; *)
+#378				MOVE		FALSE,Comando_caldaia	{LNXT:100|101|-1}
+(*) BOOL
+05A50D22  B8 00 00 00 00                mov eax, 00H
+05A50D27  84 C0                         test al, al
+05A50D29  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+0
+
+#379		
+#380				(* Comando_pompe := FALSE; *)
+#381				MOVE		FALSE,Comando_pompe	{LNXT:101|102|-1}
+(*) BOOL
+05A50D30  B8 00 00 00 00                mov eax, 00H
+05A50D35  84 C0                         test al, al
+05A50D37  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+2
+
+#382		
+#383				(* Comando_PdC := FALSE; *)
+#384				MOVE		FALSE,Comando_PdC	{LNXT:102|103|-1}
+(*) BOOL
+05A50D3E  B8 00 00 00 00                mov eax, 00H
+05A50D43  84 C0                         test al, al
+05A50D45  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+1
+
+#385		
+#386				(* Comando_fancoil := FALSE; *)
+#387				MOVE		FALSE,Comando_fancoil	{LNXT:103|1|-1}
+(*) BOOL
+05A50D4C  B8 00 00 00 00                mov eax, 00H
+05A50D51  84 C0                         test al, al
+05A50D53  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; %Q255+3
+
+05A50D5A  61                            popad
+05A50D5B  5D                            pop ebp
+
+05A50D5C  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+05A50D5D  C3                            ret
+
+
+*** OUTPUT:
+05A50D5E  C3                            ret
+
+
+
+**************************************************
+	Task Slow init code
+**************************************************
+
+05A50D5F  55                            push ebp
+05A50D60  8B EC                         mov ebp, esp
+
+05A50D62  8B E5                         mov esp, ebp
+05A50D64  5D                            pop ebp
+
+05A50D65  C3                            ret
+
+**************************************************
+	List program: UpdateOrologio
+**************************************************
+
+PROGRAM UpdateOrologio
+
+        VAR
+Datetime : LINT;
+tset : LINT;
+time : LINT;
+Default : SysETimeToDate;
+Done : BOOL;
+Error : BOOL;
+YY : UINT;
+MM : INT;
+DD : INT;
+dd : INT;
+hh : INT;
+mm : INT;
+ss : INT;
+OnOff_calendario : INT;
+A : OnOffCalendar;
+OnOffCalendar : OnOffCalendar;
+onoff : OnOffCalendar;
+	END_VAR
+
+END_PROGRAM
+
+05A50D80  55                            push ebp
+05A50D81  8B EC                         mov ebp, esp
+05A50D83  60                            pushad
+
+#0		{SRC:UpdateOrologio}
+#1		
+#2		
+#3		
+#4		(*** Network 1 ***)
+#5		
+#6		(* Call for FB SysETimeToDate instance Default *)
+#7		MOVE	SysDateTime,Default.EpochTime	{R:"1$FB:Default"}
+(*) UDINT
+05A50D84  8B 05 CC CC CC CC             mov eax, [CCCCCCCCH] ; %M1+256
+05A50D8A  89 05 CC CC CC CC             mov [CCCCCCCCH], eax ; $$DATA$$+45
+
+#8		CAL	Default	{R:"1$FB:Default"}
+(*) UDINT
+05A50D90  50                            push eax
+05A50D91  68 CC CC CC CC                push CCCCCCCCH ; $$DATA$$+40
+05A50D96  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; SysETimeToDate
+05A50D9B  FF D1                         call ecx
+05A50D9D  81 C4 04 00 00 00             add esp, 4
+05A50DA3  58                            pop eax
+
+#9		MOVE	Default.Done,Done	{R:"1$FB:Default"}
+(*) UDINT
+05A50DA4  33 C0                         xor eax, eax
+05A50DA6  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+49
+05A50DAC  84 C0                         test al, al
+05A50DAE  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+15
+
+#10		MOVE	Default.Fault,Error	{R:"1$FB:Default"}
+(*) BOOL
+05A50DB5  33 C0                         xor eax, eax
+05A50DB7  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+50
+05A50DBD  84 C0                         test al, al
+05A50DBF  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+59
+
+#11		MOVE	Default.Year,YY	{R:"1$FB:Default"}
+(*) BOOL
+05A50DC6  33 C0                         xor eax, eax
+05A50DC8  66 8B 05 CC CC CC CC          mov ax, [CCCCCCCCH] ; $$DATA$$+51
+05A50DCF  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+60
+
+#12		MOVE	Default.Month,MM	{R:"1$FB:Default"}
+(*) UINT
+05A50DD6  33 C0                         xor eax, eax
+05A50DD8  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+53
+05A50DDE  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+62
+
+#13		MOVE	Default.Second,ss	{R:"1$FB:Default"}
+(*) USINT
+05A50DE5  33 C0                         xor eax, eax
+05A50DE7  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+58
+05A50DED  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+64
+
+#14		
+#15		(* Call for function TO_INT *)
+#16		LD	Default.Day	{R:"1$F:7"}
+(*) UNDEF
+05A50DF4  33 C0                         xor eax, eax
+05A50DF6  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+54
+
+#17		TO_INT	{R:"1$F:7"}
+(*) USINT
+#18		ST	Giorno	{R:"1$F:7"}
+(*) INT
+05A50DFC  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+66
+
+#19		
+#20		(* Call for function TO_INT *)
+#21		LD	Default.WeekDay	{R:"1$F:9"}
+(*) UNDEF
+05A50E03  33 C0                         xor eax, eax
+05A50E05  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+55
+
+#22		TO_INT	{R:"1$F:9"}
+(*) USINT
+#23		ST	DayWeek	{R:"1$F:9"}
+(*) INT
+05A50E0B  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+68
+
+#24		
+#25		(* Call for function TO_INT *)
+#26		LD	Default.Hour	{R:"1$F:11"}
+(*) UNDEF
+05A50E12  33 C0                         xor eax, eax
+05A50E14  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+56
+
+#27		TO_INT	{R:"1$F:11"}
+(*) USINT
+#28		ST	Ora	{R:"1$F:11"}
+(*) INT
+05A50E1A  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+70
+
+#29		
+#30		(* Call for function TO_INT *)
+#31		LD	Default.Minute	{R:"1$F:13"}
+(*) UNDEF
+05A50E21  33 C0                         xor eax, eax
+05A50E23  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+57
+
+#32		TO_INT	{R:"1$F:13"}
+(*) USINT
+#33		ST	Minuto	{R:"1$F:13"}
+(*) INT
+05A50E29  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+72
+
+#34		
+#35		
+#36		
+#37		
+#38		(*** Network 2 ***)
+#39		
+#40		(* Call for FB OnOffCalendar instance onoff *)
+#41		MOVE	DayWeek,onoff.Giorno_settimana	{R:"2$FB:onoff"}
+(*) INT
+05A50E30  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+68
+05A50E37  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+76
+
+#42		MOVE	Ora,onoff.Ora	{R:"2$FB:onoff"}
+(*) INT
+05A50E3E  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+70
+05A50E45  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+78
+
+#43		MOVE	Minuto,onoff.Minuto	{R:"2$FB:onoff"}
+(*) INT
+05A50E4C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+72
+05A50E53  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+80
+
+#44		MOVE	P11On,onoff.P11On	{R:"2$FB:onoff"}
+(*) INT
+05A50E5A  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+148
+05A50E61  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+82
+
+#45		MOVE	P12Off,onoff.P12Off	{R:"2$FB:onoff"}
+(*) INT
+05A50E68  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+150
+05A50E6F  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+84
+
+#46		MOVE	P13On,onoff.P13On	{R:"2$FB:onoff"}
+(*) INT
+05A50E76  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+152
+05A50E7D  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+86
+
+#47		MOVE	P14Off,onoff.P14Off	{R:"2$FB:onoff"}
+(*) INT
+05A50E84  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+154
+05A50E8B  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+88
+
+#48		MOVE	P21On,onoff.P21On	{R:"2$FB:onoff"}
+(*) INT
+05A50E92  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+156
+05A50E99  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+90
+
+#49		MOVE	P22Off,onoff.P22Off	{R:"2$FB:onoff"}
+(*) INT
+05A50EA0  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+158
+05A50EA7  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+92
+
+#50		MOVE	P23On,onoff.P23On	{R:"2$FB:onoff"}
+(*) INT
+05A50EAE  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+160
+05A50EB5  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+94
+
+#51		MOVE	P24Off,onoff.P24Off	{R:"2$FB:onoff"}
+(*) INT
+05A50EBC  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+162
+05A50EC3  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+96
+
+#52		MOVE	P31On,onoff.P31On	{R:"2$FB:onoff"}
+(*) INT
+05A50ECA  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+164
+05A50ED1  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+98
+
+#53		MOVE	P32Off,onoff.P32Off	{R:"2$FB:onoff"}
+(*) INT
+05A50ED8  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+166
+05A50EDF  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+100
+
+#54		MOVE	P33On,onoff.P33On	{R:"2$FB:onoff"}
+(*) INT
+05A50EE6  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+168
+05A50EED  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+102
+
+#55		MOVE	P34Off,onoff.P34Off	{R:"2$FB:onoff"}
+(*) INT
+05A50EF4  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+170
+05A50EFB  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+104
+
+#56		MOVE	P41On,onoff.P41On	{R:"2$FB:onoff"}
+(*) INT
+05A50F02  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+172
+05A50F09  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+106
+
+#57		MOVE	P42Off,onoff.P42Off	{R:"2$FB:onoff"}
+(*) INT
+05A50F10  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+174
+05A50F17  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+108
+
+#58		MOVE	P43On,onoff.P43On	{R:"2$FB:onoff"}
+(*) INT
+05A50F1E  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+176
+05A50F25  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+110
+
+#59		MOVE	P44Off,onoff.P44Off	{R:"2$FB:onoff"}
+(*) INT
+05A50F2C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+178
+05A50F33  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+112
+
+#60		MOVE	P51On,onoff.P51On	{R:"2$FB:onoff"}
+(*) INT
+05A50F3A  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+180
+05A50F41  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+114
+
+#61		MOVE	P52Off,onoff.P52Off	{R:"2$FB:onoff"}
+(*) INT
+05A50F48  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+182
+05A50F4F  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+116
+
+#62		MOVE	P53On,onoff.P53On	{R:"2$FB:onoff"}
+(*) INT
+05A50F56  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+184
+05A50F5D  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+118
+
+#63		MOVE	P54Off,onoff.P54Off	{R:"2$FB:onoff"}
+(*) INT
+05A50F64  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+186
+05A50F6B  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+120
+
+#64		MOVE	P61On,onoff.P61On	{R:"2$FB:onoff"}
+(*) INT
+05A50F72  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+188
+05A50F79  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+122
+
+#65		MOVE	P62Off,onoff.P62Off	{R:"2$FB:onoff"}
+(*) INT
+05A50F80  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+190
+05A50F87  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+124
+
+#66		MOVE	P63On,onoff.P63On	{R:"2$FB:onoff"}
+(*) INT
+05A50F8E  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+192
+05A50F95  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+126
+
+#67		MOVE	P64Off,onoff.P64Off	{R:"2$FB:onoff"}
+(*) INT
+05A50F9C  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+194
+05A50FA3  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+128
+
+#68		MOVE	P71On,onoff.P71On	{R:"2$FB:onoff"}
+(*) INT
+05A50FAA  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+196
+05A50FB1  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+130
+
+#69		MOVE	P72Off,onoff.P72Off	{R:"2$FB:onoff"}
+(*) INT
+05A50FB8  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+198
+05A50FBF  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+132
+
+#70		MOVE	P73On,onoff.P73On	{R:"2$FB:onoff"}
+(*) INT
+05A50FC6  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+200
+05A50FCD  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+134
+
+#71		MOVE	P74Off,onoff.P74Off	{R:"2$FB:onoff"}
+(*) INT
+05A50FD4  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+202
+05A50FDB  66 89 05 CC CC CC CC          mov [CCCCCCCCH], ax ; $$DATA$$+136
+
+#72		MOVE	Lun_enabled,onoff.Lun_enabled	{R:"2$FB:onoff"}
+(*) INT
+05A50FE2  33 C0                         xor eax, eax
+05A50FE4  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+147
+05A50FEA  84 C0                         test al, al
+05A50FEC  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+138
+
+#73		MOVE	Mar_enabled,onoff.Mar_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+05A50FF3  33 C0                         xor eax, eax
+05A50FF5  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+204
+05A50FFB  84 C0                         test al, al
+05A50FFD  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+139
+
+#74		MOVE	Mer_enabled,onoff.Mer_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+05A51004  33 C0                         xor eax, eax
+05A51006  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+205
+05A5100C  84 C0                         test al, al
+05A5100E  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+140
+
+#75		MOVE	Gio_enabled,onoff.Gio_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+05A51015  33 C0                         xor eax, eax
+05A51017  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+206
+05A5101D  84 C0                         test al, al
+05A5101F  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+141
+
+#76		MOVE	Ven_enabled,onoff.Ven_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+05A51026  33 C0                         xor eax, eax
+05A51028  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+207
+05A5102E  84 C0                         test al, al
+05A51030  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+142
+
+#77		MOVE	Sab_enabled,onoff.Sab_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+05A51037  33 C0                         xor eax, eax
+05A51039  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+208
+05A5103F  84 C0                         test al, al
+05A51041  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+143
+
+#78		MOVE	Dom_enabled,onoff.Dom_enabled	{R:"2$FB:onoff"}
+(*) BOOL
+05A51048  33 C0                         xor eax, eax
+05A5104A  8A 05 CC CC CC CC             mov al, [CCCCCCCCH] ; $$DATA$$+209
+05A51050  84 C0                         test al, al
+05A51052  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+144
+
+#79		CAL	onoff	{R:"2$FB:onoff"}
+(*) BOOL
+05A51059  50                            push eax
+05A5105A  BB CC CC CC CC                mov ebx, CCCCCCCCH ; $$DATA$$+74
+05A5105F  E8 3A F1 FF FF                call 05A5019EH ; $$CODE$$+414
+05A51064  58                            pop eax
+
+#80		MOVE	onoff.OnByCalendar,CalendarOnOff	{R:"2$FB:onoff"}
+(*) BOOL
+05A51065  0F BF 05 CC CC CC CC          movsx eax, word ptr [CCCCCCCCH] ; $$DATA$$+145
+05A5106C  66 85 C0                      test ax, ax
+05A5106F  0F 95 05 CC CC CC CC          setne [CCCCCCCCH] ; $$DATA$$+14
+
+05A51076  61                            popad
+05A51077  5D                            pop ebp
+
+05A51078  C3                            ret
+
+END_PROGRAM
+
+
+**************************************************
+	Target variable image generation
+**************************************************
+
+
+*** INPUT:
+05A51079  C3                            ret
+
+
+*** OUTPUT:
+05A5107A  C3                            ret
+
+
+
+**************************************************
+	Task Back init code
+**************************************************
+
+05A5107B  55                            push ebp
+05A5107C  8B EC                         mov ebp, esp
+
+05A5107E  8B E5                         mov esp, ebp
+05A51080  5D                            pop ebp
+
+05A51081  C3                            ret
+
+
+
+**************************************************
+	Global init code
+**************************************************
+
+05A510A0  55                            push ebp
+05A510A1  8B EC                         mov ebp, esp
+
+Var init: Temp_setpoint_inverno = 50
+05A510A3  66 C7 05 CC CC CC CC 32 00    mov word ptr [CCCCCCCCH], 0032H ; $$DATA$$+22
+
+Var init: T_tolleranza = 4
+05A510AC  66 C7 05 CC CC CC CC 04 00    mov word ptr [CCCCCCCCH], 0004H ; $$DATA$$+24
+
+Var init: P11On = 480
+05A510B5  66 C7 05 CC CC CC CC E0 01    mov word ptr [CCCCCCCCH], 01E0H ; $$DATA$$+148
+
+Var init: P12Off = 780
+05A510BE  66 C7 05 CC CC CC CC 0C 03    mov word ptr [CCCCCCCCH], 030CH ; $$DATA$$+150
+
+Var init: P13On = 900
+05A510C7  66 C7 05 CC CC CC CC 84 03    mov word ptr [CCCCCCCCH], 0384H ; $$DATA$$+152
+
+Var init: P14Off = 1140
+05A510D0  66 C7 05 CC CC CC CC 74 04    mov word ptr [CCCCCCCCH], 0474H ; $$DATA$$+154
+
+Var init: P21On = 480
+05A510D9  66 C7 05 CC CC CC CC E0 01    mov word ptr [CCCCCCCCH], 01E0H ; $$DATA$$+156
+
+Var init: P22Off = 780
+05A510E2  66 C7 05 CC CC CC CC 0C 03    mov word ptr [CCCCCCCCH], 030CH ; $$DATA$$+158
+
+Var init: P23On = 900
+05A510EB  66 C7 05 CC CC CC CC 84 03    mov word ptr [CCCCCCCCH], 0384H ; $$DATA$$+160
+
+Var init: P24Off = 1140
+05A510F4  66 C7 05 CC CC CC CC 74 04    mov word ptr [CCCCCCCCH], 0474H ; $$DATA$$+162
+
+Var init: P31On = 480
+05A510FD  66 C7 05 CC CC CC CC E0 01    mov word ptr [CCCCCCCCH], 01E0H ; $$DATA$$+164
+
+Var init: P32Off = 780
+05A51106  66 C7 05 CC CC CC CC 0C 03    mov word ptr [CCCCCCCCH], 030CH ; $$DATA$$+166
+
+Var init: P33On = 900
+05A5110F  66 C7 05 CC CC CC CC 84 03    mov word ptr [CCCCCCCCH], 0384H ; $$DATA$$+168
+
+Var init: P34Off = 1140
+05A51118  66 C7 05 CC CC CC CC 74 04    mov word ptr [CCCCCCCCH], 0474H ; $$DATA$$+170
+
+Var init: P41On = 480
+05A51121  66 C7 05 CC CC CC CC E0 01    mov word ptr [CCCCCCCCH], 01E0H ; $$DATA$$+172
+
+Var init: P42Off = 780
+05A5112A  66 C7 05 CC CC CC CC 0C 03    mov word ptr [CCCCCCCCH], 030CH ; $$DATA$$+174
+
+Var init: P43On = 900
+05A51133  66 C7 05 CC CC CC CC 84 03    mov word ptr [CCCCCCCCH], 0384H ; $$DATA$$+176
+
+Var init: P44Off = 1140
+05A5113C  66 C7 05 CC CC CC CC 74 04    mov word ptr [CCCCCCCCH], 0474H ; $$DATA$$+178
+
+Var init: P51On = 480
+05A51145  66 C7 05 CC CC CC CC E0 01    mov word ptr [CCCCCCCCH], 01E0H ; $$DATA$$+180
+
+Var init: P52Off = 780
+05A5114E  66 C7 05 CC CC CC CC 0C 03    mov word ptr [CCCCCCCCH], 030CH ; $$DATA$$+182
+
+Var init: P53On = 900
+05A51157  66 C7 05 CC CC CC CC 84 03    mov word ptr [CCCCCCCCH], 0384H ; $$DATA$$+184
+
+Var init: P54Off = 1200
+05A51160  66 C7 05 CC CC CC CC B0 04    mov word ptr [CCCCCCCCH], 04B0H ; $$DATA$$+186
+
+Var init: P61On = 480
+05A51169  66 C7 05 CC CC CC CC E0 01    mov word ptr [CCCCCCCCH], 01E0H ; $$DATA$$+188
+
+Var init: P62Off = 780
+05A51172  66 C7 05 CC CC CC CC 0C 03    mov word ptr [CCCCCCCCH], 030CH ; $$DATA$$+190
+
+Var init: P63On = 900
+05A5117B  66 C7 05 CC CC CC CC 84 03    mov word ptr [CCCCCCCCH], 0384H ; $$DATA$$+192
+
+Var init: P64Off = 1140
+05A51184  66 C7 05 CC CC CC CC 74 04    mov word ptr [CCCCCCCCH], 0474H ; $$DATA$$+194
+
+Var init: P71On = 480
+05A5118D  66 C7 05 CC CC CC CC E0 01    mov word ptr [CCCCCCCCH], 01E0H ; $$DATA$$+196
+
+Var init: P72Off = 780
+05A51196  66 C7 05 CC CC CC CC 0C 03    mov word ptr [CCCCCCCCH], 030CH ; $$DATA$$+198
+
+Var init: P73On = 900
+05A5119F  66 C7 05 CC CC CC CC 84 03    mov word ptr [CCCCCCCCH], 0384H ; $$DATA$$+200
+
+Var init: P74Off = 1140
+05A511A8  66 C7 05 CC CC CC CC 74 04    mov word ptr [CCCCCCCCH], 0474H ; $$DATA$$+202
+
+Var init: $$POUCBARRAY$$Back = 0
+05A511B1  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+1160
+05A511B6  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+212
+
+Var init: $$POUCBARRAY$$Boot = 0
+05A511BC  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+1166
+05A511C1  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+220
+
+Var init: $$POUCBARRAY$$Slow = 0
+05A511C7  B9 CC CC CC CC                mov ecx, CCCCCCCCH ; $$DATA$$+1172
+05A511CC  89 0D CC CC CC CC             mov [CCCCCCCCH], ecx ; $$DATA$$+228
+
+05A511D2  8B E5                         mov esp, ebp
+05A511D4  5D                            pop ebp
+
+05A511D5  C3                            ret
+
+
+
+**************************************************
+	Global RETAIN init code
+**************************************************
+
+05A511D6  55                            push ebp
+05A511D7  8B EC                         mov ebp, esp
+
+05A511D9  8B E5                         mov esp, ebp
+05A511DB  5D                            pop ebp
+
+05A511DC  C3                            ret
+
+
+
+**************************************************
+	Task $$VirtualTables init code
+**************************************************
+
+05A511DD  55                            push ebp
+05A511DE  8B EC                         mov ebp, esp
+
+05A511E0  8B E5                         mov esp, ebp
+05A511E2  5D                            pop ebp
+
+05A511E3  C3                            ret
+
+
+
+********************************************
+MEMORY MAP
+********************************************
+
+Code area type:          		       main code
+Start code area:          		0000000005A50000h
+End code area:            		0000000005A51A64h
+Code size:                		00001A64h
+
+Start local data area:    		0000000005A10000h
+End local data area:      		0000000005A1049Ah
+Local data size:          		0000049Ah
+
+Start retentive data area:		0000000005A30000h
+End retentive data area:  		0000000005A30000h
+Retentive data size:      		00000000h
+
+Start bit data area:      		0000000000000000h
+End bit data area:        		0000000000000000h
+Bit data size:            		00000000h
+
+
+
+********************************************
+CODE ID:                                3F807107
+DEBUG MEMO ID:                          00000664
+FULL MEMO ID:                           0000FF6B
+RELOCATION ADDR:                        0000000005A50000
+********************************************
