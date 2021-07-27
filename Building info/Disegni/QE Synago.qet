@@ -1,0 +1,80 @@
+<project version="0.90" title="QE Synago">
+    <properties>
+        <property show="1" name="savedtime">16:31</property>
+        <property show="1" name="saveddate">16/07/2021</property>
+        <property show="1" name="savedfilename">QE Synago</property>
+        <property show="1" name="savedfilepath">C:/Users/Francesco Manghi/Documents/GITHUB/CT_Sinago/Building info/Disegni/QE Synago.qet</property>
+        <property show="1" name="saveddate-us">2021-07-16</property>
+        <property show="1" name="saveddate-eu">16-07-2021</property>
+    </properties>
+    <newdiagrams>
+        <border rowsize="80" rows="8" displaycols="true" colsize="60" cols="17" displayrows="true"/>
+        <inset author="" version="" title="" folio="%id/%total" date="null" indexrev="" displayAt="bottom" filename="" auto_page_num="" plant="" locmach=""/>
+        <conductors text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+        <report label="%f-%l%c"/>
+        <xrefs>
+            <xref offset="40" xrefpos="AlignTop" delayprefix="" master_label="%f-%l%c" snapto="label" switchprefix="" type="coil" displayhas="cross" slave_label="(%f-%l%c)" powerprefix="" showpowerctc="false"/>
+            <xref offset="40" xrefpos="" delayprefix="" master_label="%f-%l%c" snapto="label" switchprefix="" type="protection" displayhas="cross" slave_label="(%f-%l%c)" powerprefix="" showpowerctc="false"/>
+            <xref offset="40" xrefpos="" delayprefix="" master_label="%f-%l%c" snapto="label" switchprefix="" type="commutator" displayhas="cross" slave_label="(%f-%l%c)" powerprefix="" showpowerctc="false"/>
+        </xrefs>
+        <conductors_autonums freeze_new_conductors="false" current_autonum=""/>
+        <folio_autonums/>
+        <element_autonums current_autonum="" freeze_new_elements="false"/>
+    </newdiagrams>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="1" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="2" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="3" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="4" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="5" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="6" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="7" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="8" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="9" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="10" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <diagram date="null" rows="8" auto_page_num="" freezeNewElement="false" displaycols="true" rowsize="80" author="" height="660" folio="%id/%total" plant="" version="0.90-DEV+760a1f6c4c957a06d79751d3" title="" indexrev="" displayAt="bottom" locmach="" cols="17" filename="" colsize="60" freezeNewConductor="false" order="11" displayrows="true">
+        <defaultconductor text_color="#000000" cable="" dash-size="2" function="" conductor_section="" bus="" tension_protocol="" vertirotatetext="270" displaytext="1" conductor_color="" vertical-alignment="AlignRight" num="_" formula="" condsize="1" type="multi" numsize="6" horizontal-alignment="AlignBottom" horizrotatetext="0" bicolor="false" color2="#000000" onetextperfolio="0"/>
+    </diagram>
+    <collection>
+        <category name="import">
+            <names>
+                <name lang="pl">Elementy importowane</name>
+                <name lang="de">Importierte elemente</name>
+                <name lang="nl">Elementen geïmporteerd</name>
+                <name lang="cs">Zavedené prvky</name>
+                <name lang="hr">Uvezeni elementi</name>
+                <name lang="ca">Elements importats</name>
+                <name lang="es">Elementos importados</name>
+                <name lang="ru">Импортированные элементы</name>
+                <name lang="tr">İthal öğeler</name>
+                <name lang="fr">Éléments importés</name>
+                <name lang="da">Importerede elementer</name>
+                <name lang="en">Imported elements</name>
+                <name lang="ro">Elemente importate</name>
+                <name lang="sl">Uvoženi elementi</name>
+                <name lang="pt">elementos importados</name>
+                <name lang="it">Elementi importati</name>
+                <name lang="el">Εισηγμένα στοιχεία</name>
+            </names>
+        </category>
+    </collection>
+</project>

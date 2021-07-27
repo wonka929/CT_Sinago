@@ -1,0 +1,4150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plcProject caseSensitive="true" useCustomWorkspace="true" debugMode="false" extcheck="true" SFCControl="false" strictPointerCheck="true" strictEnumsCheck="true" copyWarningThreshold="200" version="2.4" useLD2="true" useXPLCFiles="false" useFBMethods="false">
+	<image>WebPages.imgx</image>
+	<commSettings>ModbusTCP:255,1000,M#TCPIP:192.168.0.186/502,5000</commSettings>
+	<sources>
+		<main>
+			<resources/>
+			<tasks>
+				<task name="Back">
+					<program>WebPages</program>
+				</task>
+			</tasks>
+			<globalVars>
+				<group name="WebPages">
+					<var name="Angle" type="REAL">
+						<descr>Angle value (Rad)</descr>
+						<address type="M" typeVar="D" index="100" subIndex="100"/>
+					</var>
+					<var name="Sine" type="REAL">
+						<descr>Angle sine</descr>
+						<address type="M" typeVar="D" index="100" subIndex="104"/>
+					</var>
+					<var name="Cosine" type="REAL">
+						<descr>Angle cosine</descr>
+						<address type="M" typeVar="D" index="100" subIndex="108"/>
+					</var>
+					<var name="View" type="UINT">
+						<descr>View variable</descr>
+						<address type="M" typeVar="W" index="100" subIndex="10"/>
+					</var>
+					<var name="Set" type="UINT">
+						<descr>Set variable</descr>
+						<address type="M" typeVar="W" index="100" subIndex="12"/>
+					</var>
+					<var name="IFactor" type="REAL">
+						<descr>Angle increment factor</descr>
+						<address type="M" typeVar="D" index="100" subIndex="112"/>
+						<initValue>0.1</initValue>
+					</var>
+				</group>
+			</globalVars>
+			<retainVars>
+				<group name="WebPages"/>
+			</retainVars>
+			<constantVars>
+				<group name="WebPages"/>
+			</constantVars>
+			<iecVarsDeclaration>
+				<group name="WebPages">
+					<iecDeclaration active="FALSE"/>
+				</group>
+			</iecVarsDeclaration>
+			<functions/>
+			<functionBlocks/>
+			<programs>
+				<program name="WebPages" version="1.0.0" creationDate="0" lastModifiedDate="1610467156">
+					<vars>
+						<localVars>
+							<var name="i" type="UDINT">
+								<descr>Auxiliary variable</descr>
+							</var>
+							<var name="TimeBf" type="UDINT">
+								<descr>Time buffer (uS)</descr>
+							</var>
+						</localVars>
+					</vars>
+					<iecDeclaration active="FALSE"/>
+					<sourceCode type="ST">
+						<![CDATA[// *****************************************************************************
+// PROGRAM "WebPages
+// *****************************************************************************
+// The program manages the variables that are set and displayed on the web
+// pages thru the SlimLine web server.
+// -----------------------------------------------------------------------------
+
+	// Every 1 second calculates the angle and its sine and cosine.
+
+	IF ((SysGetSysTime(TRUE)-TimeBf) < 2000000) THEN RETURN; END_IF;
+	TimeBf:=SysGetSysTime(TRUE); //Time buffer (uS)
+
+	Angle:=Angle+IFactor; //Angle value (Rad)
+	IF (Angle > 6.28) THEN Angle:=0.0; END_IF;
+
+	Sine:=SIN(Angle); //Sine value
+	Cosine:=COS(Angle); //Cosine value
+
+// [End of file]
+]]>
+					</sourceCode>
+				</program>
+			</programs>
+			<macros/>
+			<structs/>
+			<typedefs/>
+			<enums/>
+			<subranges/>
+			<interfaces/>
+		</main>
+		<target id="Mps054_XUnified_1_0" name="WebPages.tgt" fullXml="false">
+			<![CDATA[(* ************************************************************************** *)
+(* Project      : PCK033****                                                  *)
+(* Programmer   : Massimo Piovera                                             *)
+(* ************************************************************************** *)
+(* Alias "ELSIST XUnified"                                                    *)
+(* -------------------------------------------------------------------------- *)
+
+(* ************************************************************************** *)
+(* VARIABLES                                                                  *)
+(* ************************************************************************** *)
+
+VAR_GLOBAL
+    {G:"Digital inputs"}
+    SysDI00             AT %IX0.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 00"}
+    SysDI01             AT %IX1.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 01"}
+    SysDI02             AT %IX2.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 02"}
+    SysDI03             AT %IX3.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 03"}
+    SysDI04             AT %IX4.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 04"}
+    SysDI05             AT %IX5.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 05"}
+    SysDI06             AT %IX6.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 06"}
+    SysDI07             AT %IX7.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 07"}
+    SysDI08             AT %IX8.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 08"}
+    SysDI09             AT %IX9.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic inputs module 09"}
+    SysDI10             AT %IX10.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic inputs module 10"}
+    SysDI11             AT %IX11.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic inputs module 11"}
+    SysDI12             AT %IX12.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic inputs module 12"}
+    SysDI13             AT %IX13.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic inputs module 13"}
+    SysDI14             AT %IX14.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic inputs module 14"}
+    SysDI15             AT %IX15.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic inputs module 15"}
+
+    SysCPUDI            AT %IX255.0 : ARRAY[0..31] OF BOOL;     {IO:"Logic inputs CPU"}
+
+    {G:"Digital outputs"}
+    SysDO00             AT %QX0.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 00"}
+    SysDO01             AT %QX1.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 01"}
+    SysDO02             AT %QX2.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 02"}
+    SysDO03             AT %QX3.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 03"}
+    SysDO04             AT %QX4.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 04"}
+    SysDO05             AT %QX5.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 05"}
+    SysDO06             AT %QX6.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 06"}
+    SysDO07             AT %QX7.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 07"}
+    SysDO08             AT %QX8.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 08"}
+    SysDO09             AT %QX9.0 : ARRAY[0..31] OF BOOL;       {IO:"Logic outputs module 09"}
+    SysDO10             AT %QX10.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic outputs module 10"}
+    SysDO11             AT %QX11.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic outputs module 11"}
+    SysDO12             AT %QX12.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic outputs module 12"}
+    SysDO13             AT %QX13.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic outputs module 13"}
+    SysDO14             AT %QX14.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic outputs module 14"}
+    SysDO15             AT %QX15.0 : ARRAY[0..31] OF BOOL;      {IO:"Logic outputs module 15"}
+
+    SysCPUDO            AT %QX255.0 : ARRAY[0..31] OF BOOL;     {IO:"Logic outputs CPU"}
+END_VAR
+]]>
+		</target>
+		<targetXML name="WebPages.tgtx" fullXml="true">
+			<target>
+				<resources>
+					<resource name="ELS20" processor="ARMv7M">
+						<task id="0" name="Fast" type="cyclic" period="1000" descr="Fast task">
+							<constraints minPeriod="100" maxPeriod="10000"/>
+						</task>
+						<task id="1" name="Slow" type="cyclic" period="10000" descr="Slow task">
+							<constraints minPeriod="1000" maxPeriod="100000"/>
+						</task>
+						<task id="2" name="Boot" type="single" period="0" descr="Boot task"/>
+						<task id="3" name="Back" period="0" type="cyclic" descr="Background task"/>
+					</resource>
+				</resources>
+			</target>
+		</targetXML>
+		<libraries>
+			<lib version="1.0.2" name="c:\program files (x86)\elsist\logiclab\catalog\elsist\plc\..\..\..\Libraries\eLLabXUnified12Lib.plclib" fullXml="true" link="true">
+				<descr>eLLabXTarget12Lib [Sfr094a020]</descr>
+				<libWorkspace>
+					<folder name="eLLabXUnified12Lib">
+						<GlobalVars name="SystemVariables"/>
+						<GlobalVars name="UserData"/>
+						<folder name="DateTime">
+							<Pou name="SysGetSysTime"/>
+							<Pou name="SysETimeToDate"/>
+							<Pou name="SysDateToETime"/>
+							<Pou name="SysGetUTCDateTime"/>
+							<Pou name="SysSetUTCDateTime"/>
+							<Pou name="SysTimeZoneAdj"/>
+						</folder>
+						<folder name="System">
+							<Pou name="SysSetLastError"/>
+							<Pou name="SysGetLastError"/>
+							<Pou name="SysGetRandom"/>
+							<Pou name="SysGetEndianness"/>
+							<Pou name="SysOSIDValue"/>
+							<Pou name="SysSetTaskLpTime"/>
+						</folder>
+						<folder name="TermIO">
+							<Pou name="SysFfopen"/>
+							<Pou name="Sysfputc"/>
+							<Pou name="Sysfclose"/>
+							<Pou name="Sysfgetc"/>
+							<Pou name="SysFIsOpen"/>
+							<Pou name="SysFGetIChars"/>
+							<Pou name="SysFGetOSpace"/>
+							<Pou name="SysFIBfClear"/>
+							<Pou name="SysFOBfClear"/>
+							<Pou name="SysFOBfFlush"/>
+							<Pou name="SysFGetIBfSize"/>
+							<Pou name="SysFGetOBfSize"/>
+							<Pou name="Sysfread"/>
+							<Pou name="Sysfwrite"/>
+						</folder>
+						<folder name="Serial">
+							<Pou name="SysSetSerialDTR"/>
+							<Pou name="SysSerialPort"/>
+							<Pou name="SysGetSerialMode"/>
+							<Pou name="SysSetSerialMode"/>
+							<Pou name="SysGetSerialCTS"/>
+							<Pou name="SysDMXMng"/>
+						</folder>
+						<folder name="Networking">
+							<Pou name="SysTCPClient"/>
+							<Pou name="SysPing"/>
+							<Pou name="SysTCPServer"/>
+							<Pou name="SysGetPeerInfos"/>
+							<Pou name="SysUDPClient"/>
+							<Pou name="SysUDPServer"/>
+						</folder>
+						<folder name="Disk">
+							<Pou name="SysGetFileLen"/>
+							<Pou name="Sysfseek"/>
+							<Pou name="SysFileRename"/>
+							<Pou name="SysFileRemove"/>
+							<Pou name="SysGetFileInfos"/>
+						</folder>
+						<folder name="Utilities">
+							<Pou name="SysStrFind"/>
+							<Pou name="Systolower"/>
+							<Pou name="Systoupper"/>
+							<Pou name="Sysstrlen"/>
+							<Pou name="SysGetCheck"/>
+						</folder>
+						<folder name="ScanfPrintf">
+							<Pou name="SysVsscanf"/>
+							<Pou name="SysVfprintf"/>
+							<Pou name="SysVsnprintf"/>
+							<Pou name="SysCVsnprintf"/>
+						</folder>
+						<folder name="Spy">
+							<Pou name="SysWrSpyData"/>
+						</folder>
+						<folder name="Peripherals">
+							<folder name="Digital">
+								<Pou name="SysSetPhrDO"/>
+								<Pou name="SysGetPhrDI"/>
+							</folder>
+							<folder name="Analog">
+								<Pou name="SysGetAnInp"/>
+								<Pou name="SysSetAnOut"/>
+							</folder>
+							<folder name="Others">
+								<Pou name="SysGetCounter"/>
+								<Pou name="SysGetEncoder"/>
+								<Pou name="SysGetPhrInfos"/>
+								<Pou name="SysPhrVRd"/>
+								<Pou name="SysPhrVWr"/>
+								<Pou name="SysI2CWrRd"/>
+								<Pou name="SysSetPWMOut"/>
+							</folder>
+						</folder>
+						<folder name="CodeProtection">
+							<Pou name="SysPCodeVerify"/>
+							<Pou name="SysIDEnabled"/>
+						</folder>
+						<folder name="Init">
+							<Pou name="XUnifiedLibInit"/>
+							<Pou name="SysXUnifiedValue"/>
+						</folder>
+						<folder name="Memory">
+							<Pou name="SysMemFind"/>
+							<Pou name="Sysmemset"/>
+							<Pou name="Sysmemmove"/>
+							<Pou name="SysMAlloc"/>
+							<Pou name="SysRMAlloc"/>
+							<Pou name="SysRMFree"/>
+						</folder>
+						<folder name="DataType">
+							<Definition name="VR_TYPE"/>
+							<Definition name="CHECK_TYPE"/>
+							<Definition name="FIND_MODE"/>
+							<Definition name="FSEEK_ORIGIN"/>
+							<Definition name="AI_MODE"/>
+							<Definition name="AO_MODE"/>
+							<Definition name="DI_MODE"/>
+							<Definition name="DO_MODE"/>
+							<Definition name="PHR_INFOS_ID"/>
+							<Definition name="DTR_MODE"/>
+							<Definition name="SPY_MODE"/>
+							<Definition name="SYS_ID"/>
+							<Definition name="TASK_ID"/>
+							<Definition name="SYSSERIALMODE"/>
+							<Definition name="CAN_SPEED"/>
+							<Definition name="SYSCANMESSAGE"/>
+							<Definition name="DAYLIGHT_ZONE"/>
+							<Definition name="eFILEP"/>
+							<Definition name="eVOID"/>
+							<Definition name="eNULL"/>
+							<Definition name="eEOF"/>
+						</folder>
+						<folder name="CANBus">
+							<Pou name="SysCANSetMode"/>
+							<Pou name="SysIsCANRxTxAv"/>
+							<Pou name="SysCANRxMsg"/>
+							<Pou name="SysCANTxMsg"/>
+						</folder>
+					</folder>
+				</libWorkspace>
+				<globalVars>
+					<group name="UserData">
+						<var name="SysData" type="BYTE" dim0="4096">
+							<descr>User data and backup</descr>
+							<address type="M" typeVar="B" index="100" subIndex="0"/>
+						</var>
+						<var name="SysDataBk" type="BYTE" dim0="2048">
+							<descr>User data backup</descr>
+							<address type="M" typeVar="B" index="100" subIndex="2048"/>
+						</var>
+					</group>
+					<group name="SystemVariables">
+						<var name="SysVR" type="BYTE" dim0="768">
+							<descr>System read only variables</descr>
+							<address type="M" typeVar="B" index="0" subIndex="0"/>
+						</var>
+						<var name="SysClock100" type="BOOL">
+							<descr>System clock 100 mS</descr>
+							<address type="M" typeVar="B" index="0" subIndex="0"/>
+						</var>
+						<var name="SysClock1000" type="BOOL">
+							<descr>System clock 1000 mS</descr>
+							<address type="M" typeVar="B" index="0" subIndex="1"/>
+						</var>
+						<var name="SysBackupEnd" type="BOOL">
+							<descr>System backup end</descr>
+							<address type="M" typeVar="B" index="0" subIndex="2"/>
+						</var>
+						<var name="SysRestoreFault" type="BOOL">
+							<descr>System restore fault</descr>
+							<address type="M" typeVar="B" index="0" subIndex="3"/>
+						</var>
+						<var name="SysPLCInRun" type="BOOL">
+							<descr>System PLC is running</descr>
+							<address type="M" typeVar="B" index="0" subIndex="4"/>
+						</var>
+						<var name="SysFirstLoop" type="BOOL">
+							<descr>System first execution loop</descr>
+							<address type="M" typeVar="B" index="0" subIndex="5"/>
+						</var>
+						<var name="SysLLabCn" type="BOOL">
+							<descr>LogicLab connected to the system</descr>
+							<address type="M" typeVar="B" index="0" subIndex="6"/>
+						</var>
+						<var name="SysIsDST" type="BOOL">
+							<descr>Is daylight saving time</descr>
+							<address type="M" typeVar="B" index="0" subIndex="7"/>
+						</var>
+						<var name="SysDTSet" type="BOOL">
+							<descr>Date/Time set</descr>
+							<address type="M" typeVar="B" index="0" subIndex="8"/>
+						</var>
+						<var name="SysUVSet" type="BOOL">
+							<descr>User variables set</descr>
+							<address type="M" typeVar="B" index="0" subIndex="9"/>
+						</var>
+						<var name="SysAlwaysOff" type="BOOL">
+							<descr>Always off</descr>
+							<address type="M" typeVar="B" index="0" subIndex="10"/>
+						</var>
+						<var name="SysAlwaysOn" type="BOOL">
+							<descr>Always on</descr>
+							<address type="M" typeVar="B" index="0" subIndex="11"/>
+						</var>
+						<var name="SysFFBUspt" type="BOOL">
+							<descr>Function or FB unsupported</descr>
+							<address type="M" typeVar="B" index="0" subIndex="12"/>
+						</var>
+						<var name="SysFFBPrt" type="BOOL">
+							<descr>Function or FB protected</descr>
+							<address type="M" typeVar="B" index="0" subIndex="13"/>
+						</var>
+						<var name="SysCfgChanged" type="BOOL">
+							<descr>System configuration changed</descr>
+							<address type="M" typeVar="B" index="0" subIndex="14"/>
+						</var>
+						<var name="SysActTaskID" type="USINT">
+							<descr>System active task ID</descr>
+							<address type="M" typeVar="B" index="0" subIndex="64"/>
+						</var>
+						<var name="SysErActTaskID" type="USINT">
+							<descr>System task ID in error</descr>
+							<address type="M" typeVar="B" index="0" subIndex="65"/>
+						</var>
+						<var name="SysModulesReady" type="WORD">
+							<descr>Modules connected to Sline bus (bit index)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="128"/>
+						</var>
+						<var name="SysApllVMajor" type="UINT">
+							<descr>Application major version number</descr>
+							<address type="M" typeVar="B" index="0" subIndex="130"/>
+						</var>
+						<var name="SysApllVMinor" type="UINT">
+							<descr>Application minor version number</descr>
+							<address type="M" typeVar="B" index="0" subIndex="132"/>
+						</var>
+						<var name="SysTBackLpTm" type="UDINT">
+							<descr>System Back task loop time (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="256"/>
+						</var>
+						<var name="SysTBackLpTmMin" type="UDINT">
+							<descr>System Back task loop time min (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="260"/>
+						</var>
+						<var name="SysTBackLpTmMax" type="UDINT">
+							<descr>System Back task loop time max (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="264"/>
+						</var>
+						<var name="SysTBootExTm" type="UDINT">
+							<descr>System Boot task execution time (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="268"/>
+						</var>
+						<var name="SysTBootExTmMin" type="UDINT">
+							<descr>System Boot task execution time min (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="272"/>
+						</var>
+						<var name="SysTBootExTmMax" type="UDINT">
+							<descr>System Boot task execution time max (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="276"/>
+						</var>
+						<var name="SysTFastExTm" type="UDINT">
+							<descr>System Fast task execution time (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="280"/>
+						</var>
+						<var name="SysTFastExTmMin" type="UDINT">
+							<descr>System Fast task execution time min (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="284"/>
+						</var>
+						<var name="SysTFastExTmMax" type="UDINT">
+							<descr>System Fast task execution time max (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="288"/>
+						</var>
+						<var name="SysTSlowExTm" type="UDINT">
+							<descr>System Slow task execution time (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="292"/>
+						</var>
+						<var name="SysTSlowExTmMin" type="UDINT">
+							<descr>System Slow task execution time min (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="296"/>
+						</var>
+						<var name="SysTSlowExTmMax" type="UDINT">
+							<descr>System Slow task execution time max (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="300"/>
+						</var>
+						<var name="SysTBackExTm" type="UDINT">
+							<descr>System Back task execution time (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="304"/>
+						</var>
+						<var name="SysTBackExTmMin" type="UDINT">
+							<descr>System Back task execution time min (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="308"/>
+						</var>
+						<var name="SysTBackExTmMax" type="UDINT">
+							<descr>System Back task execution time max (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="312"/>
+						</var>
+						<var name="SysStartTime" type="UDINT">
+							<descr>PLC run since Date/Time [Epoch time]</descr>
+							<address type="M" typeVar="B" index="0" subIndex="316"/>
+						</var>
+						<var name="SysTime" type="UDINT">
+							<descr>System time [mS]</descr>
+							<address type="M" typeVar="B" index="0" subIndex="320"/>
+						</var>
+						<var name="SysTFastLpTm" type="UDINT">
+							<descr>System Fast task loop time (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="324"/>
+						</var>
+						<var name="SysTSlowLpTm" type="UDINT">
+							<descr>System Slow task loop time (uS)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="328"/>
+						</var>
+						<var name="SysApplID" type="UDINT">
+							<descr>Application ID</descr>
+							<address type="M" typeVar="B" index="0" subIndex="332"/>
+						</var>
+						<var name="SysMfcCode" type="UDINT">
+							<descr>Manufacturer code</descr>
+							<address type="M" typeVar="B" index="0" subIndex="336"/>
+						</var>
+						<var name="SysCustomerCode" type="UDINT">
+							<descr>Customer code</descr>
+							<address type="M" typeVar="B" index="0" subIndex="340"/>
+						</var>
+						<var name="SysErCode" type="UDINT">
+							<descr>System error code</descr>
+							<address type="M" typeVar="B" index="0" subIndex="344"/>
+						</var>
+						<var name="SysErTime" type="UDINT">
+							<descr>System error time</descr>
+							<address type="M" typeVar="B" index="0" subIndex="348"/>
+						</var>
+						<var name="SysSerialNr" type="UDINT">
+							<descr>Device serial number</descr>
+							<address type="M" typeVar="B" index="0" subIndex="352"/>
+						</var>
+						<var name="SysApllBTime" type="UDINT">
+							<descr>Build time (Epoch)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="356"/>
+						</var>
+						<var name="SysUniqueID" type="UDINT">
+							<descr>Unique ID</descr>
+							<address type="M" typeVar="B" index="0" subIndex="360"/>
+						</var>
+						<var name="SysPLCUpTime" type="UDINT">
+							<descr>PLC up time (S)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="364"/>
+						</var>
+						<var name="SysCode" type="STRING" length="10">
+							<descr>Device product code</descr>
+							<address type="M" typeVar="B" index="0" subIndex="512"/>
+						</var>
+						<var name="SysFVersion" type="STRING" length="10">
+							<descr>Firmware version</descr>
+							<address type="M" typeVar="B" index="0" subIndex="523"/>
+						</var>
+						<var name="SysErInfos" type="STRING" length="32">
+							<descr>System error infos</descr>
+							<address type="M" typeVar="B" index="0" subIndex="534"/>
+						</var>
+						<var name="SysApllName" type="STRING" length="10">
+							<descr>Application name</descr>
+							<address type="M" typeVar="B" index="0" subIndex="567"/>
+						</var>
+						<var name="SysUSetA" type="STRING" length="16">
+							<descr>User setting (A)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="578"/>
+						</var>
+						<var name="SysUSetB" type="STRING" length="16">
+							<descr>User setting (B)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="595"/>
+						</var>
+						<var name="SysUSetC" type="STRING" length="16">
+							<descr>User setting (C)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="612"/>
+						</var>
+						<var name="SysUSetD" type="STRING" length="16">
+							<descr>User setting (D)</descr>
+							<address type="M" typeVar="B" index="0" subIndex="629"/>
+						</var>
+						<var name="SysVRW" type="BYTE" dim0="640">
+							<descr>System read and write variables</descr>
+							<address type="M" typeVar="B" index="1" subIndex="0"/>
+						</var>
+						<var name="SysTimeInit" type="BOOL">
+							<descr>System timing calculation init</descr>
+							<address type="M" typeVar="B" index="1" subIndex="0"/>
+						</var>
+						<var name="SysDateTime" type="UDINT">
+							<descr>System current local date time [Epoch time]</descr>
+							<address type="M" typeVar="B" index="1" subIndex="256"/>
+						</var>
+						<var name="SysLastError" type="UDINT">
+							<descr>Last error value</descr>
+							<address type="M" typeVar="B" index="1" subIndex="260"/>
+						</var>
+						<var name="SysUTCDateTime" type="UDINT">
+							<descr>System current UTC date time [Epoch time]</descr>
+							<address type="M" typeVar="B" index="1" subIndex="264"/>
+						</var>
+						<var name="SysUInfoA" type="STRING" length="16">
+							<descr>User info (A)</descr>
+							<address type="M" typeVar="B" index="1" subIndex="512"/>
+						</var>
+						<var name="SysUInfoB" type="STRING" length="16">
+							<descr>User info (B)</descr>
+							<address type="M" typeVar="B" index="1" subIndex="529"/>
+						</var>
+						<var name="SysUInfoC" type="STRING" length="16">
+							<descr>User info (C)</descr>
+							<address type="M" typeVar="B" index="1" subIndex="546"/>
+						</var>
+						<var name="SysUInfoD" type="STRING" length="16">
+							<descr>User info (D)</descr>
+							<address type="M" typeVar="B" index="1" subIndex="563"/>
+						</var>
+					</group>
+				</globalVars>
+				<retainVars>
+					<group name="UserData"/>
+					<group name="SystemVariables"/>
+				</retainVars>
+				<constantVars>
+					<group name="UserData"/>
+					<group name="SystemVariables"/>
+				</constantVars>
+				<iecVarsDeclaration>
+					<group name="UserData">
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[VAR_GLOBAL
+	SysData				AT %MB100.0 : ARRAY[0..4095] OF BYTE;       (* User data and backup *)
+	SysDataBk			AT %MB100.2048 : ARRAY[0..2047] OF BYTE;	(* User data backup *)
+END_VAR
+]]>
+						</iecDeclaration>
+					</group>
+					<group name="SystemVariables">
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[VAR_GLOBAL
+    SysVR               AT %MB0.0 : ARRAY[0..767] OF BYTE;(* System read only variables *)
+    SysClock100         AT %MB0.0 : BOOL;(* System clock 100 mS *)
+    SysClock1000        AT %MB0.1 : BOOL;(* System clock 1000 mS *)
+    SysBackupEnd        AT %MB0.2 : BOOL;(* System backup end *)
+    SysRestoreFault     AT %MB0.3 : BOOL;(* System restore fault *)
+    SysPLCInRun         AT %MB0.4 : BOOL;(* System PLC is running *)
+    SysFirstLoop        AT %MB0.5 : BOOL;(* System first execution loop *)
+    SysLLabCn           AT %MB0.6 : BOOL;(* LogicLab connected to the system *)
+    SysIsDST            AT %MB0.7 : BOOL;(* Is daylight saving time *)
+    SysDTSet            AT %MB0.8 : BOOL;(* Date/Time set *)
+    SysUVSet            AT %MB0.9 : BOOL;(* User variables set *)
+    SysAlwaysOff        AT %MB0.10 : BOOL;(* Always off *)
+    SysAlwaysOn         AT %MB0.11 : BOOL;(* Always on *)
+    SysFFBUspt          AT %MB0.12 : BOOL;(* Function or FB unsupported *)
+    SysFFBPrt           AT %MB0.13 : BOOL;(* Function or FB protected *)
+    SysCfgChanged       AT %MB0.14 : BOOL;(* System configuration changed *)
+
+    SysActTaskID        AT %MB0.64 : USINT;(* System active task ID *)
+    SysErActTaskID      AT %MB0.65 : USINT;(* System task ID in error *)
+
+    SysModulesReady     AT %MB0.128 : WORD;(* Modules connected to Sline bus (bit index) *)
+    SysApllVMajor       AT %MB0.130 : UINT;(* Application major version number *)
+    SysApllVMinor       AT %MB0.132 : UINT;(* Application minor version number *)
+
+    SysTBackLpTm        AT %MB0.256 : UDINT;(* System Back task loop time (uS) *)
+    SysTBackLpTmMin     AT %MB0.260 : UDINT;(* System Back task loop time min (uS) *)
+    SysTBackLpTmMax     AT %MB0.264 : UDINT;(* System Back task loop time max (uS) *)
+
+    SysTBootExTm        AT %MB0.268 : UDINT;(* System Boot task execution time (uS) *)
+    SysTBootExTmMin     AT %MB0.272 : UDINT;(* System Boot task execution time min (uS) *)
+    SysTBootExTmMax     AT %MB0.276 : UDINT;(* System Boot task execution time max (uS) *)
+
+    SysTFastExTm        AT %MB0.280 : UDINT;(* System Fast task execution time (uS) *)
+    SysTFastExTmMin     AT %MB0.284 : UDINT;(* System Fast task execution time min (uS) *)
+    SysTFastExTmMax     AT %MB0.288 : UDINT;(* System Fast task execution time max (uS) *)
+
+    SysTSlowExTm        AT %MB0.292 : UDINT;(* System Slow task execution time (uS) *)
+    SysTSlowExTmMin     AT %MB0.296 : UDINT;(* System Slow task execution time min (uS) *)
+    SysTSlowExTmMax     AT %MB0.300 : UDINT;(* System Slow task execution time max (uS) *)
+
+    SysTBackExTm        AT %MB0.304 : UDINT;(* System Back task execution time (uS) *)
+    SysTBackExTmMin     AT %MB0.308 : UDINT;(* System Back task execution time min (uS) *)
+    SysTBackExTmMax     AT %MB0.312 : UDINT;(* System Back task execution time max (uS) *)
+
+    SysStartTime        AT %MB0.316 : UDINT;(* PLC run since Date/Time [Epoch time] *)
+    SysTime             AT %MB0.320 : UDINT;(* System time [mS] *)
+    SysTFastLpTm        AT %MB0.324 : UDINT;(* System Fast task loop time (uS) *)
+    SysTSlowLpTm        AT %MB0.328 : UDINT;(* System Slow task loop time (uS) *)
+
+    SysApplID           AT %MB0.332 : UDINT;(* Application ID *)
+    SysMfcCode          AT %MB0.336 : UDINT;(* Manufacturer code *)
+    SysCustomerCode     AT %MB0.340 : UDINT;(* Customer code *)
+    SysErCode           AT %MB0.344 : UDINT;(* System error code *)
+    SysErTime           AT %MB0.348 : UDINT;(* System error time *)
+    SysSerialNr         AT %MB0.352 : UDINT;(* Device serial number *)
+    SysApllBTime        AT %MB0.356 : UDINT;(* Build time (Epoch) *)
+    SysUniqueID         AT %MB0.360 : UDINT;(* Unique ID *)
+    
+    SysPLCUpTime        AT %MB0.364 : UDINT;(* PLC up time (S) *)
+
+    SysCode             AT %MB0.512 : STRING[10];(* Device product code *)
+    SysFVersion         AT %MB0.523 : STRING[10];(* Firmware version *)
+    SysErInfos          AT %MB0.534 : STRING[32];(* System error infos *)
+    SysApllName         AT %MB0.567 : STRING[10];(* Application name *)
+    SysUSetA            AT %MB0.578 : STRING[16];(* User setting (A) *)
+    SysUSetB            AT %MB0.595 : STRING[16];(* User setting (B) *)
+    SysUSetC            AT %MB0.612 : STRING[16];(* User setting (C) *)
+    SysUSetD            AT %MB0.629 : STRING[16];(* User setting (D) *)
+
+    SysVRW              AT %MB1.0 : ARRAY[0..639] OF BYTE;(* System read and write variables *)
+    SysTimeInit         AT %MB1.0 : BOOL;(* System timing calculation init *)
+
+    SysDateTime         AT %MB1.256 : UDINT;(* System current local date time [Epoch time] *)
+    SysLastError        AT %MB1.260 : UDINT;(* Last error value *)
+    SysUTCDateTime      AT %MB1.264 : UDINT;(* System current UTC date time [Epoch time] *)
+
+    SysUInfoA           AT %MB1.512 : STRING[16];(* User info (A) *)
+    SysUInfoB           AT %MB1.529 : STRING[16];(* User info (B) *)
+    SysUInfoC           AT %MB1.546 : STRING[16];(* User info (C) *)
+    SysUInfoD           AT %MB1.563 : STRING[16];(* User info (D) *)
+
+END_VAR
+]]>
+						</iecDeclaration>
+					</group>
+				</iecVarsDeclaration>
+				<functions>
+					<function name="SysCANTxMsg" version="1.0.0" creationDate="1580461275" lastModifiedDate="1580461315">
+						<descr>Send a CAN message</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Msg" type="@SYSCANMESSAGE">
+									<descr>Message pointer</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysCANTxMsg: BOOL
+
+    VAR_INPUT
+        Msg : @SYSCANMESSAGE;   (* Message pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysCANRxMsg" version="1.0.0" creationDate="1580461167" lastModifiedDate="1590585944">
+						<descr>Receive a CAN message</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Mask" type="DWORD">
+									<descr>Message ID mask</descr>
+								</var>
+								<var name="ID" type="DWORD">
+									<descr>Message ID (FF:Bit 31) (11 or 29 Bit)</descr>
+								</var>
+								<var name="Msg" type="@SYSCANMESSAGE">
+									<descr>Message pointer</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysCANRxMsg: BOOL
+
+    VAR_INPUT
+        Mask : DWORD;           (* Message ID mask *)
+        ID : DWORD;             (* Message ID (FF:Bit 31) (11 or 29 Bit) *)
+        Msg : @SYSCANMESSAGE;   (* Message pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysIsCANRxTxAv" version="1.0.0" creationDate="1580461044" lastModifiedDate="1580461125">
+						<descr>Check if CAN Rx/Tx is available</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Select" type="BOOL">
+									<descr>eFALSE:Rx message selection, eTRUE:Tx space selection</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysIsCANRxTxAv: BOOL
+
+    VAR_INPUT
+        Select : BOOL;         (* eFALSE:Rx message selection, eTRUE:Tx space selection *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysCANSetMode" version="1.0.0" creationDate="1580459112" lastModifiedDate="1595226012">
+						<descr>Sets the CAN controller mode</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="BitRate" type="CAN_SPEED">
+									<descr>Bit rate</descr>
+								</var>
+								<var name="Filter" type="DWORD">
+									<descr>Acceptance filter</descr>
+								</var>
+								<var name="Mask" type="DWORD">
+									<descr>Acceptance mask</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysCANSetMode: BOOL
+
+    VAR_INPUT
+        BitRate : CAN_SPEED;(* Bit rate *)
+        Filter : DWORD;         (* Acceptance filter *)
+        Mask : DWORD;           (* Acceptance mask *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysRMFree" version="1.0.0" creationDate="1562858369" lastModifiedDate="1591705961">
+						<descr>Disallocate a relocatable memory buffer</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="DataPtr" type="@eVOID">
+									<descr>Memory buffer address</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysRMFree: BOOL
+
+    VAR_INPUT
+        DataPtr : @eVOID;      		(* Memory buffer address *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysRMAlloc" version="1.0.0" creationDate="1562858307" lastModifiedDate="1591705961">
+						<descr>Allocate a relocatable memory buffer</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Size" type="UDINT">
+									<descr>Memory size</descr>
+								</var>
+								<var name="DataPtr" type="@eVOID">
+									<descr>Memory buffer address pointer</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysRMAlloc: BOOL
+
+    VAR_INPUT
+        Size    : UDINT;           (* Memory size *)
+        DataPtr : @eVOID;          (* Memory buffer address pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysMAlloc" version="1.0.0" creationDate="1562858233" lastModifiedDate="1590591581">
+						<descr>Allocate a memory buffer</descr>
+						<returnValue>@eVOID</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Size" type="UDINT">
+									<descr>Memory size</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysMAlloc: @eVOID
+
+    VAR_INPUT
+        Size : UDINT;           (* Memory size *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysmemmove" version="1.0.0" creationDate="1562942460" lastModifiedDate="1591705961">
+						<descr>Copy bytes between two memory areas</descr>
+						<returnValue>@eVOID</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Dest" type="@eVOID">
+									<descr>Destination area</descr>
+								</var>
+								<var name="Src" type="@eVOID">
+									<descr>Source area</descr>
+								</var>
+								<var name="Size" type="UDINT">
+									<descr>Number of bytes to copy</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysmemmove: @eVOID
+
+    VAR_INPUT
+        Dest    : @eVOID;       (* Destination area *)
+        Src     : @eVOID;       (* Source area *)
+        Size    : UDINT;        (* Number of bytes to copy *)
+    END_VAR
+
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysmemset" version="1.0.0" creationDate="1562941483" lastModifiedDate="1591705961">
+						<descr>Fill a memory area with a character value</descr>
+						<returnValue>@eVOID</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Buff" type="@eVOID">
+									<descr>Memory area</descr>
+								</var>
+								<var name="Ch" type="INT">
+									<descr>Character to set</descr>
+								</var>
+								<var name="Size" type="UDINT">
+									<descr>Number of bytes to set</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysmemset: @eVOID
+
+    VAR_INPUT
+        Buff    : @eVOID;       (* Memory area *)
+        Ch      : INT;          (* Character to set *)
+        Size    : UDINT;        (* Number of bytes to set *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysMemFind" version="1.0.0" creationDate="1563194679" lastModifiedDate="1591705961">
+						<descr>Locate a memory area inside another</descr>
+						<returnValue>@eVOID</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Haystack" type="@eVOID">
+									<descr>Memory area where to find</descr>
+								</var>
+								<var name="HSize" type="UDINT">
+									<descr>Haystack area size</descr>
+								</var>
+								<var name="Needle" type="@eVOID">
+									<descr>Memory area to find</descr>
+								</var>
+								<var name="NSize" type="UDINT">
+									<descr>Needle area size</descr>
+								</var>
+								<var name="Mode" type="FIND_MODE">
+									<descr>Find mode</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysMemFind: @eVOID
+
+    VAR_INPUT
+        Haystack: @eVOID;       (* Memory area where to find *)
+        HSize   : UDINT;        (* Haystack area size *)
+        Needle  : @eVOID;       (* Memory area to find *)
+        NSize   : UDINT;        (* Needle area size *)
+        Mode    : FIND_MODE;    (* Find mode *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysXUnifiedValue" version="1.0.0" creationDate="1564641787" lastModifiedDate="1591706026">
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Wr" type="BOOL">
+									<descr>Write command</descr>
+								</var>
+								<var name="ID" type="UDINT">
+									<descr>Variable ID</descr>
+								</var>
+								<var name="Val" type="@eVOID">
+									<descr>Variable pointer</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysXUnifiedValue: BOOL
+
+    VAR_INPUT
+        Wr      : BOOL;         (* Write command *)
+        ID    	: UDINT;        (* Variable ID *)
+        Val     : @eVOID;       (* Variable pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="XUnifiedLibInit" version="1.0.0" hidden="true" creationDate="1564580394" lastModifiedDate="1593417188">
+						<descr>XUnified library init</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Cmd" type="BOOL">
+									<descr>Command</descr>
+								</var>
+							</inputVars>
+							<localVars>
+								<var name="b" type="BOOL">
+									<descr>Dummy</descr>
+								</var>
+								<var name="ver" type="STRING" length="10">
+									<descr>Lib version</descr>
+								</var>
+								<var name="ptr" type="@eVOID"/>
+							</localVars>
+						</vars>
+						<iecDeclaration active="FALSE"/>
+						<sourceCode type="ST">
+							<![CDATA[// Passo al firmware la versione di questa libreria.
+ver:='SFR094A020';
+ptr:=ADR(ver);
+b:=SysXUnifiedValue(TRUE, 1, ptr);
+XUnifiedLibInit:=TRUE;
+]]>
+						</sourceCode>
+					</function>
+					<function name="SysIDEnabled" version="1.0.0" hidden="true" creationDate="1563529410" lastModifiedDate="1563529453">
+						<descr>Protected ID enabled</descr>
+						<returnValue>REAL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="ID" type="UINT">
+									<descr>ID to check</descr>
+								</var>
+								<var name="DTime" type="UDINT">
+									<descr>Demo time</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysIDEnabled: REAL
+
+    VAR_INPUT
+        ID : UINT;              (* ID to check *)
+        DTime : UDINT;          (* Demo time *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysPCodeVerify" version="1.0.0" creationDate="1563529362" lastModifiedDate="1593758932">
+						<descr>Accept a protection code</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Code" type="@STRING">
+									<descr>Code</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysPCodeVerify: BOOL
+
+    VAR_INPUT
+        Code : @STRING;      	(* Code *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysI2CWrRd" version="1.0.0" creationDate="1563377160" lastModifiedDate="1591706026">
+						<descr>Write and read on I2C bus</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>I2c address</descr>
+								</var>
+								<var name="WrBytes" type="USINT">
+									<descr>Bytes to write</descr>
+								</var>
+								<var name="WrBuffer" type="@eVOID">
+									<descr>Write data buffer</descr>
+								</var>
+								<var name="RdBytes" type="USINT">
+									<descr>Bytes to read</descr>
+								</var>
+								<var name="RdBuffer" type="@eVOID">
+									<descr>Read data buffer</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysI2CWrRd: BOOL
+
+    VAR_INPUT
+        Address : USINT;        (* I2c address *)
+        WrBytes : USINT;        (* Bytes to write *)
+        WrBuffer: @eVOID;       (* Write data buffer *)
+        RdBytes : USINT;        (* Bytes to read *)
+        RdBuffer: @eVOID;       (* Read data buffer *)
+     END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysPhrVWr" version="1.0.0" creationDate="1563358513" lastModifiedDate="1591705961">
+						<descr>Write variable to peripheral bus</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Module" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="WrAdd" type="UINT">
+									<descr>Write address</descr>
+								</var>
+								<var name="VarType" type="VR_TYPE">
+									<descr>Variable type</descr>
+								</var>
+								<var name="VarAdd" type="@eVOID">
+									<descr>Variable address</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysPhrVWr: BOOL
+
+    VAR_INPUT
+        Module: USINT;          (* Module address *)
+        WrAdd: UINT;            (* Write address *)
+        VarType: VR_TYPE;       (* Variable type *)
+        VarAdd: @eVOID;         (* Variable address *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysPhrVRd" version="1.0.0" creationDate="1563358443" lastModifiedDate="1591705961">
+						<descr>Read variable from peripheral bus</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Module" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="RdAdd" type="UINT">
+									<descr>Read address</descr>
+								</var>
+								<var name="VarType" type="VR_TYPE">
+									<descr>Variable type</descr>
+								</var>
+								<var name="VarAdd" type="@eVOID">
+									<descr>Variable address</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysPhrVRd: BOOL
+
+    VAR_INPUT
+        Module: USINT;          (* Module address *)
+        RdAdd: UINT;            (* Read address *)
+        VarType: VR_TYPE;       (* Variable type *)
+        VarAdd: @eVOID;         (* Variable address *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetPhrInfos" version="1.0.0" creationDate="1563357145" lastModifiedDate="1590661673">
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Module" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="InfoID" type="PHR_INFOS_ID">
+									<descr>Info ID</descr>
+								</var>
+								<var name="Info" type="@STRING">
+									<descr>Info report</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="FALSE"/>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysWrSpyData" version="1.0.0" creationDate="1563264275" lastModifiedDate="1594646242">
+						<descr>Spy data</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Mode" type="SPY_MODE">
+									<descr>Spy mode</descr>
+								</var>
+								<var name="Length" type="UDINT">
+									<descr>Data length</descr>
+								</var>
+								<var name="TFlags" type="DWORD">
+									<descr>Trigger flags</descr>
+								</var>
+								<var name="Label" type="@STRING">
+									<descr>Label pointer</descr>
+								</var>
+								<var name="DPtr" type="@eVOID">
+									<descr>Data pointer</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysWrSpyData: BOOL
+
+    VAR_INPUT
+        Mode    : SPY_MODE;     (* Spy mode *)
+        Length	: UDINT;		(* Data length *)
+        TFlags  : DWORD;        (* Trigger flags *)
+        Label   : @STRING;      (* Label pointer *)
+        DPtr    : @eVOID;       (* Data pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysCVsnprintf" version="1.0.0" creationDate="1563199699" lastModifiedDate="1594641262">
+						<descr>Variable print to string with append</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Str" type="@STRING">
+									<descr>Return string</descr>
+								</var>
+								<var name="Size" type="UDINT">
+									<descr>Return size</descr>
+								</var>
+								<var name="Format" type="@STRING">
+									<descr>Print format</descr>
+								</var>
+								<var name="VarType" type="VR_TYPE">
+									<descr>Variable type</descr>
+								</var>
+								<var name="VarAdd" type="@eVOID">
+									<descr>Variable address</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysCVsnprintf: INT
+
+    VAR_INPUT
+        Str : @STRING;        	(* Return string *)
+        Size : UDINT;           (* Return size *)
+        Format : @STRING;    	(* Print format *)
+        VarType : VR_TYPE;      (* Variable type *)
+        VarAdd : @eVOID;        (* Variable address *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysVsnprintf" version="1.0.0" creationDate="1563199614" lastModifiedDate="1594635768">
+						<descr>Variable print to string</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Str" type="@STRING">
+									<descr>Return string</descr>
+								</var>
+								<var name="Size" type="UDINT">
+									<descr>Return size</descr>
+								</var>
+								<var name="Format" type="@STRING">
+									<descr>Print format</descr>
+								</var>
+								<var name="VarType" type="VR_TYPE">
+									<descr>Variable type</descr>
+								</var>
+								<var name="VarAdd" type="@eVOID">
+									<descr>Variable address</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysVsnprintf: INT
+
+    VAR_INPUT
+        Str : @STRING;        	(* Return string *)
+        Size : UDINT;           (* Return size *)
+        Format : @STRING;    	(* Print format *)
+        VarType : VR_TYPE;      (* Variable type *)
+        VarAdd : @eVOID;       	(* Variable address *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysVfprintf" version="1.0.0" creationDate="1563199520" lastModifiedDate="1594635144">
+						<descr>Variable print to file</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+								<var name="Format" type="@STRING">
+									<descr>Print format</descr>
+								</var>
+								<var name="VarType" type="VR_TYPE">
+									<descr>Variable type</descr>
+								</var>
+								<var name="VarAdd" type="@eVOID">
+									<descr>Variable address</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysVfprintf: INT
+
+VAR_INPUT
+	File : eFILEP;	(* File *)
+	Format : @STRING;	(* Print format *)
+	VarType : VR_TYPE;	(* Variable type *)
+	VarAdd : @eVOID;	(* Variable address *)
+END_VAR
+
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysVsscanf" version="1.0.0" creationDate="1563199435" lastModifiedDate="1594396840">
+						<descr>Extracts values from string</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Str" type="@STRING">
+									<descr>String to scan</descr>
+								</var>
+								<var name="Format" type="@STRING">
+									<descr>Scan format</descr>
+								</var>
+								<var name="VarType" type="VR_TYPE">
+									<descr>Variable type</descr>
+								</var>
+								<var name="VarAdd" type="@eVOID">
+									<descr>Variable address</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysVsscanf: BOOL
+
+    VAR_INPUT
+        Str : @STRING;        	(* String to scan *)
+        Format : @STRING;    	(* Scan format *)
+        VarType : VR_TYPE;      (* Variable type *)
+        VarAdd : @eVOID;        (* Variable address *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetCheck" version="1.0.0" creationDate="1563262107" lastModifiedDate="1594728262">
+						<descr>Check calculation</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Buf" type="@eVOID">
+									<descr>Buffer filled with data</descr>
+								</var>
+								<var name="ByteNr" type="UDINT">
+									<descr>Number of bytes to calculate</descr>
+								</var>
+								<var name="Init" type="UDINT">
+									<descr>Init value</descr>
+								</var>
+								<var name="Type" type="CHECK_TYPE">
+									<descr>Check type</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysGetCheck: UDINT
+
+    VAR_INPUT
+        Buf     : @eVOID;       (* Buffer filled with data *)
+        ByteNr  : UDINT;        (* Number of bytes to calculate *)
+        Init    : UDINT;        (* Init value *)
+        Type    : CHECK_TYPE;	(* Check type *)
+    END_VAR
+
+
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysstrlen" version="1.0.0" creationDate="1563196489" lastModifiedDate="1590670432">
+						<descr>Calculate length of string</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Str" type="@STRING">
+									<descr>String</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysstrlen: UDINT
+
+    VAR_INPUT
+        Str     : @STRING;     	(* String *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Systoupper" version="1.0.0" creationDate="1563196425" lastModifiedDate="1563196464">
+						<descr>Convert a character to upper case</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Ch" type="INT">
+									<descr>Character to convert</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Systoupper: INT
+
+    VAR_INPUT
+        Ch      : INT;          (* Character to convert *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Systolower" version="1.0.0" creationDate="1563196374" lastModifiedDate="1563196413">
+						<descr>Convert a character to lower case</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Ch" type="INT">
+									<descr>Character to convert</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Systolower: INT
+
+    VAR_INPUT
+        Ch      : INT;          (* Character to convert *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysStrFind" version="1.0.0" creationDate="1563194792" lastModifiedDate="1590758122">
+						<descr>Locate a substring inside a string</descr>
+						<returnValue>@STRING</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Haystack" type="@STRING">
+									<descr>String where to find</descr>
+								</var>
+								<var name="Needle" type="@STRING">
+									<descr>String to find</descr>
+								</var>
+								<var name="Mode" type="FIND_MODE">
+									<descr>Find mode</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysStrFind: @STRING
+
+    VAR_INPUT
+        Haystack: @STRING;      (* String where to find *)
+        Needle  : @STRING;      (* String to find *)
+        Mode    : FIND_MODE;    (* Find mode *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFileRemove" version="1.0.0" creationDate="1562660166" lastModifiedDate="1594391349">
+						<descr>Remove a file</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Name" type="@STRING">
+									<descr>File to rename</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFileRemove: BOOL
+
+    VAR_INPUT
+        Name : @STRING;      	(* File to rename *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFileRename" version="1.0.0" creationDate="1562660092" lastModifiedDate="1594390878">
+						<descr>Rename a file</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="OldName" type="@STRING">
+									<descr>File to rename</descr>
+								</var>
+								<var name="NewName" type="@STRING">
+									<descr>New name</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFileRename: BOOL
+
+    VAR_INPUT
+        OldName : @STRING;   	(* File to rename *)
+        NewName : @STRING;   	(* New name *)
+    END_VAR
+
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysfseek" version="1.0.0" creationDate="1562657471" lastModifiedDate="1591706345">
+						<descr>Set the file cursor position</descr>
+						<returnValue>DINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+								<var name="Offset" type="DINT">
+									<descr>Offset</descr>
+								</var>
+								<var name="Origin" type="FSEEK_ORIGIN">
+									<descr>Origin</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysfseek: DINT
+
+    VAR_INPUT
+        File : eFILEP;          (* File *)
+        Offset : DINT;          (* Offset *)
+        Origin : FSEEK_ORIGIN;  (* Origin *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetFileLen" version="1.0.0" creationDate="1562657414" lastModifiedDate="1594390504">
+						<descr>Returns the file length</descr>
+						<returnValue>DINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Name" type="@STRING">
+									<descr>File name</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysGetFileLen: DINT
+
+    VAR_INPUT
+        Name : @STRING;      	(* File name *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetSerialCTS" version="1.0.0" creationDate="1575285679" lastModifiedDate="1591706345">
+						<descr>Get serial CTS signal status</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysGetSerialCTS: BOOL
+
+     VAR_INPUT
+        File : eFILEP;         	(* File *)
+    END_VAR
+
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysSetSerialMode" version="1.0.0" creationDate="1568814215" lastModifiedDate="1591706345">
+						<descr>Set serial mode</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Mode" type="@SYSSERIALMODE">
+									<descr>SYSSERIALMODE data</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysSetSerialMode: BOOL
+
+    VAR_INPUT
+        Mode : @SYSSERIALMODE;  (* SYSSERIALMODE data *)
+        File : eFILEP;          (* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetSerialMode" version="1.0.0" creationDate="1568814145" lastModifiedDate="1591706345">
+						<descr>Get serial mode</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Mode" type="@SYSSERIALMODE">
+									<descr>SYSSERIALMODE data</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysGetSerialMode: BOOL
+
+    VAR_INPUT
+        Mode : @SYSSERIALMODE;  (* SYSSERIALMODE data *)
+        File : eFILEP;          (* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysSetSerialDTR" version="1.0.0" creationDate="1561039037" lastModifiedDate="1591706256">
+						<descr>Set serial DTR signal status</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Status" type="BOOL">
+									<descr>DTR status</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysSetSerialDTR: BOOL
+
+    VAR_INPUT
+        Status : BOOL;          (* DTR status *)
+        File : eFILEP;          (* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysfwrite" version="1.0.0" creationDate="1561975028" lastModifiedDate="1591705961">
+						<descr>Write data to file</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Buf" type="@eVOID">
+									<descr>Buffer of data to write</descr>
+								</var>
+								<var name="Size" type="INT">
+									<descr>Bytes per data block</descr>
+								</var>
+								<var name="Count" type="INT">
+									<descr>Nr of data blocks</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysfwrite: INT
+
+    VAR_INPUT
+        Buf  : @eVOID;          (* Buffer of data to write *)
+        Size : INT;             (* Bytes per data block *)
+        Count: INT;             (* Nr of data blocks *)
+        File : eFILEP;          (* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysfread" version="1.0.0" creationDate="1561974944" lastModifiedDate="1591705961">
+						<descr>Read data from file</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Buf" type="@eVOID">
+									<descr>Buffer filled with read data</descr>
+								</var>
+								<var name="Size" type="INT">
+									<descr>Bytes per data block</descr>
+								</var>
+								<var name="Count" type="INT">
+									<descr>Nr of data blocks</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysfread: INT
+
+    VAR_INPUT
+        Buf  : @eVOID;          (* Buffer filled with read data *)
+        Size : INT;             (* Bytes per data block *)
+        Count: INT;             (* Nr of data blocks *)
+        File : eFILEP;          (* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFGetOBfSize" version="1.0.0" creationDate="1561470765" lastModifiedDate="1591706256">
+						<descr>Get output buffer size</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFGetOBfSize: UDINT
+
+    VAR_INPUT
+        File : eFILEP;        	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFGetIBfSize" version="1.0.0" creationDate="1561470693" lastModifiedDate="1591706256">
+						<descr>Get input buffer size</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFGetIBfSize: UDINT
+
+    VAR_INPUT
+        File : eFILEP;        	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFOBfFlush" version="1.0.0" creationDate="1561470633" lastModifiedDate="1591706256">
+						<descr>Flush output buffer</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFOBfFlush: BOOL
+
+    VAR_INPUT
+        File : eFILEP;         	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFOBfClear" version="1.0.0" creationDate="1561470581" lastModifiedDate="1591706256">
+						<descr>Clear output buffer</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFOBfClear: BOOL
+
+    VAR_INPUT
+        File : eFILEP;        	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFIBfClear" version="1.0.0" creationDate="1561470527" lastModifiedDate="1591706256">
+						<descr>Clear input buffer</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFIBfClear: BOOL
+
+    VAR_INPUT
+        File : eFILEP;        	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFGetOSpace" version="1.0.0" creationDate="1561470456" lastModifiedDate="1591706256">
+						<descr>Get available output space</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFGetOSpace: INT
+
+    VAR_INPUT
+        File : eFILEP;        	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFGetIChars" version="1.0.0" creationDate="1561470379" lastModifiedDate="1591706256">
+						<descr>Get available input chars</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFGetIChars: INT
+
+    VAR_INPUT
+        File : eFILEP;        	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFIsOpen" version="1.0.0" creationDate="1561470315" lastModifiedDate="1591706256">
+						<descr>Get the file open status</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFIsOpen: BOOL
+
+    VAR_INPUT
+        File : eFILEP;          (* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysfgetc" version="1.0.0" creationDate="1561024499" lastModifiedDate="1591706256">
+						<descr>Get character from file</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysfgetc: INT
+
+    VAR_INPUT
+        File : eFILEP;         	(* "File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysfclose" version="1.0.0" creationDate="1561019586" lastModifiedDate="1591706256">
+						<descr>Close a file</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysfclose: INT
+
+    VAR_INPUT
+        File : eFILEP;         	(* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="Sysfputc" version="1.0.0" creationDate="1560957123" lastModifiedDate="1591706256">
+						<descr>Put character to file</descr>
+						<returnValue>INT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Ch" type="INT">
+									<descr>Character</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION Sysfputc: INT
+
+    VAR_INPUT
+        Ch   : INT;             (* Character *)
+        File : eFILEP;          (* File *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysFfopen" version="1.0.0" creationDate="1560956765" lastModifiedDate="1594383479">
+						<descr>Open a file</descr>
+						<returnValue>eFILEP</returnValue>
+						<vars>
+							<inputVars>
+								<var name="FName" type="@STRING">
+									<descr>File name</descr>
+								</var>
+								<var name="Mode" type="@STRING">
+									<descr>Attribute</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysFfopen: eFILEP
+
+    VAR_INPUT
+        FName : @STRING;   		(* File name *)
+        Mode  : @STRING;      	(* Attribute *)
+    END_VAR
+
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysSetTaskLpTime" version="1.0.0" creationDate="1580480968" lastModifiedDate="1580481008">
+						<descr>Set the task loop time</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="TaskID" type="TASK_ID">
+									<descr>Task ID</descr>
+								</var>
+								<var name="Time" type="UDINT">
+									<descr>Task time [uSec]</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysSetTaskLpTime: BOOL
+
+    VAR_INPUT
+        TaskID : TASK_ID;       (* Task ID *)
+        Time   : UDINT;         (* Task time [uSec] *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysOSIDValue" version="1.0.0" creationDate="1564648259" lastModifiedDate="1591706026">
+						<descr>Get or set an operative system variable</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Wr" type="BOOL">
+									<descr>Write command</descr>
+								</var>
+								<var name="OSID" type="SYS_ID">
+									<descr>Variable ID</descr>
+								</var>
+								<var name="Val" type="@eVOID">
+									<descr>Variable pointer</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysOSIDValue: BOOL
+
+    VAR_INPUT
+        Wr      : BOOL;         (* Write command *)
+        OSID    : SYS_ID;       (* Variable ID *)
+        Val     : @eVOID;       (* Variable pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetEndianness" version="1.0.0" creationDate="1562941217" lastModifiedDate="1562941235">
+						<descr>Get the endianness</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Cmd" type="BOOL">
+									<descr>Command</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysGetEndianness: BOOL
+
+    VAR_INPUT
+        Cmd : BOOL;             (* Command *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetRandom" version="1.0.0" creationDate="1562913486" lastModifiedDate="1562913515">
+						<descr>Get random number</descr>
+						<returnValue>REAL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Cmd" type="BOOL">
+									<descr>Command</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysGetRandom: REAL
+
+    VAR_INPUT
+        Cmd : BOOL;             (* Command *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetLastError" version="1.0.0" creationDate="1560153538" lastModifiedDate="1560153559">
+						<descr>Get the last error</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Cmd" type="BOOL">
+									<descr>Command</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="FALSE"/>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysSetLastError" version="1.0.0" hidden="true" creationDate="1560153472" lastModifiedDate="1560153526">
+						<descr>Set the last error</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Error" type="UDINT">
+									<descr>Error number</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="FALSE"/>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysTimeZoneAdj" version="1.0.0" creationDate="1580487666" lastModifiedDate="1580487708">
+						<descr>Adjust the UTC date time with time zone and daylight saving time</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="UTCDateTime" type="UDINT">
+									<descr>UTC date and time to adjust</descr>
+								</var>
+								<var name="TimeZone" type="SINT">
+									<descr>Difference to Greenwich time (GMT) (H)</descr>
+								</var>
+								<var name="DaylightZone" type="DAYLIGHT_ZONE">
+									<descr>Daylight saving zone</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="FALSE"/>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysSetUTCDateTime" version="1.0.0" creationDate="1562934114" lastModifiedDate="1562934160">
+						<descr>Set the system UTC date time</descr>
+						<returnValue>BOOL</returnValue>
+						<vars>
+							<inputVars>
+								<var name="UTCDateTime" type="UDINT">
+									<descr>UTC date and time to set</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysSetUTCDateTime: BOOL
+
+    VAR_INPUT
+        UTCDateTime : UDINT;             (* UTC date and time to set *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetUTCDateTime" version="1.0.0" creationDate="1562934055" lastModifiedDate="1562934172">
+						<descr>Get the system UTC date time</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Cmd" type="BOOL">
+									<descr>Command</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION SysGetUTCDateTime: UDINT
+
+    VAR_INPUT
+        Cmd : BOOL;             (* Command *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+					<function name="SysGetSysTime" version="1.0.0" creationDate="1559908839" lastModifiedDate="1560153935">
+						<descr>Get uSec system time</descr>
+						<returnValue>UDINT</returnValue>
+						<vars>
+							<inputVars>
+								<var name="Cmd" type="BOOL">
+									<descr>Command</descr>
+								</var>
+							</inputVars>
+						</vars>
+						<iecDeclaration active="FALSE"/>
+						<sourceCode type="EMBEDDED"/>
+					</function>
+				</functions>
+				<functionBlocks>
+					<functionBlock name="SysSetPWMOut" version="1.0.0" creationDate="1580725051" lastModifiedDate="1591705961">
+						<descr>Set PWM generator output</descr>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="Channel" type="USINT">
+									<descr>Channel</descr>
+								</var>
+								<var name="Frequency" type="REAL">
+									<descr>Frequency (Hz)</descr>
+								</var>
+								<var name="Duty" type="REAL">
+									<descr>Duty cycle (%)</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysSetPWMOut
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Address : USINT;        (* Module address *)
+        Channel : USINT;        (* Channel *)
+        Frequency : REAL;       (* Frequency (Hz) *)
+        Duty    : REAL;         (* Duty cycle (%) *)
+     END_VAR
+
+    VAR_OUTPUT
+        Done    : BOOL;         (* Function done *)
+        Fault   : BOOL;         (* Function fault *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysGetEncoder" version="1.0.0" creationDate="1563287358" lastModifiedDate="1591705761">
+						<descr>Get encoder value</descr>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="Channel" type="USINT">
+									<descr>Channel</descr>
+								</var>
+								<var name="RCount" type="BOOL">
+									<descr>Reverse count</descr>
+								</var>
+								<var name="ZeroEn" type="BOOL">
+									<descr>Zero enable</descr>
+								</var>
+								<var name="GateEn" type="BOOL">
+									<descr>Gate enable</descr>
+								</var>
+								<var name="RGate" type="BOOL">
+									<descr>Reverse gate</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="ZeroD" type="BOOL">
+									<descr>Zero pulse detected</descr>
+								</var>
+								<var name="GateD" type="BOOL">
+									<descr>Gate detected</descr>
+								</var>
+								<var name="GQuote" type="UINT">
+									<descr>Gate quote</descr>
+								</var>
+								<var name="EQuote" type="UINT">
+									<descr>Encoder quote</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysGetEncoder
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Address : USINT;        (* Module address *)
+        Channel : USINT;        (* Channel *)
+        RCount  : BOOL;         (* Reverse count *)
+        ZeroEn  : BOOL;         (* Zero enable *)
+        GateEn  : BOOL;         (* Gate enable *)
+        RGate   : BOOL;         (* Reverse gate *)
+     END_VAR
+
+    VAR_OUTPUT
+        Done    : BOOL;         (* Function done *)
+        Fault   : BOOL;         (* Function fault *)
+        ZeroD   : BOOL;         (* Zero pulse detected *)
+        GateD   : BOOL;         (* Gate detected *)
+        GQuote  : UINT;         (* Gate quote *)
+        EQuote  : UINT;         (* Encoder quote *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysGetCounter" version="1.0.0" creationDate="1563280403" lastModifiedDate="1591705761">
+						<descr>Get counter value</descr>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="Channel" type="USINT">
+									<descr>Channel</descr>
+								</var>
+								<var name="Mode" type="DWORD">
+									<descr>Mode</descr>
+								</var>
+								<var name="RCount" type="BOOL">
+									<descr>Reverse count</descr>
+								</var>
+								<var name="Reset" type="BOOL">
+									<descr>Count reset</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="Value" type="UDINT">
+									<descr>Counter value</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysGetCounter
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Address : USINT;        (* Module address *)
+        Channel : USINT;        (* Channel *)
+        Mode 	: DWORD;      	(* Mode *)
+        RCount  : BOOL;         (* Reverse count *)
+        Reset  	: BOOL;       	(* Count reset *)
+     END_VAR
+
+    VAR_OUTPUT
+        Done    : BOOL;         (* Function done *)
+        Fault   : BOOL;      	(* Function fault *)
+        Value  	: UDINT;       	(* Counter value *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysSetAnOut" version="1.0.0" creationDate="1563354406" lastModifiedDate="1591705761">
+						<descr>Set analog output</descr>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="Channel" type="USINT">
+									<descr>Channel</descr>
+								</var>
+								<var name="Mode" type="AO_MODE">
+									<descr>Mode</descr>
+								</var>
+								<var name="Value" type="REAL">
+									<descr>Value</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysSetAnOut
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Address : USINT;        (* Module address *)
+        Channel : USINT;        (* Channel *)
+        Mode    : AO_MODE;      (* Mode *)
+        Value   : REAL;         (* Value *)
+     END_VAR
+
+    VAR_OUTPUT
+        Done    : BOOL;         (* Function done *)
+        Fault   : BOOL;         (* Function fault *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysGetAnInp" version="1.0.0" creationDate="1559909686" lastModifiedDate="1591705761">
+						<descr>Get analog input</descr>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="Channel" type="USINT">
+									<descr>Channel</descr>
+								</var>
+								<var name="Mode" type="AI_MODE">
+									<descr>Mode</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="Value" type="REAL">
+									<descr>Value</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysGetAnInp
+
+VAR
+    Ver     : USINT := 0;   (* Function block version *)
+    IVP     : @eVOID;       (* Internal variables pointer *)
+END_VAR
+
+VAR_INPUT
+    Address : USINT;        (* Module address *)
+    Channel : USINT;        (* Channel *)
+    Mode    : AI_MODE;      (* Mode *)
+END_VAR
+
+VAR_OUTPUT
+    Done    : BOOL;         (* Function done *)
+    Fault   : BOOL;         (* Function fault *)
+    Value   : REAL;         (* Value *)
+END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysGetPhrDI" version="1.0.0" creationDate="1560325839" lastModifiedDate="1591705761">
+						<descr>Get the peripheral digital inputs</descr>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="Mode" type="DI_MODE">
+									<descr>Mode</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="Value" type="DWORD">
+									<descr>Digital input value</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysGetPhrDI
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Address : USINT;        (* Module address *)
+        Mode    : DI_MODE;      (* Mode *)
+    END_VAR
+
+    VAR_OUTPUT
+        Done    : BOOL;         (* Function done *)
+        Fault   : BOOL;         (* Function fault *)
+        Value   : DWORD;        (* Digital input value *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysSetPhrDO" version="1.0.0" creationDate="1560243348" lastModifiedDate="1591705761">
+						<descr>Set the peripheral digital outputs</descr>
+						<vars>
+							<inputVars>
+								<var name="Address" type="USINT">
+									<descr>Module address</descr>
+								</var>
+								<var name="Mode" type="DO_MODE">
+									<descr>Mode</descr>
+								</var>
+								<var name="Value" type="DWORD">
+									<descr>Digital output value</descr>
+								</var>
+								<var name="Mask" type="DWORD">
+									<descr>Memory mapped output mask</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>1</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysSetPhrDO
+
+    VAR
+        Ver     : USINT := 1;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Address : USINT;        (* Module address *)
+        Mode    : DO_MODE;      (* Mode *)
+        Value   : DWORD;        (* Digital output value *)
+        Mask    : DWORD;        (* Memory mapped output mask *)
+    END_VAR
+
+    VAR_OUTPUT
+        Done    : BOOL;         (* Function done *)
+        Fault   : BOOL;         (* Function fault *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysGetFileInfos" version="1.0.0" creationDate="1563436461" lastModifiedDate="1593695668">
+						<descr>Directory listing</descr>
+						<vars>
+							<inputVars>
+								<var name="Init" type="BOOL">
+									<descr>Init command</descr>
+								</var>
+								<var name="Next" type="BOOL">
+									<descr>Next command</descr>
+								</var>
+								<var name="PathName" type="@STRING">
+									<descr>Directory name</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Found" type="BOOL">
+									<descr>File found</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Fault</descr>
+								</var>
+								<var name="IsDir" type="BOOL">
+									<descr>Is directory</descr>
+								</var>
+								<var name="Size" type="UDINT">
+									<descr>File size</descr>
+								</var>
+								<var name="Time" type="UDINT">
+									<descr>File time (UTC)</descr>
+								</var>
+								<var name="Name" type="@STRING">
+									<descr>File or directory name</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysGetFileInfos
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Init    : BOOL;         (* Init command *)
+        Next    : BOOL;         (* Next command *)
+        PathName: @STRING;   	(* Directory name *)
+    END_VAR
+
+    VAR_OUTPUT
+        Found   : BOOL;         (* File found *)
+        Fault   : BOOL;         (* Fault *)
+        IsDir   : BOOL;         (* Is directory *)
+        Size    : UDINT;        (* File size *)
+        Time    : UDINT;        (* File time (UTC) *)
+        Name	: @STRING;      (* File or directory name *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysUDPServer" version="1.0.0" creationDate="1567774820" lastModifiedDate="1591705761">
+						<descr>UDP server</descr>
+						<vars>
+							<inputVars>
+								<var name="Enable" type="BOOL">
+									<descr>Server enable</descr>
+								</var>
+								<var name="FilesArr" type="@eFILEP">
+									<descr>File pointer array address</descr>
+								</var>
+								<var name="LocalAdd" type="@STRING">
+									<descr>Local address</descr>
+								</var>
+								<var name="LocalPort" type="UINT">
+									<descr>Local port</descr>
+								</var>
+								<var name="MaxConn" type="USINT">
+									<descr>Max number of connections</descr>
+								</var>
+								<var name="FlushTm" type="UINT">
+									<descr>Flush time [mS]</descr>
+								</var>
+								<var name="LifeTm" type="UINT">
+									<descr>Life time [S]</descr>
+								</var>
+								<var name="RxSize" type="UINT">
+									<descr>Rx buffer data size</descr>
+								</var>
+								<var name="TxSize" type="UINT">
+									<descr>Tx buffer data size</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Enabled" type="BOOL">
+									<descr>Enabled</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="ConnPeers" type="USINT">
+									<descr>Number of peers connected</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysUDPServer
+
+    VAR
+        Ver      : USINT := 0;   (* Function block version *)
+        IVP      : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Enable   : BOOL;         (* Server enable *)
+        FilesArr : @eFILEP;      (* File pointer array address *)
+        LocalAdd : @STRING;      (* Local address *)
+        LocalPort: UINT;         (* Local port *)
+        MaxConn  : USINT;        (* Max number of connections *)
+        FlushTm  : UINT;         (* Flush time [mS] *)
+        LifeTm   : UINT;         (* Life time [S] *)
+        RxSize   : UINT;         (* Rx buffer data size *)
+        TxSize   : UINT;         (* Tx buffer data size *)
+     END_VAR
+
+    VAR_OUTPUT
+        Enabled  : BOOL;         (* Enabled *)
+        Fault    : BOOL;         (* Function fault *)
+        ConnPeers: USINT;        (* Number of peers connected *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysUDPClient" version="1.0.0" creationDate="1567172297" lastModifiedDate="1591705761">
+						<descr>UDP client</descr>
+						<vars>
+							<inputVars>
+								<var name="Connect" type="BOOL">
+									<descr>Connection request</descr>
+								</var>
+								<var name="PeerAdd" type="@STRING">
+									<descr>Peer address</descr>
+								</var>
+								<var name="PeerPort" type="UINT">
+									<descr>Peer port</descr>
+								</var>
+								<var name="LocalAdd" type="@STRING">
+									<descr>Local address</descr>
+								</var>
+								<var name="LocalPort" type="UINT">
+									<descr>Local port</descr>
+								</var>
+								<var name="FlushTm" type="UINT">
+									<descr>Flush time [mS]</descr>
+								</var>
+								<var name="LifeTm" type="UINT">
+									<descr>Life time [S]</descr>
+								</var>
+								<var name="RxSize" type="UINT">
+									<descr>Rx buffer data size</descr>
+								</var>
+								<var name="TxSize" type="UINT">
+									<descr>Tx buffer data size</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Connected" type="BOOL">
+									<descr>Connected</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File pointer</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysUDPClient
+
+    VAR
+        Ver      : USINT := 0;   (* Function block version *)
+        IVP      : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Connect  : BOOL;         (* Connection request *)
+        PeerAdd  : @STRING;      (* Peer address *)
+        PeerPort : UINT;         (* Peer port *)
+        LocalAdd : @STRING;      (* Local address *)
+        LocalPort: UINT;         (* Local port *)
+        FlushTm  : UINT;         (* Flush time [mS] *)
+        LifeTm   : UINT;         (* Life time [S] *)
+        RxSize   : UINT;         (* Rx buffer data size *)
+        TxSize   : UINT;         (* Tx buffer data size *)
+     END_VAR
+
+    VAR_OUTPUT
+        Connected: BOOL;         (* Connected *)
+        Fault    : BOOL;         (* Function fault *)
+        File     : eFILEP;       (* File pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysGetPeerInfos" version="1.0.0" creationDate="1567074697" lastModifiedDate="1593692289">
+						<descr>Get IP infos</descr>
+						<vars>
+							<inputVars>
+								<var name="File" type="eFILEP">
+									<descr>Pointer to file</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="PeerIP" type="@STRING">
+									<descr>Peer IP address</descr>
+								</var>
+								<var name="PeerPort" type="UINT">
+									<descr>Peer port</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysGetPeerInfos
+
+    VAR
+        Ver      : USINT := 0;   (* Function block version *)
+        IVP      : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        File     : eFILEP;       (* Pointer to file *)
+     END_VAR
+
+    VAR_OUTPUT
+        PeerIP   : @STRING;   	 (* Peer IP address *)
+        PeerPort : UINT;         (* Peer port *)
+    END_VAR
+
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysTCPServer" version="1.0.0" creationDate="1566994015" lastModifiedDate="1591705761">
+						<descr>TCP server</descr>
+						<vars>
+							<inputVars>
+								<var name="Enable" type="BOOL">
+									<descr>Server enable</descr>
+								</var>
+								<var name="FilesArr" type="@eFILEP">
+									<descr>File pointer array address</descr>
+								</var>
+								<var name="LocalAdd" type="@STRING">
+									<descr>Local address</descr>
+								</var>
+								<var name="LocalPort" type="UINT">
+									<descr>Local port</descr>
+								</var>
+								<var name="MaxConn" type="USINT">
+									<descr>Max number of connections</descr>
+								</var>
+								<var name="FlushTm" type="UINT">
+									<descr>Flush time [mS]</descr>
+								</var>
+								<var name="LifeTm" type="UINT">
+									<descr>Life time [S]</descr>
+								</var>
+								<var name="RxSize" type="UINT">
+									<descr>Rx buffer data size</descr>
+								</var>
+								<var name="TxSize" type="UINT">
+									<descr>Tx buffer data size</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Enabled" type="BOOL">
+									<descr>Enabled</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="ConnPeers" type="USINT">
+									<descr>Number of peers connected</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysTCPServer
+
+    VAR
+        Ver      : USINT := 0;   (* Function block version *)
+        IVP      : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Enable   : BOOL;         (* Server enable *)
+        FilesArr : @eFILEP;      (* File pointer array address *)
+        LocalAdd : @STRING;      (* Local address *)
+        LocalPort: UINT;         (* Local port *)
+        MaxConn  : USINT;        (* Max number of connections *)
+        FlushTm  : UINT;         (* Flush time [mS] *)
+        LifeTm   : UINT;         (* Life time [S] *)
+        RxSize   : UINT;         (* Rx buffer data size *)
+        TxSize   : UINT;         (* Tx buffer data size *)
+     END_VAR
+
+    VAR_OUTPUT
+        Enabled  : BOOL;         (* Enabled *)
+        Fault    : BOOL;         (* Function fault *)
+        ConnPeers: USINT;        (* Number of peers connected *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysPing" version="1.0.0" creationDate="1563869924" lastModifiedDate="1594288705">
+						<descr>Checks if IP is reachable</descr>
+						<vars>
+							<inputVars>
+								<var name="Enable" type="BOOL">
+									<descr>Function enable</descr>
+								</var>
+								<var name="Address" type="@STRING">
+									<descr>Address to ping</descr>
+								</var>
+								<var name="Length" type="UINT">
+									<descr>Sent frame length</descr>
+								</var>
+								<var name="Delay" type="REAL">
+									<descr>Delay to set Done [Sec]</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Ok" type="BOOL">
+									<descr>Function ok</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="Time" type="REAL">
+									<descr>Time from ping send and received answer [Sec]</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysPing
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Enable  : BOOL;         (* Function enable *)
+        Address : @STRING;   	(* Address to ping *)
+        Length 	: UINT;   		(* Sent frame length *)
+        Delay	: REAL;  		(* Delay to set Done [Sec] *)
+     END_VAR
+
+    VAR_OUTPUT
+        Done    : BOOL;         (* Function done *)
+        Ok   	: BOOL;         (* Function ok *)
+        Fault   : BOOL;         (* Function fault *)
+        Time	: REAL;         (* Time from ping send and received answer [Sec] *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysTCPClient" version="1.0.0" creationDate="1561468934" lastModifiedDate="1593760436">
+						<descr>TCP client</descr>
+						<vars>
+							<inputVars>
+								<var name="Connect" type="BOOL">
+									<descr>Connection request</descr>
+								</var>
+								<var name="PeerAdd" type="@STRING">
+									<descr>Peer address</descr>
+								</var>
+								<var name="PeerPort" type="UINT">
+									<descr>Peer port</descr>
+								</var>
+								<var name="LocalAdd" type="@STRING">
+									<descr>Local address</descr>
+								</var>
+								<var name="LocalPort" type="UINT">
+									<descr>Local port</descr>
+								</var>
+								<var name="FlushTm" type="UINT">
+									<descr>Flush time [mS]</descr>
+								</var>
+								<var name="LifeTm" type="UINT">
+									<descr>Life time [S]</descr>
+								</var>
+								<var name="RxSize" type="UINT">
+									<descr>Rx buffer data size</descr>
+								</var>
+								<var name="TxSize" type="UINT">
+									<descr>Tx buffer data size</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Connected" type="BOOL">
+									<descr>Connected</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File pointer</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysTCPClient
+
+    VAR
+        Ver      : USINT := 0;   (* Function block version *)
+        IVP      : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Connect  : BOOL;         (* Connection request *)
+        PeerAdd  : @STRING;      (* Peer address *)
+        PeerPort : UINT;         (* Peer port *)
+        LocalAdd : @STRING;      (* Local address *)
+        LocalPort: UINT;         (* Local port *)
+        FlushTm  : UINT;         (* Flush time [mS] *)
+        LifeTm   : UINT;         (* Life time [S] *)
+        RxSize   : UINT;         (* Rx buffer data size *)
+        TxSize   : UINT;         (* Tx buffer data size *)
+     END_VAR
+
+    VAR_OUTPUT
+        Connected: BOOL;         (* Connected *)
+        Fault    : BOOL;         (* Function fault *)
+        File     : eFILEP;       (* File pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysDMXMng" version="1.0.0" creationDate="1580729328" lastModifiedDate="1593697543">
+						<descr>DMX protocol management</descr>
+						<vars>
+							<inputVars>
+								<var name="Start" type="BOOL">
+									<descr>Start</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File</descr>
+								</var>
+								<var name="Status" type="USINT">
+									<descr>Status byte</descr>
+								</var>
+								<var name="Devices" type="UINT">
+									<descr>Number of devices</descr>
+								</var>
+								<var name="Delay" type="UINT">
+									<descr>Interframe delay [mSec]</descr>
+								</var>
+								<var name="DataPtr" type="@eVOID">
+									<descr>Data array pointer</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Function done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Function fault</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="FALSE"/>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysSerialPort" version="1.0.0" creationDate="1562060319" lastModifiedDate="1591705761">
+						<descr>Serial port manager</descr>
+						<vars>
+							<inputVars>
+								<var name="Open" type="BOOL">
+									<descr>Open serial port</descr>
+								</var>
+								<var name="COM" type="@STRING">
+									<descr>COM port</descr>
+								</var>
+								<var name="Baudrate" type="UDINT">
+									<descr>Baudrate</descr>
+								</var>
+								<var name="Parity" type="STRING" length="1">
+									<descr>Parity type</descr>
+								</var>
+								<var name="DataBits" type="USINT">
+									<descr>Number of data bits</descr>
+								</var>
+								<var name="StopBits" type="USINT">
+									<descr>Number of stop bits</descr>
+								</var>
+								<var name="DTRManagement" type="DTR_MODE">
+									<descr>DTR management type</descr>
+								</var>
+								<var name="DTRComplement" type="BOOL">
+									<descr>DTR signal complement</descr>
+								</var>
+								<var name="EchoFlush" type="BOOL">
+									<descr>Flush the echo characters</descr>
+								</var>
+								<var name="DTROnTime" type="UINT">
+									<descr>DTR on time</descr>
+								</var>
+								<var name="DTROffTime" type="UINT">
+									<descr>DTR off time</descr>
+								</var>
+								<var name="FlushTm" type="UINT">
+									<descr>Flush time [mS]</descr>
+								</var>
+								<var name="RxSize" type="UINT">
+									<descr>Rx buffer data size</descr>
+								</var>
+								<var name="TxSize" type="UINT">
+									<descr>Tx buffer data size</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Opened" type="BOOL">
+									<descr>Serial port was opened</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Fault status</descr>
+								</var>
+								<var name="File" type="eFILEP">
+									<descr>File pointer</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysSerialPort
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Open    : BOOL;         (* Open serial port *)
+        COM     : @STRING;      (* COM port *)
+        Baudrate: UDINT;        (* Baudrate *)
+        Parity  : STRING[1];    (* Parity type *)
+        DataBits: USINT;        (* Number of data bits *)
+        StopBits: USINT;        (* Number of stop bits *)
+        DTRManagement: DTR_MODE;(* DTR management type *)
+        DTRComplement: BOOL;    (* DTR signal complement *)
+        EchoFlush   : BOOL;     (* Flush the echo characters *)
+        DTROnTime   : UINT;     (* DTR on time *)
+        DTROffTime  : UINT;     (* DTR off time *)
+        FlushTm : UINT;         (* Flush time [mS] *)
+        RxSize  : UINT;         (* Rx buffer data size *)
+        TxSize  : UINT;         (* Tx buffer data size *)
+    END_VAR
+
+    VAR_OUTPUT
+        Opened  : BOOL;         (* Serial port was opened *)
+        Fault   : BOOL;         (* Fault status *)
+        File    : eFILEP;       (* File pointer *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysDateToETime" version="1.0.0" creationDate="1562915651" lastModifiedDate="1591705761">
+						<descr>Date to epoch time conversion</descr>
+						<vars>
+							<inputVars>
+								<var name="Year" type="UINT">
+									<descr>Year</descr>
+								</var>
+								<var name="Month" type="USINT">
+									<descr>Month</descr>
+								</var>
+								<var name="Day" type="USINT">
+									<descr>Day</descr>
+								</var>
+								<var name="Hour" type="USINT">
+									<descr>Hour</descr>
+								</var>
+								<var name="Minute" type="USINT">
+									<descr>Minute</descr>
+								</var>
+								<var name="Second" type="USINT">
+									<descr>Second</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Conversion done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Conversion fault</descr>
+								</var>
+								<var name="EpochTime" type="UDINT">
+									<descr>Epoch time</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysDateToETime
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        Year   : UINT;          (* Year *)
+        Month  : USINT;         (* Month *)
+        Day    : USINT;         (* Day *)
+        Hour   : USINT;         (* Hour *)
+        Minute : USINT;         (* Minute *)
+        Second : USINT;         (* Second *)
+    END_VAR
+
+    VAR_OUTPUT
+        Done   : BOOL;          (* Conversion done *)
+        Fault  : BOOL;          (* Conversion fault *)
+        EpochTime: UDINT;       (* Epoch time *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+					<functionBlock name="SysETimeToDate" version="1.0.0" creationDate="1562915526" lastModifiedDate="1591705761">
+						<descr>Epoch time to date conversion</descr>
+						<vars>
+							<inputVars>
+								<var name="EpochTime" type="UDINT">
+									<descr>Epoch time</descr>
+								</var>
+							</inputVars>
+							<outputVars>
+								<var name="Done" type="BOOL">
+									<descr>Conversion done</descr>
+								</var>
+								<var name="Fault" type="BOOL">
+									<descr>Conversion fault</descr>
+								</var>
+								<var name="Year" type="UINT">
+									<descr>Year</descr>
+								</var>
+								<var name="Month" type="USINT">
+									<descr>Month</descr>
+								</var>
+								<var name="Day" type="USINT">
+									<descr>Day</descr>
+								</var>
+								<var name="WeekDay" type="USINT">
+									<descr>WeekDay</descr>
+								</var>
+								<var name="Hour" type="USINT">
+									<descr>Hour</descr>
+								</var>
+								<var name="Minute" type="USINT">
+									<descr>Minute</descr>
+								</var>
+								<var name="Second" type="USINT">
+									<descr>Second</descr>
+								</var>
+							</outputVars>
+							<localVars>
+								<var name="Ver" type="USINT">
+									<descr>Function block version</descr>
+									<initValue>0</initValue>
+								</var>
+								<var name="IVP" type="@eVOID">
+									<descr>Internal variables pointer</descr>
+								</var>
+							</localVars>
+						</vars>
+						<iecDeclaration active="TRUE" valid="TRUE">
+							<![CDATA[FUNCTION_BLOCK SysETimeToDate
+
+    VAR
+        Ver     : USINT := 0;   (* Function block version *)
+        IVP     : @eVOID;       (* Internal variables pointer *)
+    END_VAR
+
+    VAR_INPUT
+        EpochTime: UDINT;       (* Epoch time *)
+    END_VAR
+
+    VAR_OUTPUT
+        Done   : BOOL;          (* Conversion done *)
+        Fault  : BOOL;          (* Conversion fault *)
+        Year   : UINT;          (* Year *)
+        Month  : USINT;         (* Month *)
+        Day    : USINT;         (* Day *)
+        WeekDay: USINT;         (* WeekDay *)
+        Hour   : USINT;         (* Hour *)
+        Minute : USINT;         (* Minute *)
+        Second : USINT;         (* Second *)
+    END_VAR
+]]>
+						</iecDeclaration>
+						<interfaces/>
+						<methods/>
+						<sourceCode type="EMBEDDED"/>
+					</functionBlock>
+				</functionBlocks>
+				<programs/>
+				<macros>
+					<macro name="eEOF">
+						<sourceCode type="ST">
+							<![CDATA[-1
+]]>
+						</sourceCode>
+						<parameters/>
+					</macro>
+					<macro name="eNULL">
+						<sourceCode type="ST">
+							<![CDATA[NULL
+]]>
+						</sourceCode>
+						<parameters/>
+					</macro>
+				</macros>
+				<structs>
+					<struct name="SYSCANMESSAGE" version="1.0.0">
+						<title>CAN message</title>
+						<vars>
+							<var name="RmReq" type="BOOL">
+								<descr>FALSE:Data frame, TRUE:Remote request</descr>
+							</var>
+							<var name="Length" type="USINT">
+								<descr>Data length</descr>
+							</var>
+							<var name="MsgID" type="DWORD">
+								<descr>Message ID (FF:Bit 31) (11 or 29 Bit)</descr>
+							</var>
+							<var name="Data" type="BYTE" dim0="8">
+								<descr>Message data</descr>
+							</var>
+						</vars>
+					</struct>
+					<struct name="SYSSERIALMODE" version="1.0.0">
+						<descr>SYSSERIALMODE definition</descr>
+						<vars>
+							<var name="Baudrate" type="UDINT">
+								<descr>Baudrate</descr>
+							</var>
+							<var name="Parity" type="STRING" length="1">
+								<descr>Parity type</descr>
+							</var>
+							<var name="DataBits" type="USINT">
+								<descr>Nr of data bits</descr>
+							</var>
+							<var name="StopBits" type="USINT">
+								<descr>Nr of stop bits</descr>
+							</var>
+							<var name="DTRManagement" type="DTR_MODE">
+								<descr>DTR management type</descr>
+							</var>
+							<var name="DTRComplement" type="BOOL">
+								<descr>Complement the DTR signal</descr>
+							</var>
+							<var name="EchoFlush" type="BOOL">
+								<descr>Flush the echo</descr>
+							</var>
+							<var name="DTROnTime" type="UINT">
+								<descr>DTR On wait time</descr>
+							</var>
+							<var name="DTROffTime" type="UINT">
+								<descr>DTR Off wait time</descr>
+							</var>
+						</vars>
+					</struct>
+				</structs>
+				<typedefs>
+					<typedef name="eVOID" type="BYTE">
+						<descr>Generic type definition</descr>
+					</typedef>
+					<typedef name="eFILEP" type="UDINT">
+						<descr>eFILEP definition</descr>
+					</typedef>
+				</typedefs>
+				<enums>
+					<enum name="DAYLIGHT_ZONE" version="1.0.0">
+						<elements>
+							<element name="DLZ_OFF">
+								<descr>No daylight</descr>
+								<value>0</value>
+							</element>
+							<element name="DLZ_EUROPE">
+								<descr>Europe</descr>
+								<value>1</value>
+							</element>
+							<element name="DLZ_USA">
+								<descr>Usa</descr>
+								<value>2</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="CAN_SPEED" version="1.0.0">
+						<title>CAN bit rate definition</title>
+						<elements>
+							<element name="CAN_50KBIT">
+								<descr>Bit rate 50 Khz</descr>
+								<value>0</value>
+							</element>
+							<element name="CAN_100KBIT">
+								<descr>Bit rate 100 Khz</descr>
+								<value>1</value>
+							</element>
+							<element name="CAN_125KBIT">
+								<descr>Bit rate 125 Khz</descr>
+								<value>2</value>
+							</element>
+							<element name="CAN_250KBIT">
+								<descr>Bit rate 250 Khz</descr>
+								<value>3</value>
+							</element>
+							<element name="CAN_500KBIT">
+								<descr>Bit rate 500 Khz</descr>
+								<value>4</value>
+							</element>
+							<element name="CAN_1MBIT">
+								<descr>Bit rate 1 Mhz</descr>
+								<value>5</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="TASK_ID" version="1.0.0">
+						<elements>
+							<element name="ID_TASK_BOOT">
+								<descr>Boot task ID</descr>
+								<value>0</value>
+							</element>
+							<element name="ID_TASK_BACK">
+								<descr>Back task ID</descr>
+								<value>1</value>
+							</element>
+							<element name="ID_TASK_SLOW">
+								<descr>Slow task ID</descr>
+								<value>2</value>
+							</element>
+							<element name="ID_TASK_FAST">
+								<descr>Fast task ID</descr>
+								<value>3</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="SYS_ID" version="1.0.0">
+						<elements>
+							<element name="OSID_CFG_WRITE">
+								<descr>Save actual configuration</descr>
+								<value>1</value>
+							</element>
+							<element name="OSID_ETH0_IP">
+								<descr>Eth0 network IP (4 bytes (array)</descr>
+								<value>100</value>
+							</element>
+							<element name="OSID_ETH0_MASK">
+								<descr>Eth0 network mask (4 bytes (array)</descr>
+								<value>101</value>
+							</element>
+							<element name="OSID_ETH0_GATEWAY">
+								<descr>Eth0 network gateway (4 bytes (array)</descr>
+								<value>102</value>
+							</element>
+							<element name="OSID_ETH0_MAC">
+								<descr>Eth0 network MAC address (6 bytes (array)</descr>
+								<value>103</value>
+							</element>
+							<element name="OSID_ETH0_DNS_PRIM">
+								<descr>Eth0 primary DNS 4 bytes (array)</descr>
+								<value>104</value>
+							</element>
+							<element name="OSID_ETH0_DNS_SEC">
+								<descr>Eth0 primary DNS 4 bytes (array)</descr>
+								<value>105</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="SPY_MODE" version="1.0.0">
+						<elements>
+							<element name="SPY_ASCII">
+								<descr>Ascii</descr>
+								<value>1</value>
+							</element>
+							<element name="SPY_ASCII_L">
+								<descr>Ascii with length limit</descr>
+								<value>2</value>
+							</element>
+							<element name="SPY_ASCHEX">
+								<descr>Ascii with substitute unprintable chars</descr>
+								<value>10</value>
+							</element>
+							<element name="SPY_ASCHEX_L">
+								<descr>Ascii with substitute unprintable chars with length limit</descr>
+								<value>11</value>
+							</element>
+							<element name="SPY_BINARY">
+								<descr>Binary</descr>
+								<value>100</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="DTR_MODE" version="1.0.0">
+						<elements>
+							<element name="DTR_OFF">
+								<descr>DTR off</descr>
+								<value>0</value>
+							</element>
+							<element name="DTR_ON">
+								<descr>DTR on</descr>
+								<value>1</value>
+							</element>
+							<element name="DTR_AUTO_WO_TIMES">
+								<descr>DTR Auto without times</descr>
+								<value>2</value>
+							</element>
+							<element name="DTR_AUTO_W_TIMES">
+								<descr>DTR Auto with times</descr>
+								<value>3</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="PHR_INFOS_ID" version="1.0.0">
+						<elements>
+							<element name="PRODUCT_CODE">
+								<descr>Product code</descr>
+								<value>0</value>
+							</element>
+							<element name="PROGRAM_CODE">
+								<descr>Program code</descr>
+								<value>1</value>
+							</element>
+							<element name="PRODUCT_SERNR">
+								<descr>Product serial number</descr>
+								<value>2</value>
+							</element>
+							<element name="PRODUCT_UID">
+								<descr>Product unique id</descr>
+								<value>3</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="DO_MODE" version="1.0.0">
+						<elements>
+							<element name="DO_8_LL">
+								<descr>Write 0-7 output mode</descr>
+								<value>1</value>
+							</element>
+							<element name="DO_8_L">
+								<descr>Write 8-15 output mode</descr>
+								<value>2</value>
+							</element>
+							<element name="DO_8_M">
+								<descr>Write 16-23 output mode</descr>
+								<value>3</value>
+							</element>
+							<element name="DO_8_MM">
+								<descr>Write 24-31 output mode</descr>
+								<value>4</value>
+							</element>
+							<element name="DO_16_L">
+								<descr>Write 0-15 output mode</descr>
+								<value>5</value>
+							</element>
+							<element name="DO_16_M">
+								<descr>Write 16-31 output mode</descr>
+								<value>6</value>
+							</element>
+							<element name="DO_32">
+								<descr>Write 0-31 output mode</descr>
+								<value>7</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="DI_MODE" version="1.0.0">
+						<elements>
+							<element name="DI_8_LL">
+								<descr>Read 0-7 input mode (Debounced)</descr>
+								<value>1</value>
+							</element>
+							<element name="DI_8_L">
+								<descr>Read 8-15 input mode (Debounced)</descr>
+								<value>2</value>
+							</element>
+							<element name="DI_8_M">
+								<descr>Read 16-23 input mode (Debounced)</descr>
+								<value>3</value>
+							</element>
+							<element name="DI_8_MM">
+								<descr>Read 24-31 input mode (Debounced)</descr>
+								<value>4</value>
+							</element>
+							<element name="DI_16_L">
+								<descr>Read 0-15 input mode (Debounced)</descr>
+								<value>5</value>
+							</element>
+							<element name="DI_16_M">
+								<descr>Read 16-31 input mode (Debounced)</descr>
+								<value>6</value>
+							</element>
+							<element name="DI_32">
+								<descr>Read 0-31 input mode (Debounced)</descr>
+								<value>7</value>
+							</element>
+							<element name="DI_I_8_LL">
+								<descr>Read 0-7 input mode (Immediate)</descr>
+								<value>11</value>
+							</element>
+							<element name="DI_I_8_L">
+								<descr>Read 8-15 input mode (Immediate)</descr>
+								<value>12</value>
+							</element>
+							<element name="DI_I_8_M">
+								<descr>Read 16-23 input mode (Immediate)</descr>
+								<value>13</value>
+							</element>
+							<element name="DI_I_8_MM">
+								<descr>Read 24-31 input mode (Immediate)</descr>
+								<value>14</value>
+							</element>
+							<element name="DI_I_16_L">
+								<descr>Read 0-15 input mode (Immediate)</descr>
+								<value>15</value>
+							</element>
+							<element name="DI_I_16_M">
+								<descr>Read 16-31 input mode (Immediate)</descr>
+								<value>16</value>
+							</element>
+							<element name="DI_I_32">
+								<descr>Read 0-31 input mode (Immediate)</descr>
+								<value>17</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="AO_MODE" version="1.0.0">
+						<elements>
+							<element name="DA_IDLE">
+								<descr>Idle mode</descr>
+								<value>0</value>
+							</element>
+							<element name="DA_VOLT_0_10">
+								<descr>Voltage from 0 to 10 V</descr>
+								<value>1</value>
+							</element>
+							<element name="DA_VOLT_0_5">
+								<descr>Voltage from 0 to 5 V</descr>
+								<value>2</value>
+							</element>
+							<element name="DA_VOLT_M10_10">
+								<descr>Voltage from -10 to +10 V</descr>
+								<value>3</value>
+							</element>
+							<element name="DA_VOLT_M5_5">
+								<descr>Voltage from -5 to +5 V</descr>
+								<value>4</value>
+							</element>
+							<element name="DA_CURR_0_20">
+								<descr>Current from 0 to 20 mA</descr>
+								<value>5</value>
+							</element>
+							<element name="DA_CURR_4_20">
+								<descr>Current from 4 to 20 mA</descr>
+								<value>6</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="AI_MODE" version="1.0.0">
+						<elements>
+							<element name="AD_IDLE">
+								<descr>Idle mode</descr>
+								<value>0</value>
+							</element>
+							<element name="AD_VOLT_0_125_COMMON">
+								<descr>Voltage from 0 to 1.25 V (Common mode)</descr>
+								<value>1</value>
+							</element>
+							<element name="AD_VOLT_0_10_COMMON">
+								<descr>Voltage from 0 to 10 V (Common mode)</descr>
+								<value>2</value>
+							</element>
+							<element name="AD_CURR_0_20_COMMON">
+								<descr>0-20mA common mode</descr>
+								<value>3</value>
+							</element>
+							<element name="AD_CURR_4_20_COMMON">
+								<descr>Current from 4 to 20 mA (Common mode)</descr>
+								<value>4</value>
+							</element>
+							<element name="AD_VOLT_0_1_COMMON">
+								<descr>Voltage from 0 to 1 V (Common mode)</descr>
+								<value>5</value>
+							</element>
+							<element name="AD_CURR_0_20_DIFFER">
+								<descr>Current from 0 to 20 mA ( Differential mode)</descr>
+								<value>6</value>
+							</element>
+							<element name="AD_VOLT_0_1_DIFFER">
+								<descr>Voltage from 0 to 1 V (Differential mode)</descr>
+								<value>7</value>
+							</element>
+							<element name="AD_VOLT_0_125_DIFFER">
+								<descr>Voltage from 0 to 1.25 V (Differential mode)</descr>
+								<value>8</value>
+							</element>
+							<element name="AD_VOLT_0_10_DIFFER">
+								<descr>Voltage from 0 to 10 V (Differential mode)</descr>
+								<value>9</value>
+							</element>
+							<element name="AD_PT100_DIFFER">
+								<descr>Pt100 sensor Celsius degree (Differential mode)</descr>
+								<value>10</value>
+							</element>
+							<element name="AD_PT1000_DIFFER">
+								<descr>Pt1000 sensor Celsius degree (Differential mode)</descr>
+								<value>11</value>
+							</element>
+							<element name="AD_NI1000_DIFFER">
+								<descr>Ni1000 sensor Celsius degree (Differential mode)</descr>
+								<value>12</value>
+							</element>
+							<element name="AD_CURR_4_20_DIFFER">
+								<descr>Current from 4 to 20 mA (Differential mode)</descr>
+								<value>13</value>
+							</element>
+							<element name="AD_PT100_DIN_43760">
+								<descr>Pt100 DIN_43760 standard Celsius degree</descr>
+								<value>32</value>
+							</element>
+							<element name="AD_PT100_AMERICAN">
+								<descr>Pt100 American standard Celsius degree</descr>
+								<value>33</value>
+							</element>
+							<element name="AD_PT100_ITS_90">
+								<descr>Pt100 ITS-90 standard Celsius degree</descr>
+								<value>34</value>
+							</element>
+							<element name="AD_PT100_IEC_60751">
+								<descr>Pt100 IEC-60751 standard Celsius degree</descr>
+								<value>35</value>
+							</element>
+							<element name="AD_PT1000_DIN_43760">
+								<descr>Pt1000 DIN_43760 standard Celsius degree</descr>
+								<value>40</value>
+							</element>
+							<element name="AD_PT1000_AMERICAN">
+								<descr>Pt1000 American standard Celsius degree</descr>
+								<value>41</value>
+							</element>
+							<element name="AD_PT1000_ITS_90">
+								<descr>Pt1000 ITS-90 standard Celsius degree</descr>
+								<value>42</value>
+							</element>
+							<element name="AD_PT1000_IEC_60751">
+								<descr>Pt1000 IEC-60751 standard Celsius degree</descr>
+								<value>43</value>
+							</element>
+							<element name="AD_NI1000_DIN_43760">
+								<descr>Ni1000 DIN_43760 standard Celsius degree</descr>
+								<value>48</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_B">
+								<descr>Thermocouple B type Celsius degree</descr>
+								<value>64</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_E">
+								<descr>Thermocouple E type Celsius degree</descr>
+								<value>65</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_J">
+								<descr>Thermocouple J type Celsius degree</descr>
+								<value>66</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_K">
+								<descr>Thermocouple K type Celsius degree</descr>
+								<value>67</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_N">
+								<descr>Thermocouple N type Celsius degree</descr>
+								<value>68</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_R">
+								<descr>Thermocouple R type Celsius degree</descr>
+								<value>69</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_S">
+								<descr>Thermocouple S type Celsius degree</descr>
+								<value>70</value>
+							</element>
+							<element name="AD_THERMOCOUPLE_T">
+								<descr>Thermocouple T type Celsius degree</descr>
+								<value>71</value>
+							</element>
+							<element name="AD_VIN_VREF_G_1">
+								<descr>Voltage in/Voltage reference with gain 1</descr>
+								<value>90</value>
+							</element>
+							<element name="AD_VIN_VREF_G_2">
+								<descr>Voltage in/Voltage reference with gain 2</descr>
+								<value>91</value>
+							</element>
+							<element name="AD_VIN_VREF_G_4">
+								<descr>Voltage in/Voltage reference with gain 4</descr>
+								<value>92</value>
+							</element>
+							<element name="AD_VIN_VREF_G_8">
+								<descr>Voltage in/Voltage reference with gain 8</descr>
+								<value>93</value>
+							</element>
+							<element name="AD_VIN_VREF_G_16">
+								<descr>Voltage in/Voltage reference with gain 16</descr>
+								<value>94</value>
+							</element>
+							<element name="AD_VIN_VREF_G_32">
+								<descr>Voltage in/Voltage reference with gain 32</descr>
+								<value>95</value>
+							</element>
+							<element name="AD_VIN_VREF_G_64">
+								<descr>Voltage in/Voltage reference with gain 64</descr>
+								<value>96</value>
+							</element>
+							<element name="AD_VIN_VREF_G_128">
+								<descr>Voltage in/Voltage reference with gain 128</descr>
+								<value>97</value>
+							</element>
+							<element name="AD_RESISTOR_300_OHM">
+								<descr>Resistor up to 300 Ohm</descr>
+								<value>110</value>
+							</element>
+							<element name="AD_RESISTOR_5000_OHM">
+								<descr>Resistor up to 5000 Ohm</descr>
+								<value>111</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="FSEEK_ORIGIN" version="1.0.0">
+						<elements>
+							<element name="ID_SEEK_SET">
+								<descr>Beginning of file</descr>
+								<value>0</value>
+							</element>
+							<element name="ID_SEEK_CUR">
+								<descr>Current position of the file pointer</descr>
+								<value>1</value>
+							</element>
+							<element name="ID_SEEK_END">
+								<descr>End of file</descr>
+								<value>2</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="FIND_MODE" version="1.0.0">
+						<elements>
+							<element name="FIND_DEFAULT">
+								<descr>Default find</descr>
+								<value>0</value>
+							</element>
+							<element name="FIND_FROM_END">
+								<descr>Find from end</descr>
+								<value>1</value>
+							</element>
+							<element name="FIND_NO_CASE">
+								<descr>Find case insentive</descr>
+								<value>2</value>
+							</element>
+							<element name="FIND_GET_END">
+								<descr>Return a pointer to end of found</descr>
+								<value>4</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="CHECK_TYPE" version="1.0.0">
+						<elements>
+							<element name="CRC_16_MODBUS">
+								<descr>Modbus RTU CRC</descr>
+								<value>1</value>
+							</element>
+							<element name="LRC_ISO1155">
+								<descr>ISO1155 LRC</descr>
+								<value>2</value>
+							</element>
+						</elements>
+					</enum>
+					<enum name="VR_TYPE" version="1.0.0">
+						<elements>
+							<element name="BOOL_TYPE">
+								<descr>Boolean (1 bits)</descr>
+								<value>10</value>
+							</element>
+							<element name="BYTE_TYPE">
+								<descr>Byte (8 bits)</descr>
+								<value>20</value>
+							</element>
+							<element name="SINT_TYPE">
+								<descr>Single integer signed (8 bits)</descr>
+								<value>21</value>
+							</element>
+							<element name="USINT_TYPE">
+								<descr>Single integer unsigned (8 bits)</descr>
+								<value>22</value>
+							</element>
+							<element name="WORD_TYPE">
+								<descr>Word (16 bits)</descr>
+								<value>30</value>
+							</element>
+							<element name="INT_TYPE">
+								<descr>Integer signed (16 bits)</descr>
+								<value>31</value>
+							</element>
+							<element name="UINT_TYPE">
+								<descr>Integer unsigned (16 bits)</descr>
+								<value>32</value>
+							</element>
+							<element name="DWORD_TYPE">
+								<descr>Double word (32 bits)</descr>
+								<value>40</value>
+							</element>
+							<element name="DINT_TYPE">
+								<descr>Double integer signed (32 bits)</descr>
+								<value>41</value>
+							</element>
+							<element name="UDINT_TYPE">
+								<descr>Double integer unsigned (32 bits)</descr>
+								<value>42</value>
+							</element>
+							<element name="REAL_TYPE">
+								<descr>Floating (32 bits)</descr>
+								<value>43</value>
+							</element>
+							<element name="STRING_TYPE">
+								<descr>String</descr>
+								<value>50</value>
+							</element>
+							<element name="LWORD_TYPE">
+								<descr>Long word (64 bits)</descr>
+								<value>60</value>
+							</element>
+							<element name="LINT_TYPE">
+								<descr>Long integer signed (64 bits)</descr>
+								<value>61</value>
+							</element>
+							<element name="ULINT_TYPE">
+								<descr>Long integer unsigned (64 bits)</descr>
+								<value>62</value>
+							</element>
+							<element name="LREAL_TYPE">
+								<descr>Floating (64 bits)</descr>
+								<value>63</value>
+							</element>
+						</elements>
+					</enum>
+				</enums>
+				<subranges/>
+				<interfaces/>
+			</lib>
+		</libraries>
+		<aux>
+			<src fullXml="false" name="ElsistInit.PLC" order="-1" hidden="true">
+				<![CDATA[
+(* XUnified library init *)
+PROGRAM $$ElsistInit WITH Boot;
+PROGRAM $$ElsistInit
+
+{ HIDDEN:ON }
+
+VAR
+dummy : BOOL;
+END_VAR
+
+{ CODE:ST }
+dummy:=XUnifiedLibInit(TRUE);
+END_PROGRAM
+
+]]>
+			</src>
+			<src fullXml="false" name="HMIsManager.PLC" order="0" hidden="true">
+				<![CDATA[]]>
+			</src>
+		</aux>
+		<workspace>
+			<root name="WebPages" nextID="147">
+				<!-- <Pou name="POUs" id="1"/> -->
+				<folder name="POUs" id="1">
+					<Pou name="IString" id="6"/>
+					<Pou name="WebPages" id="15"/>
+				</folder>
+				<folder name="Variables" id="44">
+					<GlobalVars name="WebPages" id="45"/>
+				</folder>
+			</root>
+		</workspace>
+	</sources>
+	<codegen crossReference="false" crossReferenceOptions="0x3000001D" listing="true" hideSourceCodeInListing="true" saveEXPFile="false" saveEXPFileLibraries="false" saveTargetFiles="false" warningEnable="true" symMap="true" checkIndexType="false" waitExtension="false" allocateUnusedVariables="false" checkArrayBounds="false" checkDivisionByZero="false" checkPointers="false" checkReferences="false" checkInterfaces="false" ioVarsAsReferences="false" customTargetBINFileName="PlcCode0.bin" customTargetTSCFileName="PlcSource0.bin" customTargetTDSFileName="PlcDebug0.bin" generateCustomFilesName="true">
+		<disabledWarnings/>
+		<applicationDataBlocks/>
+	</codegen>
+	<simWorkspaces/>
+	<debug watchRefresh="20" watchVarRefresh="0" watchMaxArray="20" autoSaveWatchList="false" watchFBLocalVars="false"/>
+	<editor useOldGridSize="false"/>
+	<userDef>
+		<release/>
+		<author/>
+		<note/>
+		<version/>
+		<password disabled="true"/>
+	</userDef>
+	<downloadSequence sourceCode="never" debugSymbols="onPLCApplicationDownload"/>
+	<commands>
+		<postbuild/>
+		<postdown/>
+		<predown/>
+	</commands>
+	<resources>
+		<configuration template="LogicLab.pct" version="1">
+			<data protocol="root">
+				<project_config nextID="0">
+					<datacomment/>
+				</project_config>
+				<Mps054_XUnified_1_0 template="Elsist\Plc\Mps054_XUnified_1_0.pct" version="1" name="SlimLine Mps054 XUnified" caption="SlimLine Mps054 XUnified">
+					<config>
+						<elsist_hmis/>
+					</config>
+				</Mps054_XUnified_1_0>
+			</data>
+		</configuration>
+	</resources>
+</plcProject>

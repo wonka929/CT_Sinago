@@ -1,0 +1,81 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>SlimLine - AJAX Page</title>
+<script language="javascript">
+<!--
+// -----------------------------------------------------------------------------
+// FUNZIONE "GetPage(Page, RFlag)"
+// -----------------------------------------------------------------------------
+// Questa funzione esegue lettura in "Fetch API" della pagina "Page" ed esegue
+// la chiamata alla funzione "SetupValues" che aggiorna i valori dei campi nella
+// pagina. Viene propagato lo stato di "RFlag" per non aggiornare i campi in
+// inputazione sull'aggiornamento automatico a tempo.
+// -----------------------------------------------------------------------------
+
+function GetPage(Page, RFlag)
+{
+    fetch(Page)
+   .then(response => response.text()) //Converto risultato in testo
+   .then(text => SetupValues(text, RFlag)) //Aggiorno valori
+   .catch(error => console.log("GetPage error:"+error))
+}
+
+// -----------------------------------------------------------------------------
+// FUNZIONE "SubmitData(Page)"
+// -----------------------------------------------------------------------------
+// Questa funzione deve essere eseguita all'invio dei dati (Tasto Send).
+// Esegue l'invio dei dati in POST.
+// -----------------------------------------------------------------------------
+
+function SubmitData(Page)
+{
+    var SData=encodeURIComponent("REAL 112")+"="+document.getElementById("IFactor").value;
+
+    fetch(Page,
+    {
+        method: "POST",
+        headers: {"Content-type": "application/json; charset=UTF-8"},
+        body: SData
+    })
+   .then(response => response.text()) //Converto risultato in testo
+   .then(text => SetupValues(text, true)) //Aggiorno valori anche quelli in inputazione
+   .catch(error => console.log("SubmitData error:"+error))
+}
+
+// -----------------------------------------------------------------------------
+// FUNZIONE "LoadPage(Page)"
+// -----------------------------------------------------------------------------
+// Questa funzione deve essere eseguita al caricamento pagina.
+// Esegue l'aggiornamento dei valori ed imposta il tempo di refresh automatico.
+// -----------------------------------------------------------------------------
+
+function LoadPage(Page)
+{
+    GetPage(Page, true); //Lettura valori ed aggiornamento campi anche quelli in inputazione
+    setInterval(function(){GetPage(Page, false)}, 1000); //Lettura valori a tempo ed aggiornamento campi
+}
+
+// -----------------------------------------------------------------------------
+// FUNZIONE "SetupValues(RData, RFlag)"
+// -----------------------------------------------------------------------------
+// Questa funzione esegue l'aggiornamento dei valori di tutti i campi della
+// pagina. "RFlag" se settata aggiorna anche i campi in inputazione, non deve
+// essere settata sul rinfresco automatico della pagina.
+// -----------------------------------------------------------------------------
+
+function SetupValues(RData, RFlag)
+{
+    var Obj=JSON.parse(RData); //Parse JSON data
+    document.getElementById("Angle").innerHTML=Obj.Angle;
+    document.getElementById("Sine").innerHTML=Obj.Sine;
+    document.getElementById("Cosine").innerHTML=Obj.Cosine;
+    if (RFlag) document.getElementById("IFactor").value=Obj.IFactor;
+}
+//-->
+</script>
+</head>
+<body onLoad="LoadPage('AjaxPage.htm')">
+Angle:&nbsp;<span id="Angle"></span>&nbsp;&nbsp;Sine:&nbsp;<span id="Sine"></span>&nbsp;&nbsp;Cosine:&nbsp;<span id="Cosine"></span></br>
+Icrement factor:&nbsp;<input id="IFactor" type="text" size="5" maxlength="10">&nbsp;<input type="button" value="Save" onclick="SubmitData('AjaxPage.htm')"/>
+</body>
+</html>
